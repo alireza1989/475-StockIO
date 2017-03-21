@@ -51,7 +51,7 @@ COMPANIES.forEach(function(company)
 	        body.name = company.name;
 	        body.symbol = company.ticker;
 	        body.description = company.long_description;
-	        body.stockExchange = company.stock_exchange;
+	        body.stock_exchange = company.stock_exchange;
 	        body.url = company.company_url;
 	        body.ceo = company.ceo;
 
