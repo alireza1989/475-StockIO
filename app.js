@@ -53,7 +53,7 @@ server.listen(PORT, function () {
 		console.log('Client connected to websocket.');
 
 		// Stream real-time changes of prices for specified stocks.
-		socket.on('join', function(data) {
+		socket.on('followStocks', function(data) {
 			var stocksToWatch = data; //Need to JSON parse??
 			stocksToWatch['stocks'].forEach(function(stockSymbol) {
 				socket.join(stockSymbol);  //Join the room for a particular stock
@@ -61,11 +61,24 @@ server.listen(PORT, function () {
 		});
 
 		// Stop getting updates of prices for specified stocks.
-		socket.on('leave', function(data) {
+		socket.on('stopFollowStocks', function(data) {
 			var stocksToStopWatch = data
 			stocksToWatch['stocks'].forEach(function(stockSymbol) {
 				socket.leave(stockSymbol);
 			});
+		});
+
+		//Listen for updates to your account via user Id- Invitations, portfolio changes, etc.
+		socket.on('listenForUpdates', function(data) {
+			var sessionKey = data;
+			var userId;  //TODO: extract userId from sessionKey. 
+			socket.join(userId);
+		});
+
+		socket.on('stopListenForUpdates', function(data) {
+			var sessionKey = data;
+			var userId; //TODO: extract userId from sessionKey. 
+			socket.leave(userId);
 		});
 
 		socket.on('disconnect', function() {
@@ -96,23 +109,15 @@ var onStocksUpdate = function(error, response, body) {
 		quote.change = stock.c;
 		quote.change_percent = stock.cp; 
 		quote.last_trade_time = stock.lt;
-		quote.dividend = stock.div;
-		quote.yield = stock.yld;
 
+		console.log(quote);
 		//TODO: Compare last price or last trade time with current. If there is a change, emit to sockets subscribed to that stock index.
 		//Update the DB with the most recent time or price.
 		io.to(quote.ticker).emit('tickerUpdate', JSON.stringify(quote));
 	});
 }
 
-var removeSocketFromDictionary = function(socket, stockSymbol) {
-	var index = socketDictionary[stockSymbol].indexOf(socket);
-	if (index != -1)
-		socketDictionary[stockSymbol].splice(index, 1);
-}
-
 app.post('/createAccount', function (request, response) {
-
 	// Hash password, add to DB. If new user has initialized set of stocks to follow, add that to DB as well.
 	console.log('Creating Account.');
 });
@@ -132,4 +137,12 @@ app.get('/api/stockdata/', function (request, response) {
 
 app.get('/api/companydata', function (request, response) {
 	console.log('Request for all available companies and their information.');
+});
+
+app.post('/api/invitation', function(request, response) {
+	console.log('Received an invitation to send to a user.');
+});
+
+app.get('/api/invitation', function(request, response) {
+	console.log('Getting all unhandled (accepted/declined) invitations received for user.');
 });
