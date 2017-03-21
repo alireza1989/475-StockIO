@@ -14,8 +14,29 @@
 
 ## **File Structure**
 
-- _Root Folder_ *Scripts:
+  * Root Folder:
 
   ```
-  *webscraper
+  * scripts
+    * web scraper
+    *
+    *
+
+  ```
+
+  ```
+  * src
+
+    * app
+      * js
+      * style
+
+    * client
+      * assets
+      *
+
+    * server
+      * api
+      *
+
   ```
