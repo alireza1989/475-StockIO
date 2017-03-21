@@ -9,8 +9,6 @@ var bcrypt = require('bcrypt');
 const PORT = 3000;
 const UPDATE_FREQUENCY = 10000 //ms
 
-var socketDictionary = {};
-
 //TODO: Get this data from DB. 
 var COMPANIES = [
 	'AAPL',
@@ -55,18 +53,18 @@ server.listen(PORT, function () {
 		console.log('Client connected to websocket.');
 
 		// Stream real-time changes of prices for specified stocks.
-		socket.on('join', function(stocks) {
-			var stocksToWatch = JSON.parse(stocks);
+		socket.on('join', function(data) {
+			var stocksToWatch = data; //Need to JSON parse??
 			stocksToWatch['stocks'].forEach(function(stockSymbol) {
-				socketDictionary[stockSymbol].push(socket);
+				socket.join(stockSymbol);  //Join the room for a particular stock
 			});
 		});
 
 		// Stop getting updates of prices for specified stocks.
-		socket.on('leave', function(stocks) {
-			var stocksToStopWatch = JSON.parse(stocks);
+		socket.on('leave', function(data) {
+			var stocksToStopWatch = data
 			stocksToWatch['stocks'].forEach(function(stockSymbol) {
-				removeSocketFromDictionary(socket, stockSymbol);
+				socket.leave(stockSymbol);
 			});
 		});
 
@@ -103,13 +101,7 @@ var onStocksUpdate = function(error, response, body) {
 
 		//TODO: Compare last price or last trade time with current. If there is a change, emit to sockets subscribed to that stock index.
 		//Update the DB with the most recent time or price.
-		try {
-			socketDictionary[quote.ticker].forEach(function(socket) {
-				socket.emit('tickerUpdate', JSON.stringify(quote));
-			});
-		} catch(e) {
-			console.log('Warning: No sockets subscribed for Stock index ' + quote.ticker);
-		}
+		io.to(quote.ticker).emit('tickerUpdate', JSON.stringify(quote));
 	});
 }
 
