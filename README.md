@@ -1,14 +1,21 @@
-# __Stockio - Project__
+# **Stockio - Project**
 
 ## CMPT - 470 - final project
 
+### **_Technologies used in the project:_**
 
-### *Technologies used in the project:*
+- UI: React + webpack + hot modules + D3 for Data Visualization
+- Backend: Express + NodeJS
+- ORM: Sequelize
+- Database: MySQL
+- HTTP server: NGINX
+- Deploy: Vagrant
+- Web Scraper: NodeJS + Request + Cheerio
 
-* UI: React + webpack + hot modules  + D3 for Data Vis
-* Backend: Express
-* ORM: Sequelize
-* Database: MySQL
-* HTTP server: NGINX
-* Deploy: Vagrant
-* Web Scraper:  NodeJS + Request + Cheerio
+## **File Structure**
+
+- _Root Folder_ *Scripts:
+
+  ```
+  *webscraper
+  ```
