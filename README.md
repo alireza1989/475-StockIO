@@ -14,29 +14,25 @@
 
 ## **File Structure**
 
-  * Root Folder:
+     * Root Folder:
 
-  ```
-  * scripts
-    * web scraper
-    *
-    *
+       * scripts
+         * web scraper
+         *
+         *
 
-  ```
+       * src
 
-  ```
-  * src
+         * app
+           * js
+           * style
 
-    * app
-      * js
-      * style
+         * client
+           * assets
+           *
 
-    * client
-      * assets
-      *
+         * server
+           * api
+           *
 
-    * server
-      * api
-      *
-
-  ```
+ 
