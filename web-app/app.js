@@ -55,8 +55,10 @@ app.get('/', function(request, response) {
 });
 
 app.get('/dashboard', function(request, response) {
-    loadPage(request, response, 'dashboard.html');
+    loadPage(request, response, 'index.html');
 });
+
+app.use('/static', express.static(__dirname + '/static'));
 
 var loadPage = function(request, response, page) {    
 //     if (request.session) {
