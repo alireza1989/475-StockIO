@@ -1,7 +1,7 @@
 {
     "name": "stockio",
     "version": "1.0.0",
-    "author": "True North",
+    "author": "TrueNorth",
     "license": "BSD-2-Clause",
     "description": "Real-time stock updates for mobile and desktop.",
     "main": "app.js",
