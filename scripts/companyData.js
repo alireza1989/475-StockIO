@@ -10,30 +10,14 @@ PASSWORD = "40bb5f3b10038b557291badf18a2cd5a"
 var auth = "Basic " + new Buffer(USERNAME + ':' + PASSWORD).toString('base64');
 
 var COMPANIES = [
-	'AAPL',
-	'AMZN',
-	'DIS',
-	'CSCO',
-	'FB',
-	'INTC',
-	'GOOG',
-	'IBM',
-	'MMM',
-	'MCD',
-	'MSFT',
-	'NFLX',
-	'NVDA',
-	'PFE',
-	'V',
-	'SBUX',
-	'TSLA',
-	'TXN',
-	'XOM',
-	'YHOO'
+	'AAPL', 'AMZN', 'DIS',  'CSCO', 'FB',   'INTC', 'GOOG',
+	'IBM',  'MMM',  'MCD',  'MSFT', 'NFLX', 'NVDA', 'PFE',
+	'V',    'SBUX', 'TSLA', 'TXN',  'XOM',  'YHOO'
 ];
 
-COMPANIES.forEach(function(company)
-{
+var companyInfo = [];
+
+COMPANIES.forEach(function(company) {
 	var request = https.request({
 	    method: "GET",
 	    host: "api.intrinio.com",
@@ -41,22 +25,36 @@ COMPANIES.forEach(function(company)
 	    headers: { "Authorization": auth }
 	}, function(response) {
 	    var json = "";
+	    
 	    response.on('data', function (chunk) {
 	        json += chunk;
 	    });
+	    
 	    response.on('end', function() {
-	        var company = JSON.parse(json);
-
-	        var body = {}
-	        body.name = company.name;
-	        body.symbol = company.ticker;
-	        body.description = company.long_description;
-	        body.stock_exchange = company.stock_exchange;
-	        body.url = company.company_url;
-	        body.ceo = company.ceo;
-
-        	fs.appendFileSync('stocks.json', JSON.stringify(body) + ',');
+	        var data = JSON.parse(json);
+	        
+	        data = {
+	            'name':         data.name,
+	            'symbol':       data.ticker,
+	            'exchange':     data.stock_exchange,
+	            'url':          data.company_url,
+	            'ceo':          data.ceo,
+	            'sector':       data.sector
+	        }
+	        
+	        companyInfo.push(data);
+	        
+	        if (companyInfo.length === COMPANIES.length) {
+    	        returnData();
+	        }
 	    });
 	});
+	
 	request.end(); 
 });
+
+
+var returnData = function() {
+    data = JSON.stringify({'company' : companyInfo}, null, 4);
+	fs.appendFileSync('stocks.json', data);
+}
