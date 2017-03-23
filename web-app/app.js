@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var request = require('request');
 var passport = require('passport');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 
 const PORT = 3000;
 const UPDATE_FREQUENCY = 10000 //ms

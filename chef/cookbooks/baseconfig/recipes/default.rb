@@ -17,15 +17,15 @@ execute 'ntp_restart' do
 end
 
 # Install nginx via apt-get
-package "nginx"
+#package "nginx"
 # Override the default nginx config with the one in our cookbook.
-cookbook_file "nginx-default" do
-  path "/etc/nginx/sites-available/default"
-end
+#cookbook_file "nginx-default" do
+#  path "/etc/nginx/sites-available/default"
+#end
 # Reload nginx to pick up new nginx config
-service "nginx" do
-  action :reload
-end
+#service "nginx" do
+#  action :reload
+#end
 
 # Add repository so apt-get can install latest Node from NodeSource
 execute "add_nodesource_repo" do
@@ -40,15 +40,14 @@ package "postgresql"
 
 # Create postgres user
 execute 'pg_user' do
-    command	'sudo -u postgres psql -c "CREATE ROLE development LOGIN PASSWORD \'password\';"'
+  command	'sudo -u postgres psql -c "CREATE ROLE development LOGIN PASSWORD \'password\';"'
 end
 
 # Create database for app
 execute 'pg_db' do
-    command 'sudo -u postgres psql -c "CREATE DATABASE stockiodb OWNER development;"'
+  command 'sudo -u postgres psql -c "CREATE DATABASE stockiodb OWNER development;"'
 end
 
- # Install package dependencies and run npm install
 execute "npm_install" do
   cwd "/home/ubuntu/project/web-app"
   command "sudo npm install -g node-pre-gyp && npm install --no-bin-links"
@@ -56,8 +55,8 @@ end
 
 # Populate the DB
 execute "populate_db" do
-    cwd "/home/ubuntu/project/web-app"
-    command "node populateDb.js"
+  cwd "/home/ubuntu/project/web-app"
+  command "node populateDb.js"
 end
 
 # Add a service file for running the music app on startup
