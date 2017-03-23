@@ -16,14 +16,20 @@ Note: Need to run 'Vagrant up' to set up the database for development.
 
 ## **File Structure**
 
-     - Root Folder:
+  - Root Folder:
+    - chef
+      - cookbooks
 
+    - scripts
+    - web-app
+
+	
        - scripts
          - web scraper
          -
          -
 
-       - src
+       - web-app
 
          - app
            - js

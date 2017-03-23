@@ -1,8 +1,13 @@
 {
     "name": "stockio",
     "version": "1.0.0",
+    "author": "True North",
+    "license": "BSD-2-Clause",
     "description": "Real-time stock updates for mobile and desktop.",
     "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
     "dependencies": {
         "bcrypt-nodejs": "0.0.3",
         "body-parser": "~1.17.1",
@@ -17,8 +22,8 @@
         "cheerio": "latest"
     },
     "repository": {
-        "type": "git",
-        "url": "git://github.com/alireza1989/stockio.git"
+        "type": git,
+        "url": git@csil-git1.cs.surrey.sfu.ca:470-project-stockio/stockio.git 
     },
     "keywords": [
         "finance",
@@ -26,8 +31,6 @@
         "real-time",
         "portfolio"
     ],
-    "author": "True North",
-    "license": "BSD-2-Clause",
     "bugs": {
         "url": "https://github.com/alireza1989/stockio/issues"
     }
