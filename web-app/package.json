@@ -22,8 +22,8 @@
         "cheerio": "latest"
     },
     "repository": {
-        "type": git,
-        "url": git@csil-git1.cs.surrey.sfu.ca:470-project-stockio/stockio.git 
+        "type": "git",
+        "url": "git@csil-git1.cs.surrey.sfu.ca:470-project-stockio/stockio.git"
     },
     "keywords": [
         "finance",
