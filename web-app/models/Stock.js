@@ -23,6 +23,10 @@ module.exports = function(sequelize, DataType) {
         ceo: {
             type: DataType.STRING,
             field: 'ceo'
+        },
+        lastprice: {
+            type: DataType.FLOAT,
+            field: 'last_price'
         }
     }, {
         timestamps: false,
