@@ -5,11 +5,13 @@ var cookieParser = require('cookie-parser');
 var request = require('request');
 var passport = require('passport');
 var bcrypt = require('bcrypt-nodejs');
+var webRequest = require('request'); //web requests without a browser (Wscraper)
+var cheerio = require('cheerio');// Parsing HTML pages 
 
 const PORT = 3000;
 const UPDATE_FREQUENCY = 10000 //ms
 
-//TODO: Get this data from DB. 
+//TODO: Get this data from DB.
 var COMPANIES = [
 	'AAPL',
 	'AMZN',
@@ -36,7 +38,7 @@ var COMPANIES = [
 // var models = require('./models');
 
 var app = express();
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
@@ -49,7 +51,7 @@ server.listen(PORT, function () {
 	console.log('StockIO server listening on port ' + PORT + '. Open and accepting socket connections.');
 	listenForStockUpdates();
 
-	io.on('connection', function(socket) {  
+	io.on('connection', function(socket) {
 		console.log('Client connected to websocket.');
 
 		// Stream real-time changes of prices for specified stocks.
@@ -71,13 +73,13 @@ server.listen(PORT, function () {
 		//Listen for updates to your account via user Id- Invitations, portfolio changes, etc.
 		socket.on('listenForUpdates', function(data) {
 			var sessionKey = data;
-			var userId;  //TODO: extract userId from sessionKey. 
+			var userId;  //TODO: extract userId from sessionKey.
 			socket.join(userId);
 		});
 
 		socket.on('stopListenForUpdates', function(data) {
 			var sessionKey = data;
-			var userId; //TODO: extract userId from sessionKey. 
+			var userId; //TODO: extract userId from sessionKey.
 			socket.leave(userId);
 		});
 
@@ -107,7 +109,7 @@ var onStocksUpdate = function(error, response, body) {
 		quote.exchange = stock.e;
 		quote.price = stock.l_cur;
 		quote.change = stock.c;
-		quote.change_percent = stock.cp; 
+		quote.change_percent = stock.cp;
 		quote.last_trade_time = stock.lt;
 
 		console.log(quote);
