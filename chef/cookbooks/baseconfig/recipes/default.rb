@@ -17,15 +17,15 @@ execute 'ntp_restart' do
 end
 
 # Install nginx via apt-get
-#package "nginx"
+package "nginx"
 # Override the default nginx config with the one in our cookbook.
-#cookbook_file "nginx-default" do
-#  path "/etc/nginx/sites-available/default"
-#end
+cookbook_file "nginx-default" do
+  path "/etc/nginx/sites-available/default"
+end
 # Reload nginx to pick up new nginx config
-#service "nginx" do
-#  action :reload
-#end
+service "nginx" do
+  action :reload
+end
 
 # Add repository so apt-get can install latest Node from NodeSource
 execute "add_nodesource_repo" do
@@ -40,7 +40,7 @@ package "postgresql"
 
 # Create postgres user
 execute 'pg_user' do
-  command	'sudo -u postgres psql -c "CREATE ROLE development LOGIN PASSWORD \'password\';"'
+  command 'sudo -u postgres psql -c "CREATE ROLE development LOGIN PASSWORD \'password\';"'
 end
 
 # Create database for app
@@ -60,16 +60,16 @@ execute "populate_db" do
 end
 
 # Add a service file for running the music app on startup
-#cookbook_file "musicapp.service" do
-#    path "/etc/systemd/system/musicapp.service"
-#end
+cookbook_file "stockio.service" do
+    path "/etc/systemd/system/stockio.service"
+end
  
 # Start the music app
-#execute "start_musicapp" do
-#    command "sudo systemctl start musicapp"
-#end
+execute "start_stockio" do
+    command "sudo systemctl start stockio"
+end
  
 # Start music app on VM startup
-#execute "startup_musicapp" do
-#    command "sudo systemctl enable musicapp"
-#end
+execute "startup_stockio" do
+    command "sudo systemctl enable stockio"
+end

@@ -8,10 +8,6 @@ module.exports = function(sequelize, DataType) {
             type: DataType.STRING,
             field: 'symbol'
         },
-        description: {
-            type: DataType.STRING(2000),
-            field: 'description'
-        },
         stock_exchange: {
             type: DataType.STRING,
             field: 'stock_exchange'
@@ -23,6 +19,10 @@ module.exports = function(sequelize, DataType) {
         ceo: {
             type: DataType.STRING,
             field: 'ceo'
+        },
+        sector: {
+            type: DataType.STRING,
+            field: 'sector'
         },
         lastprice: {
             type: DataType.FLOAT,

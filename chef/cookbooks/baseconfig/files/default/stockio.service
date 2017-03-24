@@ -1,5 +1,5 @@
 [Unit]
-Description=Music App
+Description=Stockio
  
 [Service]
 ExecStart=/usr/bin/node /home/ubuntu/project/web-app/app.js

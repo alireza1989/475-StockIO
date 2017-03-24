@@ -19,5 +19,5 @@ module.exports = function(sequelize, DataType) {
             }
         }
     });
-    return Portfolio;
+    return Invitation;
 };
