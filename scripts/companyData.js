@@ -56,5 +56,5 @@ COMPANIES.forEach(function(company) {
 
 var returnData = function() {
     data = JSON.stringify({'company' : companyInfo}, null, 4);
-	fs.appendFileSync('stocks.json', data);
+	fs.appendFileSync('companies.json', data);
 }
