@@ -1,3 +1,6 @@
+* {
+  font-family: Helvetica, sans-serif;
+}
 .App {
   text-align: center;
 }
@@ -8,10 +11,17 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
+  background-image: url("images/background.jpg");
+  background-size: 150% auto;
+  min-height: 700px;
   padding: 20px;
-  color: white;
+}
+
+.App-navbar {
+  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  position: fixed;
+  top: 0;
 }
 
 .App-intro {
@@ -21,4 +31,32 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.header-logo {
+  width: 30%;
+  height: inherit;
+}
+.header-logo img {
+  max-width: 15%;
+  height: 35px;
+  margin-left: -5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.header-logo h1 {
+  display: inline-block;
+  vertical-align: middle;
+  color: white;
+  max-width:80%; /* in case of longer text */
+}
+
+/***************************/
+/*   Mobile Style          */
+/***************************/
+@media screen and (max-width: 768px) {
+  .App-header {  
+    background-size: auto 120%;
+    min-height: 680px;
+  }
 }
