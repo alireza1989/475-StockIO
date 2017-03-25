@@ -156,13 +156,13 @@ app.get('/logout', function(request, response) {
 // 						API
 //////////////////////////////////////////////////
 
-app.get('/api/stocks/', function (request, response) {
+app.get('/api/quote/', function (request, response) {
 	models.Company.findAll({attributes: ['id', 'symbol', 'last_price']}).then(function(prices) {
 		response.send(JSON.stringify(prices));
 	})
 });
 
-app.get('/api/stocks/:symbol', function (request, response) {
+app.get('/api/quote/:symbol', function (request, response) {
     var symbol = request.params['symbol'];
 	models.Company.findOne({where: {symbol: symbol}, attributes: ['id', 'symbol', 'last_price']}).then(function(price) {
 		if (!price)
@@ -371,7 +371,7 @@ models.sequelize.sync().then(function() {
 	var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + COMPANIES;
 	request(url, onStocksUpdate);
 
-	listenForStockUpdates();
+	//listenForStockUpdates();
 
 	server.listen(PORT, function () {
 		console.log('StockIO server listening on port ' + PORT + '. Open and accepting socket connections.');
