@@ -179,7 +179,6 @@ app.get('/api/company', function (request, response) {
 });
 
 app.get('/api/portfolio', function (request, response) {
-
 	if (!request.user) {
 		response.redirect(401, '/login');
 		return;
@@ -243,20 +242,47 @@ app.post('/api/portfolio/:portfolioId/invite', function(request, response)
 });
 
 app.get('/api/invitation', function(request, response) {
+	if (!request.user) {
+		response.redirect(401, '/login');
+		return;
+	}
+	var sessionUserId = request.session.passport.user;
 
+	models.User.findById(sessionUserId).then(function(user) {
+		return user.getInvitations({where: {hasResponded: false}});
+	}).then(function(invitations) {
+		response.end(JSON.stringify(invitations));
+	})
+});
+
+//Accept or decline invitation
+app.post('/api/invitation/:invitationId', function(request, response) {
 	if (!request.user) {
 		response.redirect(401, '/login');
 		return;
 	}
 
 	var sessionUserId = request.session.passport.user;
+	var invitationId = request.params['invitationId'];
+	var accepted = request.body['accepted']; //Boolean
 
 	models.User.findById(sessionUserId).then(function(user) {
-		if (user)
-			return user.getInvitations();
-	}).then(function(invitations) {
-		response.end(JSON.stringify(invitations));
+		return user.getInvitation({where: {id: invitationId}})
+	}).then(function(invitation) {
+		if (!invitation) {
+			response.status(401).end('Not authorized to respond to this invitation');
+			return;
+		}
+
+		invitation.update({hasResponded: true});
+
+		if (accepted) {
+			var portfolioId = invitation.portfolioId;
+			user.addPortfolio(portfolioId);
+			//Probably do some socket related update notification here as well.
+		}
 	})
+
 });
 
 
@@ -303,7 +329,7 @@ io.on('connection', function(socket) {
 var listenForStockUpdates = function() {
 	var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + COMPANIES;
 	setInterval(function() {request(url, onStocksUpdate)}, UPDATE_FREQUENCY);
-}
+};
 
 var onStocksUpdate = function(error, response, body) {
 	// For google API financial data

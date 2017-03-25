@@ -18,9 +18,9 @@ module.exports = function(sequelize, DataType) {
             primaryKey: true,
             allowNull: false
         },
-        accepted: {
+        hasResponded: {
             type: DataType.BOOLEAN,
-            field: 'accepted',
+            field: 'hasResponded',
             primaryKey: true,
             allowNull: false
         }
