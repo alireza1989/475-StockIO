@@ -1,0 +1,84 @@
+/* Elliot Barer, ebarer [at] mac [dot] com, 2017-03-25 */
+
+
+/* STOCK-LIST */
+.stock-list {
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.stock-list h2 {
+    font: 500 20px/25px 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #888;
+    margin-left: 4%;
+    position: absolute;
+    top: 0px;
+    z-index: 20;
+    cursor: default;
+}
+
+.stock-list h2 span {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    margin-left: 10px;
+    padding: 3px 10px;
+    position: relative;
+    top: -1px;
+    font: 14px/18px Helvetica;
+    color: black;
+    cursor: pointer;
+}
+
+.stock-list h2 span:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.stock-list .stocks {
+    width: 100%;
+    padding: 0 4%;
+    margin-top: 10px;
+    box-sizing: border-box;
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+
+.stock-list .stocks::-webkit-scrollbar { 
+    display: none;
+}
+
+.stock-list ul {
+    height: 175px;
+    white-space: nowrap;
+}
+
+.stock-list .nav-button {
+    background: rgba(20, 20, 20, 0.5);
+    -webkit-backdrop-filter: saturate(50%) blur(25px);
+    height: 125px;
+    width: 4%;
+    margin: 35px 0 25px;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    cursor: pointer;
+    font-family: Arial;
+    font-size: 64px;
+    line-height: 125px;
+    color: white;
+    text-align: center;
+}
+
+.stock-list .nav-button.prev {
+    left: 0;
+    border-radius: 0 8px 8px 0;
+    display: none;
+}
+
+.stock-list .nav-button.next {
+    right: 0;
+    border-radius: 8px 0 0 8px;
+}
+

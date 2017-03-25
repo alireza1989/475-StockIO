@@ -1,0 +1,40 @@
+/* Elliot Barer, ebarer [at] mac [dot] com, 2017-03-25 */
+
+
+/* RESETS */
+html, body, div, span, object,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, code, em, font, img, strong, var, ul, ol, dl, li,
+fieldset, form, label, caption,
+table, tbody, tfoot, thead, tr, th, td
+{ background: transparent; margin: 0; padding: 0; border: 0; outline: 0; }
+
+ol, ul 	    { list-style: none; }
+:focus 	    { outline: 0; }
+table 	    { border-collapse: collapse; border-spacing: 0; }
+
+
+/* BASIC */
+div 	    { display: block; }
+.left 	    { float: left; }
+.right 	    { float: right; }
+.clear 	    { clear: both; }
+
+
+/* FONTS */
+h1 		    { font: bold 24px/30px Helvetica; }
+h2 		    { font: bold 14px/18px Helvetica; }
+p 		    { font: normal 12px/18px Helvetica; }
+a 		    { font-size: 12px; text-decoration: none; color: #007ab3; }
+a:hover     { color: #00aeff; }
+
+
+/* APP */
+html, body, #app {
+    background: black;
+    color: white;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
