@@ -38,6 +38,11 @@ package "nodejs"
 # Install postgres
 package "postgresql"
 
+execute "npm_install" do
+  cwd "/home/ubuntu/project/web-app"
+  command "sudo npm install -g node-pre-gyp && npm install --no-bin-links"
+end
+
 # Create postgres user
 execute 'pg_user' do
   command 'sudo -u postgres psql -c "CREATE ROLE development LOGIN PASSWORD \'password\';"'
@@ -46,11 +51,6 @@ end
 # Create database for app
 execute 'pg_db' do
   command 'sudo -u postgres psql -c "CREATE DATABASE stockiodb OWNER development;"'
-end
-
-execute "npm_install" do
-  cwd "/home/ubuntu/project/web-app"
-  command "sudo npm install -g node-pre-gyp && npm install --no-bin-links"
 end
 
 # Populate the DB

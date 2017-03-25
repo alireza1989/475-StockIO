@@ -1,12 +1,13 @@
 module.exports = function(sequelize, DataType) {
-    var Stock = sequelize.define('Stock', {
+    var Company = sequelize.define('Company', {
         name: {
             type: DataType.STRING,
             field: 'name'
         },
         symbol: {
             type: DataType.STRING,
-            field: 'symbol'
+            field: 'symbol',
+            unique: true
         },
         stock_exchange: {
             type: DataType.STRING,
@@ -14,7 +15,7 @@ module.exports = function(sequelize, DataType) {
         },
         url: {
             type: DataType.STRING,
-            field: 'url'
+            field: 'url',
         },
         ceo: {
             type: DataType.STRING,
@@ -24,16 +25,18 @@ module.exports = function(sequelize, DataType) {
             type: DataType.STRING,
             field: 'sector'
         },
-        lastprice: {
-            type: DataType.FLOAT,
-            field: 'last_price'
+        last_price: {
+            type: DataType.DECIMAL,
+            field: 'last_price',
+            allowNull: false
         }
     }, {
         timestamps: false,
         classMethods: {
             associate: function(models) {
+                Company.belongsToMany(models.Portfolio, {through: 'Companies_Portfolios', timestamps: false});         
             }
         }
     });
-    return Stock;
+    return Company;
 };

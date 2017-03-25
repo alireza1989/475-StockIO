@@ -6,13 +6,14 @@ models.sequelize.sync({force: true}).then(function() {
         var stocks = JSON.parse(data).company;
 
         stocks.forEach(function(stock) {
-            models.Stock.create({
+            models.Company.create({
                 name: stock.name,
                 symbol: stock.symbol,
-                description: stock.description,
-                stock_exchange: stock.stock_exchange,
+                stock_exchange: stock.exchange,
                 url: stock.url,
-                ceo: stock.ceo
+                ceo: stock.ceo,
+                sector: stock.sector,
+                last_price: 0.00
             });
         });
     });

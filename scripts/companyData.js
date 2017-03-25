@@ -10,9 +10,9 @@ PASSWORD = "40bb5f3b10038b557291badf18a2cd5a"
 var auth = "Basic " + new Buffer(USERNAME + ':' + PASSWORD).toString('base64');
 
 var COMPANIES = [
-	'AAPL', 'AMZN', 'DIS',  'CSCO', 'FB',   'INTC', 'GOOG',
-	'IBM',  'MMM',  'MCD',  'MSFT', 'NFLX', 'NVDA', 'PFE',
-	'V',    'SBUX', 'TSLA', 'TXN',  'XOM',  'YHOO'
+	'AAPL', 'AMZN', 'DIS',  'CSCO', 'FB',   'INTC', 'GOOGL',
+	'IBM',  'ULTA',  'MCD',  'MSFT', 'NFLX', 'NVDA', 'PFE',
+	'RACE',  'SBUX', 'TSLA', 'TXN',  'XOM',  'YHOO'
 ];
 
 var companyInfo = [];

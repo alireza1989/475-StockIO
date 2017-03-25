@@ -10,6 +10,9 @@ var sequelize = new Sequelize('stockiodb', "development", "password", {
     }
 });
 
+//Don't delete this guy. Need for development
+//var sequelize = new Sequelize(null, null, null,{dialect: 'sqlite', storage: 'music.db'})
+
 var db = {};
 
 fs

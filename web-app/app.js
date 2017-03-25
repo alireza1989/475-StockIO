@@ -1,50 +1,112 @@
 /* TrueNorth, CMPT 470, 2017-03-23 */
 
-
 //////////////////////////////////////////////////
 // CONSTANTS
 //////////////////////////////////////////////////
+
 const PORT = 3000;
 const UPDATE_FREQUENCY = 10000 //ms
 
-// TODO: Get this data from DB.
-var COMPANIES = [
-	'AAPL', 'AMZN', 'DIS',  'CSCO', 'FB',   'INTC', 'GOOG',
-	'IBM',  'MMM',  'MCD',  'MSFT', 'NFLX', 'NVDA', 'PFE',
-	'V',    'SBUX', 'TSLA', 'TXN',  'XOM',  'YHOO'
-];
-
+var COMPANIES = [];  //This data is retrieved from the DB on app start.
 
 //////////////////////////////////////////////////
 // REQUIREMENTS
 //////////////////////////////////////////////////
+
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-
 var request = require('request');
 var passport = require('passport');
-var bcrypt = require('bcrypt-nodejs');
-
-var webRequest = require('request');    // Web requests without a browser (Wscraper)
-var cheerio = require('cheerio');       // Parsing HTML pages 
-
-// var Sequelize = require("sequelize");
-// var models = require('./models');
-
+var LocalStrategy = require('passport-local').Strategy;
+var cheerio = require('cheerio'); 
+var models = require('./models');
 
 //////////////////////////////////////////////////
 // CONFIGURE APP + REAL-TIME SOCKET
 //////////////////////////////////////////////////
+
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+app.use('/static', express.static(__dirname + '/static'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use(require('express-session')({
+    secret: 'keyboard kitty',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+//////////////////////////////////////////////////
+// 			SESSION MANAGEMENT
+//////////////////////////////////////////////////
+
+passport.use('login', new LocalStrategy(function (username, password, done) {
+	models.User.findOne({where: {username: username}}).then(function(user) {
+		if (!user)
+			return done(null, false, { message: 'Incorrect username'});
+		
+		var correctPassword = user.validPassword(password);
+
+		if (!correctPassword)
+			return done(null, false, {message: 'Incorrect password'});
+
+		return done(null, user);
+	});
+}));
+
+passport.use('signup', new LocalStrategy ({passReqToCallback : true}, function (request, username, password, done) {
+	var firstname = request.body['firstname'];
+	var lastname = request.body['lastname'];
+	var companies = request.body['companies']; // Array of id's
+
+	//Check if password is long enough; otherwise send error.
+	if (password.length < 8)
+		return done(null, false, {message:'Password length must be at least 8 characters.'});
+
+    models.User.create({
+    	firstname: firstname,
+    	lastname: lastname,
+    	username: username,
+    	password: models.User.hashPassword(password)
+    }).then(function(user) {
+    	//Create the user's first portfolio
+    	models.Portfolio.create({ name: 'My First Portfolio'}).then(function (portfolio) {
+    		user.addPortfolio(portfolio);
+
+    		if (companies != '' && companies != null)
+    			portfolio.setCompanies(companies);  //Add companies to it if the user has specified any.
+
+    		done(null, user);
+    	});
+    }).catch(function(error) {
+    	console.log('Error: something wrong when creating new user: ' + error);
+    	done(null, false, {message: JSON.stringify(error['errors'])});
+    });
+}));
+
+passport.serializeUser(function(user, done) {
+	console.log("serialize user:");
+  return done(null, user.id);
+});
+
+passport.deserializeUser(function(userId, done) {
+	console.log('deserailizeuser');
+	models.User.findById(userId).then(function (user) {
+		if (!user)
+			return done(null, false);
+
+		return done(null, user);
+	})
+});
 
 
 //////////////////////////////////////////////////
@@ -58,8 +120,6 @@ app.get('/dashboard', function(request, response) {
     loadPage(request, response, 'index.html');
 });
 
-app.use('/static', express.static(__dirname + '/static'));
-
 var loadPage = function(request, response, page) {    
 //     if (request.session) {
         response.status(200);
@@ -72,39 +132,131 @@ var loadPage = function(request, response, page) {
 //    }
 }
 
+// Middleware managed. Do not alter route.
+app.post('/signup', passport.authenticate('signup', { 
+	successRedirect: '/dashboard',
+    failureRedirect: '/signup',
+    session: true
+}));
 
-//////////////////////////////////////////////////
-// API
-//////////////////////////////////////////////////
-app.post('/api/users/create', function (request, response) {
-	// Hash password, add to DB.
-	// If new user has initialized set of stocks to follow, add that to DB as well.
-	console.log('Creating Account.');
+// Middleware managed. Do not alter route.
+app.post('/login', passport.authenticate('login', { 
+	successRedirect: '/dashboard',
+    failureRedirect: '/login',
+    session: true
+}));
+
+// Middleware managed. Do not alter route.
+app.get('/logout', function(request, response) {
+  request.logout();
+  response.redirect('/');
 });
 
-app.post('/api/users/login', function (request, response) {
-	console.log('User logging into account.');
-	//Authenticate and Authorize, cookie data.
-});
+//////////////////////////////////////////////////
+// 						API
+//////////////////////////////////////////////////
 
 app.get('/api/stocks/', function (request, response) {
-	console.log('Request quote for all stocks');
+	models.Company.findAll({attributes: ['id', 'symbol', 'last_price']}).then(function(prices) {
+		response.send(JSON.stringify(prices));
+	})
 });
 
-app.get('/api/stocks/:id', function (request, response) {
-	console.log('Request quote for stocks ' + request.id);
+app.get('/api/stocks/:symbol', function (request, response) {
+    var symbol = request.params['symbol'];
+	models.Company.findOne({where: {symbol: symbol}, attributes: ['id', 'symbol', 'last_price']}).then(function(price) {
+		if (!price)
+			response.status(400).send("Invalid Symbol (Case sensitive)");
+		else
+			response.send(JSON.stringify(price));
+	})
 });
 
 app.get('/api/company', function (request, response) {
-	console.log('Request data for all companies');
+	models.Company.findAll().then(function(companies) {
+		response.send(JSON.stringify(companies));
+	});
+});
+
+app.get('/api/portfolio', function (request, response) {
+
+	if (!request.user) {
+		response.redirect(401, '/login');
+		return;
+	}
+
+	var sessionUserId = request.session.passport.user;
+	 models.User.findById(sessionUserId)
+	.then(function(user) { 
+		if (user)
+			return user.getPortfolios(); 
+	})
+	.then(function(portfolios) { 
+		response.end(JSON.stringify(portfolios));
+	})
+});
+
+app.post('/api/portfolio/:portfolioId/invite', function(request, response) 
+{
+	if (!request.user) {
+		response.redirect(401, '/login');
+		return;
+	}
+
+	var sessionUserId = request.session.passport.user;
+	var receiverEmail = request.body['email'];
+	var portfolioId = request.params['portfolioId'];
+
+	//Check if the user even has access to the portfolio in the first place.
+	models.User.findById(sessionUserId).then(function(user) {
+		if (user)
+			return user.getPortfolios({where: {id: portfolioId}});
+	}).then(function(portfolio) {
+		console.log("PORTFOLIO LENGTH " + portfolio.length);
+		if (portfolio.length === 0) {
+			console.log("No access to portfolio");
+			response.status(401).end('Unauthorized access to portfolio');
+			return;
+		}
+
+		models.User.findOne({where: {username: receiverEmail}}).then(function(receiver) {
+			if (!receiver) {
+				response.status(401).end("User doesn't exist");
+				return;
+			}
+
+			models.Invitation.create({
+				senderId: parseInt(sessionUserId),
+				receiverId: parseInt(receiver.id),
+				portfolioId: parseInt(portfolioId),
+				accepted: false
+			}).then(function(invitation) { 
+				receiver.addInvitation(invitation);
+				response.end(JSON.stringify(invitation));
+				console.log("Session User: " + sessionUserId);
+	 		}).catch(function(error) {
+	 			console.log(error);
+	 			response.status(429).end('Already sent invitation to user for this portfolio.');
+			});
+		});
+	});
 });
 
 app.get('/api/invitation', function(request, response) {
-	console.log('Getting all unhandled (accepted/declined) invitations received for user.');
-});
 
-app.post('/api/invitation', function(request, response) {
-	console.log('Received an invitation to send to a user.');
+	if (!request.user) {
+		response.redirect(401, '/login');
+		return;
+	}
+
+	var sessionUserId = request.session.passport.user;
+
+	models.User.findById(sessionUserId).then(function(user) {
+		if (user)
+			return user.getInvitations();
+	}).then(function(invitations) {
+		response.end(JSON.stringify(invitations));
+	})
 });
 
 
@@ -115,7 +267,7 @@ io.on('connection', function(socket) {
 	console.log('Client connected to websocket.');
 
 	// Stream real-time changes of prices for specified stocks.
-	socket.on('followStocks', function(data) {
+	socket.on('join', function(data) {
 		var stocksToWatch = data; //Need to JSON parse??
 		stocksToWatch['stocks'].forEach(function(stockSymbol) {
 			socket.join(stockSymbol);  //Join the room for a particular stock
@@ -123,7 +275,7 @@ io.on('connection', function(socket) {
 	});
 
 	// Stop getting updates of prices for specified stocks.
-	socket.on('stopFollowStocks', function(data) {
+	socket.on('leave', function(data) {
 		var stocksToStopWatch = data
 		stocksToWatch['stocks'].forEach(function(stockSymbol) {
 			socket.leave(stockSymbol);
@@ -131,13 +283,13 @@ io.on('connection', function(socket) {
 	});
 
 	//Listen for updates to your account via user Id- Invitations, portfolio changes, etc.
-	socket.on('listenForUpdates', function(data) {
+	socket.on('updates', function(data) {
 		var sessionKey = data;
 		var userId;  //TODO: extract userId from sessionKey.
 		socket.join(userId);
 	});
 
-	socket.on('stopListenForUpdates', function(data) {
+	socket.on('stopUpdates', function(data) {
 		var sessionKey = data;
 		var userId; //TODO: extract userId from sessionKey.
 		socket.leave(userId);
@@ -149,7 +301,7 @@ io.on('connection', function(socket) {
 });
 
 var listenForStockUpdates = function() {
-	var url = 'http://finance.google.com/finance/info?client=ig&q=' + COMPANIES;
+	var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + COMPANIES;
 	setInterval(function() {request(url, onStocksUpdate)}, UPDATE_FREQUENCY);
 }
 
@@ -165,21 +317,37 @@ var onStocksUpdate = function(error, response, body) {
 	data.forEach(function(stock) {
 		var quote = {};
 		quote.ticker = stock.t;
-		quote.exchange = stock.e;
 		quote.price = stock.l_cur;
 		quote.change = stock.c;
 		quote.change_percent = stock.cp;
 		quote.last_trade_time = stock.lt;
 
-		console.log("Updated: " + quote.ticker);
-		
-		//TODO: Compare last price or last trade time with current. If there is a change, emit to sockets subscribed to that stock index.
-		//Update the DB with the most recent time or price.
-		io.to(quote.ticker).emit('tickerUpdate', JSON.stringify(quote));
+		models.Company.findOne({where: {symbol: quote.ticker}}).then(function(company) {
+
+			if (company.last_price != quote.price) {
+				console.log("Price change! From " + company.last_price + ' to ' + quote.price + " for company " + quote.ticker);
+				return company.update({last_price: parseFloat(quote.price)});
+			}
+		}).then(function(updatedCompany) {			
+			if (updatedCompany) {
+				io.to(quote.ticker).emit('tickerUpdate', JSON.stringify(quote));
+			} else
+				console.log("No changes for " + quote.ticker);
+		});
 	});
 }
 
-server.listen(PORT, function () {
-	console.log('StockIO server listening on port ' + PORT + '. Open and accepting socket connections.');
+models.sequelize.sync().then(function() { 
+	return models.Company.findAll({attributes: ['symbol']}); 
+}).then(function (companies) { 
+	COMPANIES = Object.keys(companies).map(function (key) { return companies[key].symbol; }); //Stores stock symbols in array 
+
+	var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + COMPANIES;
+	request(url, onStocksUpdate);
+
 	listenForStockUpdates();
+
+	server.listen(PORT, function () {
+		console.log('StockIO server listening on port ' + PORT + '. Open and accepting socket connections.');
+	});
 });
