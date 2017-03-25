@@ -1,27 +1,23 @@
 {
   "name": "stockio",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "TrueNorth",
   "license": "BSD-2-Clause",
   "description": "Real-time stock updates for mobile and desktop.",
-  "main": "app.js",
-  "scripts": {
-    "start": "app.js"
-  },
+  "private": true,
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
-    "body-parser": "~1.17.1",
-    "cheerio": "latest",
-    "cookie-parser": "~1.4.3",
-    "crypto": "0.0.3",
-    "express": "^4.14.1",
-    "express-session": "^1.15.1",
-    "passport": "^0.3.2",
-    "passport-local": "^1.0.0",
-    "pg": "^6.1.5",
-    "request": "latest",
-    "sequelize": "^3.30.2",
-    "socket.io": "~1.7.3"
+    "jquery": "^3.2.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "react-scripts": "0.9.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",

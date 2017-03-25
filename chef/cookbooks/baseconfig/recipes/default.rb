@@ -44,20 +44,20 @@ execute "npm_install" do
 end
 
 # Create postgres user
-execute 'pg_user' do
-  command 'sudo -u postgres psql -c "CREATE ROLE development LOGIN PASSWORD \'password\';"'
-end
+#execute 'pg_user' do
+#  command 'sudo -u postgres psql -c "CREATE ROLE development LOGIN PASSWORD \'password\';"'
+#end
 
 # Create database for app
-execute 'pg_db' do
-  command 'sudo -u postgres psql -c "CREATE DATABASE stockiodb OWNER development;"'
-end
+#execute 'pg_db' do
+#  command 'sudo -u postgres psql -c "CREATE DATABASE stockiodb OWNER development;"'
+#end
 
 # Populate the DB
-execute "populate_db" do
-  cwd "/home/ubuntu/project/web-app"
-  command "node populateDb.js"
-end
+#execute "populate_db" do
+#  cwd "/home/ubuntu/project/web-app"
+#  command "node populateDb.js"
+#end
 
 # Add a service file for running the music app on startup
 cookbook_file "stockio.service" do
