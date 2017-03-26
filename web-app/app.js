@@ -133,21 +133,21 @@ var loadPage = function(request, response, page) {
 }
 
 // Middleware managed. Do not alter route.
-app.post('/signup', passport.authenticate('signup', {
+app.post('/account/signup', passport.authenticate('signup', {
 	successRedirect: '/dashboard',
     failureRedirect: '/signup',
     session: true
 }));
 
 // Middleware managed. Do not alter route.
-app.post('/login', passport.authenticate('login', {
+app.post('/account/login', passport.authenticate('login', {
 	successRedirect: '/dashboard',
     failureRedirect: '/login',
     session: true
 }));
 
 // Middleware managed. Do not alter route.
-app.get('/logout', function(request, response) {
+app.get('/account/logout', function(request, response) {
   request.logout();
   response.redirect('/');
 });
@@ -265,6 +265,7 @@ app.delete('/api/portfolio/:portfolioId', function(request,response){
             response.end(JSON.stringify(portfolioInstance));
             console.log("Session User: " + sessionUserId);
         });
+	});
 });
 
 app.get('/api/invitation', function(request, response) {
