@@ -18,18 +18,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@csil-git1.cs.surrey.sfu.ca:470-project-stockio/stockio.git"
-  },
-  "keywords": [
-    "finance",
-    "stocks",
-    "real-time",
-    "portfolio"
-  ],
-  "bugs": {
-    "url": "https://github.com/alireza1989/stockio/issues"
   }
 }

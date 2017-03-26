@@ -1,0 +1,3 @@
+https://intrinio.com/tutorial/web_api
+https://facebook.github.io/react/docs/state-and-lifecycle.html
+https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#can-i-use-decorators
