@@ -241,6 +241,31 @@ app.post('/api/portfolio/:portfolioId/invite', function(request, response)
 	});
 });
 
+app.delete('/api/portfolio/:portfolioId', function(request,response){
+    if (!request.user) {
+        response.redirect(401, '/login');
+        return;
+    }
+    var sessionUserId = request.session.passport.user;
+    var portfolioId = request.params['portfolioId'];
+    var companyId = request.body['companyId'];
+    models.User.findById(sessionUserId).then(function(user) {
+        if (user)
+            return user.getPortfolios({where: {id: portfolioId}});
+    }).then(function(portfolio) {
+        console.log("PORTFOLIO LENGTH " + portfolio.length);
+        if (portfolio.length === 0) {
+            console.log("No access to portfolio");
+            response.status(401).end('Unauthorized access to portfolio');
+            return;
+        }
+        models.Portfolio.findById(portfolioId).then(function(portfolioInstance){
+            portfolioInstance.removeCompany(companyId);
+            response.end(JSON.stringify(portfolioInstance));
+            console.log("Session User: " + sessionUserId);
+        });
+});
+
 app.get('/api/invitation', function(request, response) {
 	if (!request.user) {
 		response.redirect(401, '/login');
