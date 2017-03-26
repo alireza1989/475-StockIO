@@ -241,6 +241,7 @@ app.post('/api/portfolio/:portfolioId/invite', function(request, response)
 	});
 });
 
+// Function to remove a company from a certain portfolio.
 app.delete('/api/portfolio/:portfolioId', function(request,response){
     if (!request.user) {
         response.redirect(401, '/login');
