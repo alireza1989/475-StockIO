@@ -4,7 +4,7 @@
 // CONSTANTS
 //////////////////////////////////////////////////
 
-const PORT = 3000;
+const PORT = 3001;
 const UPDATE_FREQUENCY = 10000 //ms
 
 var COMPANIES = [];  //This data is retrieved from the DB on app start.
@@ -21,7 +21,7 @@ var cookieParser = require('cookie-parser');
 var request = require('request');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var cheerio = require('cheerio'); 
+var cheerio = require('cheerio');
 var models = require('./models');
 
 //////////////////////////////////////////////////
@@ -53,7 +53,7 @@ passport.use('login', new LocalStrategy(function (username, password, done) {
 	models.User.findOne({where: {username: username}}).then(function(user) {
 		if (!user)
 			return done(null, false, { message: 'Incorrect username'});
-		
+
 		var correctPassword = user.validPassword(password);
 
 		if (!correctPassword)
@@ -120,11 +120,11 @@ app.get('/dashboard', function(request, response) {
     loadPage(request, response, 'index.html');
 });
 
-var loadPage = function(request, response, page) {    
+var loadPage = function(request, response, page) {
 //     if (request.session) {
         response.status(200);
         response.setHeader('Content-Type', 'text/html');
-        
+
         var fPath = path.join(__dirname, page);
         fs.createReadStream(fPath).pipe(response);
 //    } else {
@@ -133,14 +133,14 @@ var loadPage = function(request, response, page) {
 }
 
 // Middleware managed. Do not alter route.
-app.post('/signup', passport.authenticate('signup', { 
+app.post('/signup', passport.authenticate('signup', {
 	successRedirect: '/dashboard',
     failureRedirect: '/signup',
     session: true
 }));
 
 // Middleware managed. Do not alter route.
-app.post('/login', passport.authenticate('login', { 
+app.post('/login', passport.authenticate('login', {
 	successRedirect: '/dashboard',
     failureRedirect: '/login',
     session: true
@@ -186,16 +186,16 @@ app.get('/api/portfolio', function (request, response) {
 
 	var sessionUserId = request.session.passport.user;
 	 models.User.findById(sessionUserId)
-	.then(function(user) { 
+	.then(function(user) {
 		if (user)
-			return user.getPortfolios(); 
+			return user.getPortfolios();
 	})
-	.then(function(portfolios) { 
+	.then(function(portfolios) {
 		response.end(JSON.stringify(portfolios));
 	})
 });
 
-app.post('/api/portfolio/:portfolioId/invite', function(request, response) 
+app.post('/api/portfolio/:portfolioId/invite', function(request, response)
 {
 	if (!request.user) {
 		response.redirect(401, '/login');
@@ -229,7 +229,7 @@ app.post('/api/portfolio/:portfolioId/invite', function(request, response)
 				receiverId: parseInt(receiver.id),
 				portfolioId: parseInt(portfolioId),
 				accepted: false
-			}).then(function(invitation) { 
+			}).then(function(invitation) {
 				receiver.addInvitation(invitation);
 				response.end(JSON.stringify(invitation));
 				console.log("Session User: " + sessionUserId);
@@ -354,7 +354,7 @@ var onStocksUpdate = function(error, response, body) {
 				console.log("Price change! From " + company.last_price + ' to ' + quote.price + " for company " + quote.ticker);
 				return company.update({last_price: parseFloat(quote.price)});
 			}
-		}).then(function(updatedCompany) {			
+		}).then(function(updatedCompany) {
 			if (updatedCompany) {
 				io.to(quote.ticker).emit('tickerUpdate', JSON.stringify(quote));
 			} else
@@ -363,10 +363,10 @@ var onStocksUpdate = function(error, response, body) {
 	});
 }
 
-models.sequelize.sync().then(function() { 
-	return models.Company.findAll({attributes: ['symbol']}); 
-}).then(function (companies) { 
-	COMPANIES = Object.keys(companies).map(function (key) { return companies[key].symbol; }); //Stores stock symbols in array 
+models.sequelize.sync().then(function() {
+	return models.Company.findAll({attributes: ['symbol']});
+}).then(function (companies) {
+	COMPANIES = Object.keys(companies).map(function (key) { return companies[key].symbol; }); //Stores stock symbols in array
 
 	var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + COMPANIES;
 	request(url, onStocksUpdate);
