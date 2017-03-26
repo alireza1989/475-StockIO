@@ -26,6 +26,10 @@
 /*     transform: translate3d(71px, 0, 0); */
 }
 
+.stock-tile:last-of-type {
+    margin: 25px 4% 0 0;
+}
+
 .stock-tile-content {
     background: rgba(255, 0, 0, 0.5);
     -webkit-backdrop-filter: saturate(180%) blur(25px);
@@ -41,4 +45,27 @@
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+
+@media only screen and (max-width: 500px) {
+    .stock-tile {
+        height: 100px;
+        width: 100%;
+        margin: 5px 0;
+        padding: 0;
+    }
+    
+    .stock-tile:first-of-type {
+        margin-top: 0;
+    }
+    
+    .stock-tile:last-of-type {
+        margin: 0;
+    }
+    
+    .stock-tile:hover {
+        transform: scale(1);
+    }
+      
 }

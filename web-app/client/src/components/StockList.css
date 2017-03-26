@@ -82,3 +82,30 @@
     border-radius: 8px 0 0 8px;
 }
 
+
+@media only screen and (max-width: 500px) {
+    .stock-list {
+        height: auto;
+        display: inline-block;
+    }
+    
+    .stock-list h2 {
+        position: relative;
+        margin: 0 4% 10px;
+    }
+    
+    .stock-list .stocks {
+        margin-top: 0;
+        padding-bottom: 10px;
+    }
+    
+    .stock-list .stocks ul {
+        height: 100%;
+        white-space: normal;
+    }    
+
+    .stock-list .stock-list-navigation {
+        display: none;
+    }
+}
+
