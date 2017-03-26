@@ -2,6 +2,9 @@
 
 
 /* STOCK-TILE */
+* {
+    font-family: Helvetica, sans-serif;
+}
 .stock-tile {
     height: 125px;
     width: 20%;
@@ -12,26 +15,30 @@
     display: inline-block;
     box-sizing: border-box;
     cursor: pointer;
-    transition: 450ms all;
-    transform-origin: center;
 }
 
-.stock-tile:hover {
+.stock-tile-content {
+    transform-origin: center;
+    transition: 450ms all; 
+}
+
+.stock-tile-content:hover {
     transform: scale(1.3);
     opacity: 1;
     z-index: 60;
+    border-radius: 8px;
 }
 
+
 .stock-tile:hover ~ .stock-tile {
-/*     transform: translate3d(71px, 0, 0); */
+     /*transform: translate3d(71px, 0, 0); */
 }
 
 .stock-tile:last-of-type {
     margin: 25px 4% 0 0;
 }
 
-.stock-tile-content {
-    background: rgba(255, 0, 0, 0.5);
+.stock-tile-content {    
     -webkit-backdrop-filter: saturate(180%) blur(25px);
     height: 100%;
     width: 100%;
@@ -39,12 +46,62 @@
     border-radius: 8px;
     box-sizing: border-box;
 }
+.stock-tile-content-up {
+    background: rgba(0, 255, 0, 0.5);
+}
+.stock-tile-content-up:hover {
+    background: rgba(0, 255, 0, 0.9);
+}
+.stock-tile-content-down {
+    background: rgba(255, 0, 0, 0.5);
+}
+.stock-tile-content-down:hover {
+    background: rgba(255, 0, 0, 0.9);
+}
 
 .stock-tile-content p {
     font: normal 12px/18px Helvetica;
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.stock-tile-currency {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+div.stock-tile-up-or-down {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.stock-tile-up-or-down > p {
+    display: inline;
+    /*width: auto;*/
+    word-break: break-all;
+}
+
+.stock-arrow-down {
+    margin-right: 3px;
+    display: inline-block;
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;  
+    border-radius: 3px;
+  
+    border-top: 10px solid #f00;
+}
+
+.stock-arrow-up {
+    margin-right: 3px;
+    display: inline-block;
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-radius: 3px;
+  
+    border-bottom: 10px solid #0f0;
 }
 
 
@@ -64,7 +121,7 @@
         margin: 0;
     }
     
-    .stock-tile:hover {
+    .stock-tile-content:hover {
         transform: scale(1);
     }
       

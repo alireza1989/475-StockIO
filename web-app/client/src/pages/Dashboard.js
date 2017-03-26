@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import StockList from '../components/StockList';
 import './Dashboard.css';
+import logo from "../assets/logo-white.svg"
 
 class Dashboard extends Component {
     constructor() {
@@ -23,7 +24,9 @@ class Dashboard extends Component {
             <div className="App">
                 <nav>
                     <ul>
-                        <li className="nav-title">Stock.io</li>
+                        <li className="nav-title">
+                            stock.I<img src={logo} alt="O"/>
+                        </li>
                         <li className="nav-account">{this.props.name}</li>
                     </ul>
                 </nav>

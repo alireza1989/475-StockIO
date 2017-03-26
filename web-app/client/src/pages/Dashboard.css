@@ -29,6 +29,14 @@ nav ul li {
 nav ul li.nav-title {
     font-size: 24px;
     font-weight: 500;
+    display: table;
+}
+
+nav ul li.nav-title img {
+    height: 25px;    
+    vertical-align: middle;
+    margin-left: -3px;
+    margin-top: -4px;
 }
 
 nav ul li.nav-account {
@@ -82,7 +90,14 @@ nav ul li.nav-account:hover {
     nav ul li.nav-title {
         font-size: 18px;
     }
-    
+
+    nav ul li.nav-title img {
+        height: 20px;    
+        vertical-align: middle;
+        margin-left: -3px;
+        margin-top: -4px;
+    }
+
     nav ul li.nav-account {
         font-size: 14px;
         padding: 5px 10px;
@@ -94,3 +109,4 @@ nav ul li.nav-account:hover {
         padding-top: 55px;
     }
 }
+

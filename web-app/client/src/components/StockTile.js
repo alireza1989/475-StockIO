@@ -13,13 +13,22 @@ class StockTile extends Component {
         };
     }
     
-    render() {        
+    render() {
+        const stockUp = this.state.change_price >= 0;
         return (
             <li className="stock-tile">
-                <div className="stock-tile-content">
+                <div className={"stock-tile-content " + (stockUp ? 'stock-tile-content-up' : 'stock-tile-content-down')}>
+                    <h1>{this.state.price}</h1>
+                    {/* get currency from user preferences*/}
+                    <p className="stock-tile-currency">USD</p>
                     <p>{this.state.name} ({this.state.ticker})</p>
-                    <p>{this.state.price}</p>
-                    <p>{this.state.change_price}</p>
+                    <div className="stock-tile-up-or-down">
+                        {stockUp ?  
+                            <div className="stock-arrow-up"></div>
+                            : <div className="stock-arrow-down"></div>
+                        }
+                        <p>{this.state.change_price} ({this.state.change_percent})</p>
+                    </div>
                 </div>
             </li>
         );
