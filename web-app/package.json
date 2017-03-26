@@ -6,7 +6,9 @@
   "description": "Real-time stock updates for mobile and desktop.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node app.js",
+    "client": "node start-client.js"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -35,5 +37,8 @@
   ],
   "bugs": {
     "url": "https://github.com/alireza1989/stockio/issues"
+  },
+  "devDependencies": {
+    "concurrently": "^3.4.0"
   }
 }
