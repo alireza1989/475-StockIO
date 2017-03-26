@@ -1,5 +1,5 @@
 [Unit]
-Description=Stockio
+Description=StockioServer
  
 [Service]
 ExecStart=/usr/bin/node /home/ubuntu/project/web-app/app.js

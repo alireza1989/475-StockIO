@@ -22,7 +22,7 @@ var request = require('request');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var cheerio = require('cheerio');
-var models = require('./models');
+var models = require('./db/models');
 
 //////////////////////////////////////////////////
 // CONFIGURE APP + REAL-TIME SOCKET
