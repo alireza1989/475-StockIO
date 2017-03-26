@@ -17,7 +17,7 @@ class Dashboard extends Component {
             { 'name': 'Entertainment' }
         ];
     }
-    
+
     render() {
         return (
             <div className="App">
