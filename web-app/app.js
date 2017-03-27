@@ -371,7 +371,7 @@ var onStocksUpdate = function(error, response, body) {
 		var quote = {};
 		quote.ticker = stock.t;
 		quote.price = stock.l_cur;
-		quote.change = stock.c;
+		quote.change_price = stock.c;
 		quote.change_percent = stock.cp;
 		quote.last_trade_time = stock.lt;
 
@@ -379,7 +379,7 @@ var onStocksUpdate = function(error, response, body) {
 
 			if (company.last_price != quote.price) {
 				console.log("Price change! From " + company.last_price + ' to ' + quote.price + " for company " + quote.ticker);
-				return company.update({last_price: parseFloat(quote.price)});
+				return company.update({last_price: parseFloat(quote.price), change_price: parseFloat(quote.change_price), change_percent: parseFloat(quote.change_percent)});
 			}
 		}).then(function(updatedCompany) {
 			if (updatedCompany) {
