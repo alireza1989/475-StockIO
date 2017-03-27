@@ -38,3 +38,4 @@ class StockTile extends Component {
 }
 
 export default StockTile;
+
