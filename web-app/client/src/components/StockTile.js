@@ -18,8 +18,10 @@ class StockTile extends Component {
             <li className="stock-tile">
 
                 <div className={'stock-tile-content ' + ((this.state.change_price > 0) ? 'up' : 'down')}>
-                    <p className="name">{this.state.name}</p>
-                    <h1>{this.state.ticker}</h1>
+                    <div className="info">
+                        <p className="name">{this.state.name}</p>
+                        <h1>{this.state.ticker}</h1>
+                    </div>
                     
                     <div className="details">
                         <p className="price">{this.state.price} <span className="price-currency">USD</span></p>

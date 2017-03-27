@@ -26,6 +26,7 @@
     width: 100%;
     padding: 8px;
     border-radius: 8px;
+    overflow: hidden;
     box-sizing: border-box;
     position: relative;
     z-index: 40;
@@ -86,7 +87,7 @@
 
 @media only screen and (max-width: 500px) {
     .stock-tile {
-        height: 100px;
+        height: 65px;
         width: 100%;
         margin: 5px 0;
         padding: 0;
@@ -102,5 +103,29 @@
     
     .stock-tile-content:hover {
         transform: scale(1);
-    }     
+    }
+
+    .stock-tile-content .info {
+        width: 60%;
+        float: left;
+    }
+    
+    .stock-tile-content p.name {
+        height: 20px;
+    }
+    
+    .stock-tile-content .details {
+        width: auto;
+        float: right;
+        clear: none;
+        text-align: right;
+    }
+    
+    .stock-tile-content .price {
+        float: none;
+    }
+    
+    .stock-tile-content .price-change {
+        float: none;
+    }
 }
