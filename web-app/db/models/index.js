@@ -3,18 +3,18 @@
 var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
-var sequelize = new Sequelize('stockiodb', "development", "password", {
-    dialect: 'postgres',
-    define: {
-        timestamps: false
-    }
-});
+// var sequelize = new Sequelize('stockiodb', "development", "password", {
+//     dialect: 'postgres',
+//     define: {
+//         timestamps: false
+//     }
+// });
 
 //Don't delete this guy. Need for development
-//var sequelize = new Sequelize(null, null, null,{dialect: 'sqlite', storage: 'stockio.db'})
+var dbPath = path.normalize(__dirname + '/..') + '/stockio.db';
+var sequelize = new Sequelize('stockio', null, null, {dialect: 'sqlite', storage: dbPath})
 
 var db = {};
-
 fs
   .readdirSync(__dirname)
   .filter(function(file) {
