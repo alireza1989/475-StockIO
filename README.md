@@ -2,12 +2,12 @@
 
 ## CMPT - 470 - final project
 
-Note: Need to run 'Vagrant up' to set up the database for development. 
+Note: Need to run 'Vagrant up' to set up the database for development. Navigate to http://localhost:8080
 
 ### **_Technologies used in the project:_**
 
 - UI: React + webpack + hot modules + D3 for Data Visualization
-- Backend: Express + NodeJS
+- Backend: Express + NodeJS + Passport
 - ORM: Sequelize
 - Database: PostgreSQL
 - HTTP server: NGINX
