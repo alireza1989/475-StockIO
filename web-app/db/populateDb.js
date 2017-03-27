@@ -1,6 +1,7 @@
 const fs = require('fs');
 const models = require('./models');
 
+//Don't delete this guy. Need for development
 models.sequelize.sync({force: true}).then(function() {
     fs.readFile('./companies.json', function(err, data) {
         var stocks = JSON.parse(data).company;
