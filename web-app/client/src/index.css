@@ -35,6 +35,10 @@ html, body, #app {
     color: white;
     height: 100%;
     width: 100%;
-    /*overflow: hidden;*/
     -webkit-font-smoothing: antialiased;
+}
+
+.App {
+    height: 100%;
+    width: 100%;
 }

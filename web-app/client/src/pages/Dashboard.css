@@ -83,11 +83,6 @@ nav ul li.nav-account:hover {
 }
 
 /* DASHBOARD */
-.App {
-    height: 100%;
-    width: 100%;
-}
-
 .Dashboard {
     height: 100%;
     padding-top: 90px;

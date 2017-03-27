@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import StockTile from './StockTile';
-//import Companies from '../data/companies.json';
 import Client from './Client';
 import './StockList.css';
 
@@ -11,13 +10,13 @@ class StockList extends Component {
             companies: []
         };
     }
-
-componentWillMount() {
-    Client.getCompanies((companiesList) => { 
-        const companies = companiesList.map(obj => obj); //Is this redundant? Check.
-        this.setState({companies});
-    }); 
-  }
+   
+    componentWillMount() {
+        Client.getCompanies((companiesList) => { 
+            const companies = companiesList.map(obj => obj); //Is this redundant? Check.
+            this.setState({companies});
+        });
+    }
 
     render() {
         return (

@@ -54,25 +54,6 @@
     white-space: nowrap;
 }
 
-.arrow-up {
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  
-  border-bottom: 10px solid #0f0;
-}
-
-.arrow-down {
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  
-  border-top: 10px solid #f00;
-}
-
-
 .stock-list .nav-button {
     background: rgba(20, 20, 20, 0.5);
     -webkit-backdrop-filter: saturate(50%) blur(25px);

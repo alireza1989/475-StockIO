@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Dashboard from './pages/Dashboard';
-import Homepage from './pages/Homepage';
+import Login from './pages/Login';
 import './index.css';
 
 const loggedIn = false;
