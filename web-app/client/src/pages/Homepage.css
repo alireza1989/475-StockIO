@@ -31,7 +31,7 @@
 	font-size: 4em;
 }
 .landing-logo img {
-	height: 70px;
+	height: 65px;
 	margin-left: -7px;
 }
 
@@ -45,7 +45,7 @@ div.landing-login {
 }
 
 .landing-login form > input {
-	border: 1px solid #ccc;
+	border-style: none;
     border-radius: 5px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -56,15 +56,27 @@ div.landing-login {
 	padding: 10px 20px;
     margin: 15px 0 15px 10px;
     display: block;
-	opacity: 0.8
+	opacity: 0.8;
+	transition: 300ms all; 
 }
 
 .landing-login form > input[type=text], input[type=password] {
+
 }
 
 .landing-login form > input[type=submit] {
     cursor: pointer;
-
+    background-color: #FF0058;
+    color: white;
+    width: 232px;
+}
+.landing-login form > input[type=submit]:hover {
+    cursor: pointer;
+    background-color: #36D7D6;
+    color: rgba(0, 0, 0, 0.8);
+}
+.landing-login-extra {
+	margin: 15px 0 15px 10px;
 }
 
 @media only screen and (max-width: 500px) {

@@ -36,8 +36,13 @@ class Homepage extends Component {
 						<form action="" method="post">							
 							<input type="text" name="username" placeholder="username"/>
 							<input type="password" name="password" placeholder="password"/>
-							<input type="submit" value="Sign Up"/>
+							<input type="submit" value="Log In"/>
 						</form>
+						<div className="landing-login-extra">
+							<a>Sign Up</a>		
+							<span>    |    </span>
+							<a>Forgot your password?</a>							
+						</div>
 					</div>         			
 
 
