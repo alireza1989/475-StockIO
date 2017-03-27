@@ -7,9 +7,9 @@ class StockTile extends Component {
         this.state = {
             name: props.company.name,
             ticker: props.company.symbol,
-            price: '140.64',
-            change_price: '-0.28',
-            change_percent: '-0.20'
+            price: props.company.last_price,
+            change_price: props.company.change_price,
+            change_percent: props.company.change_percent
         };
     }
     
@@ -18,8 +18,10 @@ class StockTile extends Component {
             <li className="stock-tile">
 
                 <div className={'stock-tile-content ' + ((this.state.change_price > 0) ? 'up' : 'down')}>
-                    <p className="name">{this.state.name}</p>
-                    <h1>{this.state.ticker}</h1>
+                    <div className="info">
+                        <p className="name">{this.state.name}</p>
+                        <h1>{this.state.ticker}</h1>
+                    </div>
                     
                     <div className="details">
                         <p className="price">{this.state.price} <span className="price-currency">USD</span></p>

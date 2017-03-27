@@ -29,7 +29,18 @@ module.exports = function(sequelize, DataType) {
             type: DataType.DECIMAL,
             field: 'last_price',
             allowNull: false
-        }
+        },
+        change_price: {
+            type: DataType.DECIMAL,
+            field: 'change_price',
+            allowNull: false
+        },
+        change_percent: {
+            type: DataType.DECIMAL,
+            field: 'change_percent',
+            allowNull: false
+        },
+
     }, {
         timestamps: false,
         classMethods: {
