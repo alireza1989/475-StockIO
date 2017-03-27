@@ -39,22 +39,45 @@ nav ul li.nav-title img {
     margin-top: -4px;
 }
 
-nav ul li.nav-account {
-    background: rgba(255, 255, 255, 0.1);
+nav ul li.nav-button {
     float: right;
     padding: 10px 20px;
-    margin: 15px 0;
+    margin: 15px 0 15px 10px;
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 16px;
     line-height: 20px;
     cursor: pointer;
+    transition: 100ms all; 
 }
 
-nav ul li.nav-account:hover {
+nav ul li.nav-account {
+    background: rgba(255, 255, 255, 0.1);
+/*    padding: 10px 20px;
+    margin: 15px 0;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;*/
+}
+
+nav ul li.nav-login {
     background: rgba(255, 255, 255, 0.3);
 }
 
+nav ul li.nav-signin {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+nav ul li.nav-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+nav ul li.nav-account:hover {
+    background: rgba(255, 255, 255, 0.1);
+    /*opacity: 0.1;*/
+}
 
 /* DASHBOARD */
 .App {
@@ -98,10 +121,10 @@ nav ul li.nav-account:hover {
         margin-top: -4px;
     }
 
-    nav ul li.nav-account {
+    nav ul li.nav-button {
         font-size: 14px;
         padding: 5px 10px;
-        margin: 7px 0;
+        margin: 7px 0px 7px 5px;
     }
     
     .Dashboard {

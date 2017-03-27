@@ -19,7 +19,7 @@ class StockTile extends Component {
             <li className="stock-tile">
                 <div className={"stock-tile-content " + (stockUp ? 'stock-tile-content-up' : 'stock-tile-content-down')}>
                     <h1>{this.state.price}</h1>
-                    {/* get currency from user preferences*/}
+                    {/* get currency from user preferences?*/}
                     <p className="stock-tile-currency">USD</p>
                     <p>{this.state.name} ({this.state.ticker})</p>
                     <div className="stock-tile-up-or-down">
