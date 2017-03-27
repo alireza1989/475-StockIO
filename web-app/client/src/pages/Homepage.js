@@ -19,7 +19,7 @@ class Homepage extends Component {
                         <li className="nav-title">
                             stock.I<img src={logoWhite} alt="O"/>
                         </li>
-                        <li className="nav-button nav-signin">Sign In</li>
+                        <li className="nav-button nav-signin">Sign Up</li>
                         <li className="nav-button nav-login">Log In</li>
                     </ul>
                 </nav>                
@@ -37,17 +37,24 @@ class Homepage extends Component {
 							<input type="text" name="username" placeholder="username"/>
 							<input type="password" name="password" placeholder="password"/>
 							<input type="submit" value="Log In"/>
+							<div className="landing-login-extra">
+								<a>Sign Up</a>		
+								<span>    |    </span>
+								<a>Forgot your password?</a>							
+							</div>
 						</form>
-						<div className="landing-login-extra">
-							<a>Sign Up</a>		
-							<span>    |    </span>
-							<a>Forgot your password?</a>							
-						</div>
-					</div>         			
+					</div>         		
 
+		            <div className="ScrollAbout">
+		            	<p>What is stock.IO?</p>
+		            </div>
+	            </div>
 
+	            <div className="About">
 
 	            </div>
+
+
 
             </div>
 

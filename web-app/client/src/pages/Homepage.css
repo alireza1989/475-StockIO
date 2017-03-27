@@ -1,12 +1,14 @@
 .Homepage {
-	height: auto;
-	width: 100%;
+	height: 100%;
+	width: 60%;
+	margin: 0 20%;
 }
 
 .landing-brand {
 	box-sizing: border-box;
 	float: left;
-	min-height: 700px;
+	/*min-height: 700px;*/
+	height: 100%;
 	width: 50%;
 	display: block;
 	/*background: blue;*/
@@ -15,7 +17,8 @@
 .landing-login {
 	box-sizing: border-box;
 	float: right;
-	min-height: 700px;
+	/*min-height: 700px;*/
+	height: 100%;
 	width: 50%;
 	display: block;
 	/*background: red;*/
@@ -42,6 +45,7 @@ div.landing-login {
 .landing-login form {
 	display: block;
 	margin: 300px auto 0;
+	width: 50%;
 }
 
 .landing-login form > input {
@@ -77,11 +81,44 @@ div.landing-login {
 }
 .landing-login-extra {
 	margin: 15px 0 15px 10px;
+	width: 232px;
 }
 
+.ScrollAbout{
+	height: 50px;
+	position: absolute;
+	bottom: 10px;
+	width: 40%;
+}
+
+.About {
+	height: 100%;
+	display: block;
+	background: rgb(50, 50, 50);
+}
+
+
 @media only screen and (max-width: 500px) {
+	.Homepage {
+		height: 100%;
+		width: 100%;
+	}
+
 	.landing-login, .landing-brand {
 		width: 100%;
-		min-height: 500px;
+		min-height: 250px;
+	}
+	.landing-logo {		
+		margin: 125px auto 0;
+	}
+	.landing-login form {
+		margin: 10px auto 0;	
+		width: 232px;
+	}
+	.landing-login form > input  {
+		width: 200px;
+	}
+	.landing-login form > input[type=submit]  {
+		width: 200px;
 	}
 }
