@@ -7,9 +7,9 @@ class StockTile extends Component {
         this.state = {
             name: props.company.name,
             ticker: props.company.symbol,
-            price: '140.64',
-            change_price: '-0.28',
-            change_percent: '-0.20'
+            price: props.company.last_price,
+            change_price: props.company.change_price,
+            change_percent: props.company.change_percent
         };
     }
     

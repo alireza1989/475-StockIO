@@ -13,7 +13,9 @@ models.sequelize.sync({force: true}).then(function() {
                 url: stock.url,
                 ceo: stock.ceo,
                 sector: stock.sector,
-                last_price: 0.00
+                last_price: 0.00,
+                change_price: 0.00,
+                change_percent: 0.00
             });
         });
     });

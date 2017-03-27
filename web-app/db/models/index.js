@@ -11,7 +11,7 @@ var sequelize = new Sequelize('stockiodb', "development", "password", {
 });
 
 //Don't delete this guy. Need for development
-//var sequelize = new Sequelize(null, null, null,{dialect: 'sqlite', storage: '../stockio.db'})
+//var sequelize = new Sequelize(null, null, null,{dialect: 'sqlite', storage: 'stockio.db'})
 
 var db = {};
 
