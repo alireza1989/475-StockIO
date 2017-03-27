@@ -25,7 +25,7 @@ class Dashboard extends Component {
                 <nav>
                     <ul>
                         <li className="nav-title">
-                            stock.I<img src={logo} alt="O"/>
+                            Stock.I<img src={logo} alt="O"/>
                         </li>
                         <li className="nav-account">{this.props.name}</li>
                     </ul>
