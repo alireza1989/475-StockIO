@@ -8,18 +8,9 @@
     margin: 25px 0;
     padding: 0 5px 0 0;
     position: relative;
-    /*z-index: 40;*/
     display: inline-block;
     box-sizing: border-box;
     cursor: pointer;
-    transition: 450ms all;
-    transform-origin: center;
-}
-
-.stock-tile:hover {
-    transform: scale(1.3);
-    opacity: 1;
-    z-index: 60;
 }
 
 .stock-tile:hover ~ .stock-tile {
@@ -31,13 +22,21 @@
 }
 
 .stock-tile-content {
-    -webkit-backdrop-filter: saturate(180%) blur(25px);
     height: 100%;
     width: 100%;
     padding: 8px;
     border-radius: 8px;
     box-sizing: border-box;
     position: relative;
+    z-index: 40;
+    transition: 450ms all;
+    transform-origin: center;
+}
+
+.stock-tile-content:hover {
+    -webkit-backdrop-filter: saturate(180%) blur(25px);
+    transform: scale(1.3);
+    z-index: 60;
 }
 
 .stock-tile-content.up {
@@ -50,7 +49,15 @@
 
 .stock-tile-content h1 {
     font: bold 26px/30px Helvetica;
-    float: left;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stock-tile-content p.name {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .stock-tile-content .details {
