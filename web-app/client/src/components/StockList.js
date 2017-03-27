@@ -9,7 +9,7 @@ class StockList extends Component {
         super(props);
         
         this.state = {
-            data: []
+            companies: []
         };
     }
    
@@ -19,7 +19,7 @@ class StockList extends Component {
             this.setState({companies});
         }).catch(function(){
             const companies = Companies.companies;
-            this.setState({'data': companies});
+            this.setState({companies});
         });
     }
 
@@ -37,7 +37,7 @@ class StockList extends Component {
                 </div>
                 
                 <div className="stocks">
-                    <ul>{this.state.data.map((company, i) => <StockTile key={i} company={company}/>)}</ul>
+                    <ul>{this.state.companies.map((company, i) => <StockTile key={i} company={company}/>)}</ul>
                 </div>
             </section>
         );
