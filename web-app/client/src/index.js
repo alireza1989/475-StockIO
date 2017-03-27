@@ -4,7 +4,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import './index.css';
 
-const loggedIn = false;
+const loggedIn = true;
 
 if (loggedIn) {
 	ReactDOM.render(
@@ -13,7 +13,7 @@ if (loggedIn) {
 	);
 } else {
 	ReactDOM.render(
-	    <Homepage />,
+	    <Login />,
 	    document.getElementById('app')
 	);
 }
