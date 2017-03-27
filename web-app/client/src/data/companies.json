@@ -1,0 +1,164 @@
+{
+    "companies": [
+        {
+            "name": "Exxon Mobil Corp",
+            "symbol": "XOM",
+            "exchange": "NYSE",
+            "url": "http://corporate.exxonmobil.com",
+            "ceo": "Rex W. Tillerson",
+            "sector": "Basic Materials"
+        },
+        {
+            "name": "NVIDIA Corp",
+            "symbol": "NVDA",
+            "exchange": "NasdaqGS",
+            "url": "http://www.nvidia.com",
+            "ceo": "Jen-Hsun Huang",
+            "sector": "Technology"
+        },
+        {
+            "name": "Facebook Inc",
+            "symbol": "FB",
+            "exchange": "NasdaqGS",
+            "url": "http://www.facebook.com",
+            "ceo": "Mark Elliot Zuckerberg",
+            "sector": "Technology"
+        },
+        {
+            "name": "International Business Machines Corp",
+            "symbol": "IBM",
+            "exchange": "NYSE",
+            "url": "http://www.ibm.com",
+            "ceo": "Ginni Rometty",
+            "sector": "Technology"
+        },
+        {
+            "name": "Pfizer Inc",
+            "symbol": "PFE",
+            "exchange": "NYSE",
+            "url": "http://www.pfizer.com",
+            "ceo": "Ian C. Read",
+            "sector": "Healthcare"
+        },
+        {
+            "name": "Visa Inc",
+            "symbol": "V",
+            "exchange": "NYSE",
+            "url": "http://www.visa.com",
+            "ceo": "Charles W. Scharf",
+            "sector": "Financial"
+        },
+        {
+            "name": "Apple Inc",
+            "symbol": "AAPL",
+            "exchange": "NasdaqGS",
+            "url": "http://www.apple.com",
+            "ceo": "Tim Cook",
+            "sector": "Consumer Goods"
+        },
+        {
+            "name": "Tesla Motors Inc",
+            "symbol": "TSLA",
+            "exchange": "NasdaqGS",
+            "url": "http://www.teslamotors.com",
+            "ceo": "Elon Reeve Musk",
+            "sector": "Consumer Goods"
+        },
+        {
+            "name": "Cisco Systems Inc",
+            "symbol": "CSCO",
+            "exchange": "NasdaqGS",
+            "url": "http://www.cisco.com",
+            "ceo": "Charles H. Robbins",
+            "sector": "Technology"
+        },
+        {
+            "name": "Microsoft Corp",
+            "symbol": "MSFT",
+            "exchange": "NasdaqGS",
+            "url": "http://www.microsoft.com",
+            "ceo": "Satya Nadella",
+            "sector": "Technology"
+        },
+        {
+            "name": "3M Co",
+            "symbol": "MMM",
+            "exchange": "NYSE",
+            "url": "http://www.3m.com",
+            "ceo": "Inge G. Thulin",
+            "sector": "Industrial Goods"
+        },
+        {
+            "name": "Alphabet Inc",
+            "symbol": "GOOGL",
+            "exchange": "NasdaqGS",
+            "url": "http://abc.xyz",
+            "ceo": "Lawrence E. Page",
+            "sector": "Technology"
+        },
+        {
+            "name": "Amazon.com Inc",
+            "symbol": "AMZN",
+            "exchange": "NasdaqGS",
+            "url": "http://www.amazon.com",
+            "ceo": "Jeffrey P. Bezos",
+            "sector": "Services"
+        },
+        {
+            "name": "Intel Corp",
+            "symbol": "INTC",
+            "exchange": "NasdaqGS",
+            "url": "http://www.intel.com",
+            "ceo": "Brian M. Krzanich",
+            "sector": "Technology"
+        },
+        {
+            "name": "Texas Instruments Inc",
+            "symbol": "TXN",
+            "exchange": "NasdaqGS",
+            "url": "http://www.ti.com",
+            "ceo": "Richard K. Templeton",
+            "sector": "Technology"
+        },
+        {
+            "name": "Walt Disney Co",
+            "symbol": "DIS",
+            "exchange": "NYSE",
+            "url": "http://www.thewaltdisneycompany.com",
+            "ceo": "Robert A. Iger",
+            "sector": "Services"
+        },
+        {
+            "name": "Starbucks Corp",
+            "symbol": "SBUX",
+            "exchange": "NasdaqGS",
+            "url": "http://www.starbucks.com",
+            "ceo": "Howard S. Schultz",
+            "sector": "Services"
+        },
+        {
+            "name": "Netflix Inc",
+            "symbol": "NFLX",
+            "exchange": "NasdaqGS",
+            "url": "http://www.netflix.com",
+            "ceo": "Reed Hastings",
+            "sector": "Services"
+        },
+        {
+            "name": "McDonald's Corp",
+            "symbol": "MCD",
+            "exchange": "NYSE",
+            "url": "http://www.aboutmcdonalds.com",
+            "ceo": "Stephen J. Easterbrook",
+            "sector": "Services"
+        },
+        {
+            "name": "Yahoo! Inc",
+            "symbol": "YHOO",
+            "exchange": "NasdaqGS",
+            "url": "http://www.yahoo.com",
+            "ceo": "Marissa Ann Mayer",
+            "sector": "Technology"
+        }
+    ]
+}

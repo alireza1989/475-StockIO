@@ -3,7 +3,8 @@ import './StockTile.css';
 
 class StockTile extends Component {
     constructor(props) {
-        super();
+        super(props);
+        
         this.state = {
             name: props.company.name,
             ticker: props.company.symbol,

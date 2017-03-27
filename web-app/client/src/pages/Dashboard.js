@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StockList from '../components/StockList';
-import './Dashboard.css';
 import logo from "../assets/logo-white.svg"
+import './Dashboard.css';
 
 class Dashboard extends Component {
     constructor() {

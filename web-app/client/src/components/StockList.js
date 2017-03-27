@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import StockTile from './StockTile';
 import Client from './Client';
+import Companies from '../data/companies.json';
 import './StockList.css';
 
 class StockList extends Component {
     constructor(props) {
         super(props);
+        
         this.state = {
-            companies: []
+            data: []
         };
     }
    
@@ -15,6 +17,9 @@ class StockList extends Component {
         Client.getCompanies((companiesList) => { 
             const companies = companiesList.map(obj => obj); //Is this redundant? Check.
             this.setState({companies});
+        }).catch(function(){
+            const companies = Companies.companies;
+            this.setState({'data': companies});
         });
     }
 
@@ -32,7 +37,7 @@ class StockList extends Component {
                 </div>
                 
                 <div className="stocks">
-                    <ul>{this.state.companies.map((company, i) => <StockTile key={i} company={company}/>)}</ul>
+                    <ul>{this.state.data.map((company, i) => <StockTile key={i} company={company}/>)}</ul>
                 </div>
             </section>
         );
