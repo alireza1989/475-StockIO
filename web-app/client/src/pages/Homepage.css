@@ -1,3 +1,75 @@
-.test {
-	background: blue;
+.Homepage {
+	height: auto;
+	width: 100%;
+}
+
+.landing-brand {
+	box-sizing: border-box;
+	float: left;
+	min-height: 700px;
+	width: 50%;
+	display: block;
+	/*background: blue;*/
+}
+
+.landing-login {
+	box-sizing: border-box;
+	float: right;
+	min-height: 700px;
+	width: 50%;
+	display: block;
+	/*background: red;*/
+}
+
+.landing-logo {	
+	display: table;
+	margin: 300px auto 0;
+}
+.landing-logo h1 {
+	vertical-align: middle;
+	display: table-cell;
+	font-size: 4em;
+}
+.landing-logo img {
+	height: 70px;
+	margin-left: -7px;
+}
+
+div.landing-login {
+	height: 50%;
+}
+
+.landing-login form {
+	display: block;
+	margin: 300px auto 0;
+}
+
+.landing-login form > input {
+	border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    font-size: 16px;
+    line-height: 20px;
+    transition: 100ms all; 
+	padding: 10px 20px;
+    margin: 15px 0 15px 10px;
+    display: block;
+	opacity: 0.8
+}
+
+.landing-login form > input[type=text], input[type=password] {
+}
+
+.landing-login form > input[type=submit] {
+    cursor: pointer;
+
+}
+
+@media only screen and (max-width: 500px) {
+	.landing-login, .landing-brand {
+		width: 100%;
+		min-height: 500px;
+	}
 }

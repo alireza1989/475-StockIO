@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import StockList from '../components/StockList';
 import './Dashboard.css';
 import './Homepage.css';
-import logo from "../assets/logo-white.svg"
+import logo from "../assets/logo.svg"
+import logoWhite from "../assets/logo-white.svg"
 
 class Homepage extends Component {
     constructor() {
         super();
     }
+
 
 	render() {
         return (    		
@@ -15,13 +17,35 @@ class Homepage extends Component {
                 <nav>
                     <ul>
                         <li className="nav-title">
-                            stock.I<img src={logo} alt="O"/>
+                            stock.I<img src={logoWhite} alt="O"/>
                         </li>
                         <li className="nav-button nav-signin">Sign In</li>
                         <li className="nav-button nav-login">Log In</li>
                     </ul>
                 </nav>                
+
+	            <div className="Homepage">
+	            	<div className="landing-brand">
+	            		<div className="landing-logo">
+	            			<h1>stock.I</h1>
+	            			<img src={logo} alt="O"/>
+	            		</div>
+	            	</div>
+
+					<div className="landing-login">
+						<form action="" method="post">							
+							<input type="text" name="username" placeholder="username"/>
+							<input type="password" name="password" placeholder="password"/>
+							<input type="submit" value="Sign Up"/>
+						</form>
+					</div>         			
+
+
+
+	            </div>
+
             </div>
+
         );
     }
 }

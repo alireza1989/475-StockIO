@@ -4,7 +4,7 @@ import Dashboard from './pages/Dashboard';
 import Homepage from './pages/Homepage';
 import './index.css';
 
-const loggedIn = true;
+const loggedIn = false;
 
 if (loggedIn) {
 	ReactDOM.render(
