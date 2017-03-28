@@ -21,7 +21,7 @@ class Login extends Component {
 							<input type="submit" value="Log In"/>
 							<div className="landing-login-extra">
 								<a>Sign Up</a>		
-								<span>|</span>
+								<span> | </span>
 								<a>Forgot your password?</a>							
 							</div>
 						</form>
