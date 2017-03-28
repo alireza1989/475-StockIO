@@ -383,7 +383,7 @@ var onStocksUpdate = function(error, response, body) {
 			}
 		}).then(function(updatedCompany) {
 			if (updatedCompany) {
-				io.to(quote.ticker).emit('tickerUpdate', JSON.stringify(quote));
+				io.to(quote.ticker).emit(quote.ticker, JSON.stringify(quote));
 			} else
 				console.log("No changes for " + quote.ticker);
 		});
