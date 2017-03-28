@@ -4,11 +4,11 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import './index.css';
 
-const loggedIn = false;
+const loggedIn = true;
 
 if (loggedIn) {
 	ReactDOM.render(
-	    <Dashboard name="Elliot"/>,
+	    <Dashboard name="Joe"/>,
 	    document.getElementById('app')
 	);
 } else {
