@@ -6,7 +6,9 @@
             "exchange": "NYSE",
             "url": "http://corporate.exxonmobil.com",
             "ceo": "Rex W. Tillerson",
-            "sector": "Basic Materials"
+            "sector": "Basic Materials",
+            "change_percent" : 5,
+            "change_price" : 3
         },
         {
             "name": "NVIDIA Corp",
@@ -14,7 +16,9 @@
             "exchange": "NasdaqGS",
             "url": "http://www.nvidia.com",
             "ceo": "Jen-Hsun Huang",
-            "sector": "Technology"
+            "sector": "Technology",
+            "change_percent" : 3,
+            "change_price" : -3
         },
         {
             "name": "Facebook Inc",
@@ -22,7 +26,9 @@
             "exchange": "NasdaqGS",
             "url": "http://www.facebook.com",
             "ceo": "Mark Elliot Zuckerberg",
-            "sector": "Technology"
+            "sector": "Technology",
+            "change_percent" : 5,
+            "change_price" : 3
         },
         {
             "name": "International Business Machines Corp",
@@ -30,7 +36,9 @@
             "exchange": "NYSE",
             "url": "http://www.ibm.com",
             "ceo": "Ginni Rometty",
-            "sector": "Technology"
+            "sector": "Technology",
+            "change_percent" : 3,
+            "change_price" : -3
         },
         {
             "name": "Pfizer Inc",
