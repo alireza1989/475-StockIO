@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import StockSummary from './StockSummary';
 import './StockTile.css';
 
 class StockTile extends Component {
@@ -10,15 +11,33 @@ class StockTile extends Component {
             ticker: props.company.symbol,
             price: props.company.last_price,
             change_price: props.company.change_price,
-            change_percent: props.company.change_percent
+            change_percent: props.company.change_percent,
+
+            summary_visible: false
         };
+
+        this.onClick = this.onClick.bind(this);
+        this.handler = this.handler.bind(this);
+    }
+
+    onClick() {
+        this.setState({
+            summary_visible: !this.state.summary_visible
+        });
+    }
+
+    handler(e) {
+        e.preventDefault()
+        this.setState({
+            summary_visible: !this.state.summary_visible       
+        });
     }
     
     render() {
         return (
             <li className="stock-tile">
 
-                <div className={'stock-tile-content ' + ((this.state.change_price > 0) ? 'up' : 'down')}>
+                <div className={'stock-tile-content ' + ((this.state.change_price > 0) ? 'up' : 'down')} onClick={this.onClick}>
                     <div className="info">
                         <p className="name">{this.state.name}</p>
                         <h1>{this.state.ticker}</h1>
@@ -31,9 +50,10 @@ class StockTile extends Component {
                             {this.state.change_percent}%
                         </p>
                     </div>
-                </div>
+                </div>                
+                {this.state.summary_visible ? <StockSummary handler = {this.handler}/> : null}
             </li>
-            
+
 
         );
     }
