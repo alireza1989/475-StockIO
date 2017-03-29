@@ -4,10 +4,9 @@ import Login from '../pages/Login';
 
 export default class App extends Component {
   render() {
+    <Dashboard name="Joe"/>
     return (
       <div>
-        <Dashboard name="Joe"/>,
-        //document.getElementById('app')
         {this.props.children}
       </div>
     );
