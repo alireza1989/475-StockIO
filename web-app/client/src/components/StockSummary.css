@@ -1,18 +1,39 @@
 .StockSummary {
-	background: rgba(0, 0, 255, 0.9);
-	z-index: 9999;
+	background: rgba(0, 0, 0, 0.9);
+	z-index: 998;
+	border-radius: 7px;
 	height: 50%;
 	width: 50%;
 	position: fixed;
-	top: 20%;
-	left: 20%;
+	top: 25%;
+	left: 25%;
 }
-
+.stock-information {
+	display: inline-block;
+	box-sizing: border-box;
+	background: rgba(44, 44, 44, 0.5);
+	height: 100%;
+	width: 35%;
+	padding: 4%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.stock-information  h2 {
+	margin-left: 0%;
+}
+.interactive-chart {
+	display: inline-block;
+	background: rgba(22, 22, 22, 0.5);
+	height: 100%;
+	width: 65%;
+}
 .close-button {
+	position: fixed;
+	z-index: 999;
 	height: 20px;
 	width: auto;
 	float: right;
-	margin: 5px;
+	margin: 10px;
 	transition: transform .25s ease-in-out;
 }
 .close-button:hover {	
@@ -20,5 +41,14 @@
 }
 
 @media only screen and (max-width: 500px) {
-
+	.StockSummary {
+		height: 80%;
+		width: 80%;
+		top: 10%;
+		left: 10%;
+	}
+	.stock-information {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }

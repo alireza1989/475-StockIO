@@ -44,7 +44,7 @@ class StockTile extends Component {
                     </div>
                 </div>                
 
-                {this.state.summary_visible ? <StockSummary toggleSummary = {this.toggleSummary}/> : null}
+                {this.state.summary_visible ? <StockSummary toggleSummary = {this.toggleSummary} company={this.state}/> : null}
                 
             </li>
 
