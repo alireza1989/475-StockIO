@@ -133,21 +133,21 @@ var loadPage = function(request, response, page) {
 }
 
 // Middleware managed. Do not alter route.
-app.post('/account/signup', passport.authenticate('signup', {
+app.post('/accounts/signup', passport.authenticate('signup', {
 	successRedirect: '/dashboard',
     failureRedirect: '/signup',
     session: true
 }));
 
 // Middleware managed. Do not alter route.
-app.post('/account/login', passport.authenticate('login', {
+app.post('/accounts/login', passport.authenticate('login', {
 	successRedirect: '/dashboard',
     failureRedirect: '/login',
     session: true
 }));
 
 // Middleware managed. Do not alter route.
-app.get('/account/logout', function(request, response) {
+app.get('/accounts/logout', function(request, response) {
   request.logout();
   response.redirect('/');
 });
@@ -156,13 +156,13 @@ app.get('/account/logout', function(request, response) {
 // 						API
 //////////////////////////////////////////////////
 
-app.get('/api/quote/', function (request, response) {
+app.get('/api/quotes/', function (request, response) {
 	models.Company.findAll({attributes: ['id', 'symbol', 'last_price']}).then(function(prices) {
 		response.send(JSON.stringify(prices));
 	})
 });
 
-app.get('/api/quote/:symbol', function (request, response) {
+app.get('/api/quotes/:symbol', function (request, response) {
     var symbol = request.params['symbol'];
 	models.Company.findOne({where: {symbol: symbol}, attributes: ['id', 'symbol', 'last_price']}).then(function(price) {
 		if (!price)
@@ -172,13 +172,13 @@ app.get('/api/quote/:symbol', function (request, response) {
 	})
 });
 
-app.get('/api/company', function (request, response) {
+app.get('/api/companies', function (request, response) {
 	models.Company.findAll().then(function(companies) {
 		response.send(JSON.stringify(companies));
 	});
 });
 
-app.get('/api/portfolio', function (request, response) {
+app.get('/api/portfolios', function (request, response) {
 	if (!request.user) {
 		response.redirect(401, '/login');
 		return;
@@ -195,7 +195,7 @@ app.get('/api/portfolio', function (request, response) {
 	})
 });
 
-app.post('/api/portfolio/:portfolioId/invite', function(request, response)
+app.post('/api/portfolios/:portfolioId/invite', function(request, response)
 {
 	if (!request.user) {
 		response.redirect(401, '/login');
@@ -242,7 +242,7 @@ app.post('/api/portfolio/:portfolioId/invite', function(request, response)
 });
 
 // Function to remove a company from a certain portfolio.
-app.delete('/api/portfolio/:portfolioId', function(request,response){
+app.delete('/api/portfolios/:portfolioId', function(request,response){
     if (!request.user) {
         response.redirect(401, '/login');
         return;
