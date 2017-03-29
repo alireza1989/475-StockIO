@@ -8,7 +8,7 @@ const loggedIn = true;
 
 if (loggedIn) {
 	ReactDOM.render(
-	    <Dashboard name="Elliot"/>,
+	    <Dashboard name="Joe"/>,
 	    document.getElementById('app')
 	);
 } else {

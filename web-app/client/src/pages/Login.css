@@ -102,18 +102,20 @@
 	.Login {
 		height: 100%;
 		width: 100%;
+		margin: 0;
 	}
 
 	.landing-login, .landing-brand {
 		width: 100%;
-		min-height: 250px;
+		max-height: 30%;
+		float: none;
 	}
 	.landing-logo {		
 		margin: 125px auto 0;
 	}
 	.landing-login form {
 		margin: 10px auto 0;	
-		width: 232px;
+		width: 200px;
 	}
 	.landing-login form > input  {
 		width: 200px;
