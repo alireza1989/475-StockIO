@@ -16,7 +16,7 @@ class StockPopup extends Component {
 		return (
                   <div className="StockSummary">
                         
-                        <img onClick = {this.props.handler} className="close-button" src={CloseIcon} alt="X"/>
+                        <img onClick = {this.props.toggleSummary} className="close-button" src={CloseIcon} alt="X"/>
                   </div>
 		)
 	}

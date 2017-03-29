@@ -16,20 +16,12 @@ class StockTile extends Component {
             summary_visible: false
         };
 
-        this.onClick = this.onClick.bind(this);
-        this.handler = this.handler.bind(this);
+        this.toggleSummary = this.toggleSummary.bind(this);
     }
 
-    onClick() {
+    toggleSummary() {
         this.setState({
             summary_visible: !this.state.summary_visible
-        });
-    }
-
-    handler(e) {
-        e.preventDefault()
-        this.setState({
-            summary_visible: !this.state.summary_visible       
         });
     }
     
@@ -37,7 +29,7 @@ class StockTile extends Component {
         return (
             <li className="stock-tile">
 
-                <div className={'stock-tile-content ' + ((this.state.change_price > 0) ? 'up' : 'down')} onClick={this.onClick}>
+                <div className={'stock-tile-content ' + ((this.state.change_price > 0) ? 'up' : 'down')} onClick={this.toggleSummary}>
                     <div className="info">
                         <p className="name">{this.state.name}</p>
                         <h1>{this.state.ticker}</h1>
@@ -51,7 +43,9 @@ class StockTile extends Component {
                         </p>
                     </div>
                 </div>                
-                {this.state.summary_visible ? <StockSummary handler = {this.handler}/> : null}
+
+                {this.state.summary_visible ? <StockSummary toggleSummary = {this.toggleSummary}/> : null}
+                
             </li>
 
 
