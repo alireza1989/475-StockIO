@@ -8,15 +8,8 @@ import { Route, IndexRoute } from 'react-router';
 
 // Import the different components that will represent the different pages
 import App from './components/app';
-import DashBoard from './pages/Dashboard.js';
+import DashBoard from './pages/Dashboard';
 import Login from './pages/Login';
-
-console.log('route', Route)
-console.log('IndexRoute', IndexRoute)
-
-console.log('app', App)
-console.log('Dashboard', DashBoard)
-console.log('Login', Login)
 
 // Define our routes
 const routes = (

@@ -33,7 +33,7 @@ nav ul li.nav-title {
 }
 
 nav ul li.nav-title img {
-    height: 25px;    
+    height: 25px;
     vertical-align: middle;
     margin-left: -3px;
     margin-top: -4px;
@@ -50,7 +50,7 @@ nav ul li.nav-button {
     font-size: 16px;
     line-height: 20px;
     cursor: pointer;
-    transition: 100ms all; 
+    transition: 100ms all;
 }
 
 nav ul li.nav-account {
@@ -90,7 +90,7 @@ nav ul li.nav-account:hover {
     overflow-y: scroll;
 }
 
-.Dashboard::-webkit-scrollbar { 
+.Dashboard::-webkit-scrollbar {
     display: none;
 }
 
@@ -99,21 +99,21 @@ nav ul li.nav-account:hover {
     nav {
         height: 44px;
     }
-    
+
     nav ul {
         padding: 0 10px;
     }
-    
+
     nav ul li {
         line-height: 44px;
     }
-    
+
     nav ul li.nav-title {
         font-size: 18px;
     }
 
     nav ul li.nav-title img {
-        height: 20px;    
+        height: 20px;
         vertical-align: middle;
         margin-left: -3px;
         margin-top: -4px;
@@ -124,10 +124,9 @@ nav ul li.nav-account:hover {
         padding: 5px 10px;
         margin: 7px 0px 7px 5px;
     }
-    
+
     .Dashboard {
         white-space: nowrap;
         padding-top: 55px;
     }
 }
-
