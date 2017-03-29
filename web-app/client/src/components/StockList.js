@@ -5,7 +5,7 @@ import Companies from '../data/companies.json';
 import './StockList.css';
 
 {/* PRD version */}
-{/*
+{/* uncomment following to use copmany data from Vagrant version
 class StockList extends Component {
     constructor(props) {
         super(props);
@@ -47,7 +47,7 @@ class StockList extends Component {
 }
 */}
 
-{/* DEV version */}
+{/* DEV version - uncomment this out to use data from /data/companies.json version for company info */}
 class StockList extends Component {
     constructor(props) {
         super(props);
