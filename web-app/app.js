@@ -315,13 +315,15 @@ app.post('/api/invitation/:invitationId', function(request, response) {
 
 // Get the latest news from DB
 app.get('/api/news', function(request, response){
-  if (!request.user) {
-    response.redirect(401, '/login');
-    return;
-  }
+
+  // IN production uncomment the following code
+  // if (!request.user) {
+  //   response.redirect(401, '/login');
+  //   return;
+  // }
 
   models.News.findAll().then(function(news){
-    response.send(JSON.stringify(prices));
+    response.send(JSON.stringify(news));
   });
 });
 
