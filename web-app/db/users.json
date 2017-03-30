@@ -1,0 +1,10 @@
+{
+   "users":[
+	{
+		 "firstname": "Jon",
+		 "lastname": "Snow",
+		 "username": "admin@email.com",
+		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e",
+		 "companies": [1,2,3,4,5,6,7,8,9,10]
+	}]
+}
