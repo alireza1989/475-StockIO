@@ -11,12 +11,12 @@ module.exports = function(sequelize, DataType) {
             allowNull: false
         },
         Permission: {
-            type: DataType.ENUM('admin', 'write', 'read'),
+            type: DataType.STRING,
             field: 'Permission',
-            allowNull: false
-            // validate: {
-            //     isIn: [['admin', 'write', 'read']]
-            // }
+            allowNull: false,
+            validate: {
+                isIn: [['admin', 'write', 'read']]
+            }
         }
     }, {
         timestamps: false,
