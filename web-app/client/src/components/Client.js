@@ -40,6 +40,5 @@ function parseJSON(response) {
     return response.json();
 }
 
-const Client = { getCompanies, getPortfolios };
-const Client = { getCompanies, getNews };
+const Client = { getCompanies, getPortfolios, getNews };
 export default Client;
