@@ -79,7 +79,7 @@ passport.use('signup', new LocalStrategy ({passReqToCallback : true}, function (
     	password: models.User.hashPassword(password)
     }).then(function(user) {
     	//Create the user's first portfolio
-    	models.Portfolio.create({ name: 'My First Portfolio',}).then(function (portfolio) {
+    	models.Portfolio.create({ name: 'My First Portfolio'}).then(function (portfolio) {
     		user.addPortfolio(portfolio, { permission: 'admin' });
 
 		console.log("Companies " + companies);
