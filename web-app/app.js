@@ -79,9 +79,10 @@ passport.use('signup', new LocalStrategy ({passReqToCallback : true}, function (
     	password: models.User.hashPassword(password)
     }).then(function(user) {
     	//Create the user's first portfolio
-    	models.Portfolio.create({ name: 'My First Portfolio'}).then(function (portfolio) {
-    		user.addPortfolio(portfolio);
+    	models.Portfolio.create({ name: 'My First Portfolio',}).then(function (portfolio) {
+    		user.addPortfolio(portfolio, { permission: 'admin' });
 
+		console.log("Companies " + companies);
     		if (companies != '' && companies != null)
     			portfolio.setCompanies(companies);  //Add companies to it if the user has specified any.
 
@@ -112,13 +113,13 @@ passport.deserializeUser(function(userId, done) {
 //////////////////////////////////////////////////
 // PAGES
 //////////////////////////////////////////////////
-app.get('/', function(request, response) {
-    response.redirect(301, 'http://localhost:3000/dashboard');
-});
+// app.get('/', function(request, response) {
+//     response.redirect(301, 'http://localhost:3000/dashboard');
+// });
 
-app.get('/dashboard', function(request, response) {
-    loadPage(request, response, 'index.html');
-});
+// app.get('/dashboard', function(request, response) {
+//     loadPage(request, response, 'index.html');
+// });
 
 var loadPage = function(request, response, page) {
 //     if (request.session) {
@@ -135,7 +136,7 @@ var loadPage = function(request, response, page) {
 // Middleware managed. Do not alter route.
 app.post('/accounts/signup', passport.authenticate('signup', {
 	successRedirect: '/dashboard',
-    failureRedirect: '/signup',
+    failureRedirect: '/login',
     session: true
 }));
 

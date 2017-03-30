@@ -1,18 +1,8 @@
 module.exports = function(sequelize, DataType) {
     var Users_Portfolios = sequelize.define('Users_Portfolios', {
-        PortfolioId: {
-            type: DataType.INTEGER,
-            field: 'PortfolioId',
-            allowNull: false
-        },
-        UserId: {
-            type: DataType.INTEGER,
-            field: 'UserId',
-            allowNull: false
-        },
-        Permission: {
+        permission: {
             type: DataType.STRING,
-            field: 'Permission',
+            field: 'permission',
             allowNull: false,
             validate: {
                 isIn: [['admin', 'write', 'read']]
@@ -20,11 +10,7 @@ module.exports = function(sequelize, DataType) {
         }
     }, {
         timestamps: false,
-        classMethods: {
-            associate: function(models) {
-            }
-        }
     });
-    Users_Portfolios.removeAttribute('id');
+    
     return Users_Portfolios;
 };

@@ -4,11 +4,6 @@ module.exports = function(sequelize, DataType) {
             type: DataType.STRING,
             field: 'name',
             allowNull: false
-        },
-        company: {
-            type: DataType.STRING,
-            field: 'company',
-            allowNull: false
         }
     }, {
         timestamps: false,

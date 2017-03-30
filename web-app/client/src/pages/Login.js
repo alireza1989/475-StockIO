@@ -15,7 +15,7 @@ class Login extends Component {
 	            	</div>
 
 					<div className="landing-login">
-						<form action="" method="post">							
+						<form action="/accounts/login" method="post">							
 							<input type="text" name="username" placeholder="username"/>
 							<input type="password" name="password" placeholder="password"/>
 							<input type="submit" value="Log In"/>
