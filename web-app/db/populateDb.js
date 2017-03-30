@@ -19,4 +19,17 @@ models.sequelize.sync({force: true}).then(function() {
             });
         });
     });
+
+    fs.readFile('./news.json', function(err, data) {
+        var news = JSON.parse(data).data;
+
+        news.forEach(function(article) {
+            models.News.create({
+                title: article.title,
+                publication_date: article.publication_date,
+                url: article.url,
+                summary: article.summary
+            });
+        });
+    });
 });
