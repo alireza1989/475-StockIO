@@ -5,7 +5,7 @@ import './StockTile.css';
 class StockTile extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             name: props.company.name,
             ticker: props.company.symbol,
@@ -24,7 +24,7 @@ class StockTile extends Component {
             summary_visible: !this.state.summary_visible
         });
     }
-    
+
     render() {
         return (
             <li className="stock-tile">
@@ -34,18 +34,18 @@ class StockTile extends Component {
                         <p className="name">{this.state.name}</p>
                         <h1>{this.state.ticker}</h1>
                     </div>
-                    
+
                     <div className="details">
                         <p className="price">{this.state.price} <span className="price-currency">USD</span></p>
-                        
+
                         <p className='price-change'>
                             {this.state.change_percent}%
                         </p>
                     </div>
-                </div>                
+                </div>
 
                 {this.state.summary_visible ? <StockSummary toggleSummary = {this.toggleSummary} company={this.state}/> : null}
-                
+
             </li>
 
 
@@ -54,4 +54,3 @@ class StockTile extends Component {
 }
 
 export default StockTile;
-

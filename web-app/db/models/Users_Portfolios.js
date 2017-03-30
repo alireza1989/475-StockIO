@@ -11,6 +11,5 @@ module.exports = function(sequelize, DataType) {
     }, {
         timestamps: false,
     });
-    
     return Users_Portfolios;
 };
