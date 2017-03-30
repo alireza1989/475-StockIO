@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 function getCompanies(callback) {
-    return fetch('/api/company', {
+    return fetch('/api/companies', {
         accept: 'application/json',
     }).then(checkStatus)
       .then(parseJSON)
