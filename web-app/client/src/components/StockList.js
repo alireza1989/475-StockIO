@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StockTile from './StockTile';
 import Client from './Client';
-import Companies from '../data/companies.json';
+{/*import Companies from '../data/companies.json';*/}
 import './StockList.css';
 
 class StockList extends Component {
