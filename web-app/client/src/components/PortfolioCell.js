@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import StockSummary from './StockSummary';
-import './StockTile.css';
+import './PortfolioCell.css';
 
-class StockTile extends Component {
+class PortfolioCell extends Component {
     constructor(props) {
         super(props);
 
@@ -53,4 +53,4 @@ class StockTile extends Component {
     }
 }
 
-export default StockTile;
+export default PortfolioCell;

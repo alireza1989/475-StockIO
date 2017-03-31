@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import StockTile from './StockTile';
+import PortfolioCell from './PortfolioCell';
 import Client from './Client';
-import './StockList.css';
+import './Portfolio.css';
 
-class StockList extends Component {
+class Portfolio extends Component {
     constructor(props) {
         super(props);
         
@@ -16,9 +16,6 @@ class StockList extends Component {
         Client.getCompanies((companiesList) => { 
             const companies = companiesList.map(obj => obj); //Is this redundant? Check.
             this.setState({companies});
-        }).catch(function(){
-            // const companies = Companies.companies;
-            // this.setState({companies});
         });
     }
 
@@ -36,11 +33,11 @@ class StockList extends Component {
                 </div>
                 
                 <div className="stocks">
-                    <ul>{this.state.companies.map((company, i) => <StockTile key={i} company={company}/>)}</ul>
+                    <ul>{this.state.companies.map((company, i) => <PortfolioCell key={i} company={company}/>)}</ul>
                 </div>
             </section>
         );
     }
 }
 
-export default StockList;
+export default Portfolio;

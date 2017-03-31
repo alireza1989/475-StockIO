@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import StockList from '../components/StockList';
+import Portfolio from '../components/Portfolio';
 import logo from "../assets/logo-white.svg";
 import './Dashboard.css';
 
 import Client from '../components/Client';
-
 
 class Dashboard extends Component {
     constructor() {
@@ -18,9 +17,6 @@ class Dashboard extends Component {
         Client.getPortfolios((portfoliosList) => { 
             const portfolios = portfoliosList.map(obj => obj); //Is this redundant? Check.
             this.setState({portfolios});
-        }).catch(function(){
-            // const companies = Companies.companies;
-            // this.setState({companies});
         });
     }
 
@@ -37,7 +33,7 @@ class Dashboard extends Component {
                 </nav>
 
                 <div className="Dashboard">
-                    {this.state.portfolios.map((list, i) => <StockList key={i} name={list.name}/>)}
+                    {this.state.portfolios.map((portfolio, i) => <Portfolio key={i} name={portfolio.name}/>)}
                 </div>
             </div>
         );
