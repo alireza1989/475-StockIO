@@ -10,7 +10,7 @@ import { Route, IndexRoute } from 'react-router';
 import App from './components/app';
 import DashBoard from './pages/Dashboard';
 import Login from './pages/Login';
-import News from './pages/News';
+
 
 // Define our routes
 const routes = (
@@ -18,7 +18,7 @@ const routes = (
     <IndexRoute component={DashBoard} />
     <Route path='dashboard' component={DashBoard} />
     <Route path='login' component={Login} />
-    <Route path='News' component={News} />
+    
   </Route>
 );
 

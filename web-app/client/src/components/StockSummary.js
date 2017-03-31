@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './StockSummary.css';
+import News from './News'
 import CloseIcon from '../assets/close.svg';
 
 class StockPopup extends Component {
@@ -20,12 +21,15 @@ class StockPopup extends Component {
 		return (
                   <div className="StockSummary">
                         <div className="stock-information">
-                              <h2>{this.state.name}</h2>
+                              <h3>{this.state.name}</h3>
                               <p>info...</p>
                         </div>
                         <div className="interactive-chart">
 
                         </div>
+
+                        <News />
+
                         <img onClick = {this.props.toggleSummary} className="close-button" src={CloseIcon} alt="X"/>
                   </div>
 		)

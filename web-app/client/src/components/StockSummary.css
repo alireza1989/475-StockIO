@@ -2,14 +2,13 @@
 	background: rgba(0, 0, 0, 0.9);
 	z-index: 998;
 	border-radius: 7px;
-	height: 50%;
-	width: 50%;
+	height: 80%;
+	width: 80%;
 	position: fixed;
-	top: 25%;
-	left: 25%;
+	top: 10%;
+	left: 10%;
 }
 .stock-information {
-	display: inline-block;
 	box-sizing: border-box;
 	background: rgba(44, 44, 44, 0.5);
 	height: 100%;
@@ -17,15 +16,14 @@
 	padding: 4%;
 	overflow: hidden;
 	text-overflow: ellipsis;
-}
-.stock-information  h2 {
-	margin-left: 0%;
+	float: left;
 }
 .interactive-chart {
 	display: inline-block;
 	background: rgba(22, 22, 22, 0.5);
 	height: 100%;
-	width: 65%;
+	width: 45%;
+	float: left;
 }
 .close-button {
 	position: fixed;

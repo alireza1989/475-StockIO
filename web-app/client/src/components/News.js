@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Client from '../components/Client';
-import NewsRow from '../components/NewsRow';
+import Client from './Client';
+import NewsRow from './NewsRow';
 import './News.css';
 
 class News extends Component {
@@ -26,8 +26,8 @@ class News extends Component {
 
   render() {
       return(
-        <div className="App">
-          <h1> This is the news page </h1>
+        <div className="news-sidebar">
+          <h4> Related News </h4>
           <ul>
             {this.state.news.map((news, i) => <NewsRow key={i} news={news}/>)}
           </ul>
