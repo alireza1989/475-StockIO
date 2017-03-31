@@ -8,16 +8,15 @@ class Portfolio extends Component {
         super(props);
         
         this.state = {
-            companies: []
+            stocks: []
         };
-        
-        
     }
    
     componentWillMount() {
-        Client.getCompanies((companiesList) => { 
-            const companies = companiesList.map(obj => obj); //Is this redundant? Check.
-            this.setState({companies});
+        Client.getStocks(this.props.id, (companiesList) => { 
+            console.log(companiesList);
+            const stocks = companiesList.Companies; 
+            this.setState({stocks});
         });
     }
     
@@ -41,7 +40,7 @@ class Portfolio extends Component {
                 </div>
                 
                 <div className="stocks">
-                    <ul>{this.state.companies.map((company, i) => <PortfolioCell key={i} company={company}/>)}</ul>
+                    <ul>{this.state.stocks.map((stock, i) => <PortfolioCell key={i} stock={stock}/>)}</ul>
                 </div>
             </section>
         );

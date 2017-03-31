@@ -4,7 +4,7 @@ import './PortfolioAdmin.css';
 class PortfolioAdmin extends Component {
 	constructor(props) {
 		super(props);
-
+        console.log(props.name);
 		this.state = {
             name: props.name,
 		};
@@ -26,7 +26,7 @@ class PortfolioAdmin extends Component {
                     id: 3,
                     name: 'Sherlock'
                 }, {
-                    id: 3,
+                    id: 4,
                     name: 'Sarah'
                 }, {
                     id: 5,

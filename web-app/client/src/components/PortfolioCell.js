@@ -5,14 +5,15 @@ import './PortfolioCell.css';
 class PortfolioCell extends Component {
     constructor(props) {
         super(props);
-
+        
         this.state = {
-            name: props.company.name,
-            ticker: props.company.symbol,
-            price: props.company.last_price,
-            change_price: props.company.change_price,
-            change_percent: props.company.change_percent,
-
+            name: props.stock.name,
+            ticker: props.stock.symbol,
+            price: props.stock.last_price,
+            change_price: props.stock.change_price,
+            change_percent: props.stock.change_percent,
+            dividend: props.stock.dividend,
+            yield: props.stock.yield,
             summary_visible: false
         };
 
@@ -44,7 +45,7 @@ class PortfolioCell extends Component {
                     </div>
                 </div>
 
-                {this.state.summary_visible ? <StockSummary toggleSummary={this.toggleSummary} company={this.state}/> : null}
+                {this.state.summary_visible ? <StockSummary toggleSummary={this.toggleSummary} stock={this.state}/> : null}
 
             </li>
 

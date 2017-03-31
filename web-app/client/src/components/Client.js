@@ -1,13 +1,14 @@
-function getCompanies(callback) {
-    return fetch('/api/companies', {
+function getPortfolios(callback) {
+    return fetch('/api/portfolios', {
         accept: 'application/json',
+        credentials: 'include'
     }).then(checkStatus)
       .then(parseJSON)
       .then(callback);
-  }
+}
 
-function getPortfolios(callback) {
-    return fetch('/api/portfolios', {
+function getStocks(portfolioId, callback) {
+    return fetch('/api/portfolios/' + portfolioId + '/stocks', {
         accept: 'application/json',
         credentials: 'include'
     }).then(checkStatus)
@@ -24,7 +25,6 @@ function getNews(callback){
       .then(callback);
 }
 
-
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
@@ -40,5 +40,5 @@ function parseJSON(response) {
     return response.json();
 }
 
-const Client = { getCompanies, getPortfolios, getNews };
+const Client = { getPortfolios, getNews, getStocks };
 export default Client;

@@ -4,21 +4,18 @@
 		 "firstname": "Elliot",
 		 "lastname": "Snow",
 		 "username": "elliot@elliot.com",
-		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e",
-		 "companies": []
+		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e"
 	},
 	{
 		 "firstname": "Bonnie",
 		 "lastname": "Snow",
 		 "username": "bonnie@bonnie.com",
-		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e",
-		 "companies": []
+		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e"
 	},
 	{
 		 "firstname": "Sherlock",
 		 "lastname": "Snow",
 		 "username": "sherlock@sherlock.com",
-		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e",
-		 "companies": []
+		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e"
 	}]
 }
