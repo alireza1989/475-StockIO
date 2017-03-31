@@ -25,6 +25,7 @@ models.sequelize.sync({force: true}).then(function() {
 
         news.forEach(function(article) {
             models.News.create({
+                company: "Apple",
                 title: article.title,
                 publication_date: article.publication_date,
                 url: article.url,
@@ -45,7 +46,7 @@ models.sequelize.sync({force: true}).then(function() {
             }).then(function(newUser) {
                 models.Portfolio.create({ name: 'Admin Portfolio'}).then(function (portfolio) {
                     newUser.addPortfolio(portfolio, { permission: 'admin' });
-                    portfolio.setCompanies(user.companies);  
+                    portfolio.setCompanies(user.companies);
                 });
             });
         });
