@@ -19,11 +19,11 @@ class Login extends Component {
 							<input type="text" name="username" placeholder="username"/>
 							<input type="password" name="password" placeholder="password"/>
 							<input type="submit" value="Log In"/>
-							<div className="landing-login-extra">
-								<a>Sign Up</a>		
-								<span> | </span>
-								<a>Forgot your password?</a>							
-							</div>
+							
+							<ul className="landing-login-extra">
+								<li><a>Sign Up</a></li>
+								<li><a>Forgot your password?</a></li>
+							</ul>
 						</form>
 					</div>
 	            </div>

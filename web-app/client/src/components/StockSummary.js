@@ -30,7 +30,7 @@ class StockPopup extends Component {
 
                         <News />
 
-                        <img onClick = {this.props.toggleSummary} className="close-button" src={CloseIcon} alt="X"/>
+                        <img onClick={this.props.toggleSummary} className="close-button" src={CloseIcon} alt="X"/>
                   </div>
 		)
 	}
