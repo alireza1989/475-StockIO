@@ -73,7 +73,7 @@ passport.deserializeUser(function(userId, done) {
 //     response.redirect(301, 'http://localhost:3000/dashboard');
 // });
 
-// app.get('/dashboard', function(request, response) {
+// app.get('*', function(request, response) {
 //     loadPage(request, response, 'index.html');
 // });
 
@@ -83,10 +83,8 @@ passport.deserializeUser(function(userId, done) {
 
 //         var fPath = path.join(__dirname, page);
 //         fs.createReadStream(fPath).pipe(response);
-//    } else {
 //        response.redirect(301, 'http://localhost:3000/login');
-//    }
-//}
+// }
 
 //////////////////////////////////////////////////
 //                      API
@@ -108,8 +106,9 @@ app.post('/api/users/login', passport.authenticate('login', {
 
 //Middleware Managed API
 app.post('/api/users/logout', function(request, response) {
-  request.logout();
-  response.redirect('/login');
+    request.session.destroy(function (err) {
+    response.redirect('/login');
+  });
 });
 
 app.get('/api/users/current', function(request, response) {
@@ -507,14 +506,14 @@ var onStocksUpdate = function(error, response, body) {
 		quote.change_percent = stock.cp;
 		quote.last_trade_time = stock.lt;
         quote.previous_close_price = stock.pcls_fix;
-        quote.dividend = (stock.div == '') ? 0 : stock.div;
-        quote.yield = (stock.yld == '') ? 0 : stock.yld;
+        quote.dividend = (stock.div == '' || stock.div == undefined) ? 0 : stock.div;
+        quote.yield = (stock.yld == '' || stock.ylr == undefined) ? 0 : stock.yld;
 
 console.log(quote);
 		models.Company.findOne({where: {symbol: quote.ticker}}).then(function(company) {
 
 			if (company.last_price != quote.price) {
-				console.log("Price change! From " + company.last_price + ' to ' + quote.price + " for company " + quote.ticker);
+				//console.log("Price change! From " + company.last_price + ' to ' + quote.price + " for company " + quote.ticker);
 				return company.update({last_price: parseFloat(quote.price), change_price: parseFloat(quote.change_price), change_percent: parseFloat(quote.change_percent), previous_close_price: parseFloat(quote.previous_close_price), dividend: parseFloat(quote.dividend), yield: parseFloat(quote.yield)});
 			}
 		}).then(function(updatedCompany) {
