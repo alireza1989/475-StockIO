@@ -111,15 +111,16 @@ app.post('/api/users/logout', function(request, response) {
   });
 });
 
+// This is to get the current user session user id and return id and username of current user
 app.get('/api/users/current', function(request, response) {
     if (!request.user) {
         response.redirect(401, '/login');
         return;
     }
     var sessionUserId = request.session.passport.user;
-    models.User.findById(sessionUserId, {attributes: ['id', 'firstname', 'lastname' ]})
+    models.User.findById(sessionUserId, {attributes: ['id', 'username']})
     .then(function (user) {
-        response.send(JSON.stringify(user));
+        response.end(JSON.stringify(user, null, 4));
 	});
 })
 
@@ -246,9 +247,9 @@ app.get('/api/portfolios/:portfolioId/users', function (request, response) {
             var count = 0;
             var total = portfolioUsersInstance.Users.length;
             var usersData = [];
-            console.log(total);
+            // console.log(total);
             portfolioUsersInstance.Users.forEach(function(userInformation){
-                console.log(userInformation);
+                // console.log(userInformation);
                 var userData = {
                     id: userInformation.id,
                     username: userInformation.username
@@ -260,7 +261,6 @@ app.get('/api/portfolios/:portfolioId/users', function (request, response) {
                     response.end(JSON.stringify({'users': usersData}, null, 4))
                 }
             })
-            //Will DEFINITELY need to make this look better. I'll let Front end decide what they want in the return.
         })
     })
 });
