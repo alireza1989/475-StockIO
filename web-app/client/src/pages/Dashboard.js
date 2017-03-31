@@ -3,20 +3,25 @@ import StockList from '../components/StockList';
 import logo from "../assets/logo-white.svg";
 import './Dashboard.css';
 
+import Client from '../components/Client';
+
+
 class Dashboard extends Component {
     constructor() {
         super();
-        this.lists = [
-            { 'name': 'Technology' },
-            { 'name': 'Health' },
-            { 'name': 'Entertainment' },
-            { 'name': 'Technology' },
-            { 'name': 'Health' },
-            { 'name': 'Entertainment' },
-            { 'name': 'Technology' },
-            { 'name': 'Health' },
-            { 'name': 'Entertainment' }
-        ];
+        this.state = {
+            portfolios : []
+        };
+    }
+
+    componentWillMount() {
+        Client.getPortfolios((portfoliosList) => { 
+            const portfolios = portfoliosList.map(obj => obj); //Is this redundant? Check.
+            this.setState({portfolios});
+        }).catch(function(){
+            // const companies = Companies.companies;
+            // this.setState({companies});
+        });
     }
 
     render() {
@@ -32,7 +37,7 @@ class Dashboard extends Component {
                 </nav>
 
                 <div className="Dashboard">
-                    {this.lists.map((list, i) => <StockList key={i} name={list.name}/>)}
+                    {this.state.portfolios.map((list, i) => <StockList key={i} name={list.name}/>)}
                 </div>
             </div>
         );

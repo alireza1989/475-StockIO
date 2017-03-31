@@ -4,6 +4,7 @@ function getCompanies(callback) {
     }).then(checkStatus)
       .then(parseJSON)
       .then(callback);
+  }
 
 function getPortfolios(callback) {
     return fetch('/api/portfolios', {
