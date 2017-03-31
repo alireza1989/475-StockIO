@@ -27,7 +27,7 @@ class News extends Component {
   render() {
       return(
         <div className="news-sidebar">
-          <h4> Related News </h4>
+          <h3> Related News </h3>
           <ul>
             {this.state.news.map((news, i) => <NewsRow key={i} news={news}/>)}
           </ul>

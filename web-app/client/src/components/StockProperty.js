@@ -15,7 +15,7 @@ class StockProperty extends Component {
 		return (
 			<li className="StockProperty">
 				<h4>{this.state.name}</h4>
-				<hp>{this.state.value}</hp>
+				<p>{this.state.value}</p>
 			</li>
 		);
 	}

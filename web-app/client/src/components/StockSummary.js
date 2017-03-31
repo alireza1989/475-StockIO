@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './StockSummary.css';
 import News from './News'
 import CloseIcon from '../assets/close.svg';
+import StockProperty from './StockProperty';
 
 class StockPopup extends Component {
 	constructor(props) {
@@ -22,7 +23,7 @@ class StockPopup extends Component {
                   <div className="StockSummary">
                         <div className="stock-information">
                               <h3>{this.state.name}</h3>
-                              <p>info...</p>
+                              <StockProperty name="Title" value="test"/>
                         </div>
                         <div className="interactive-chart">
 

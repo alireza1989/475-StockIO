@@ -1,0 +1,7 @@
+.StockProperty h4, p {
+	display: inline;
+}
+.StockProperty h4 {
+	margin-right: 5px;
+	font-weight: bold
+}
