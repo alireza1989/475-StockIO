@@ -182,6 +182,7 @@ app.get('/api/portfolios/:portfolioId', function (request, response) {
     })
 });
 
+// Get all the information about the stock companies that are part of this portfolioId
 app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
     // This checks if the instance of request.user is empty or not
     if (!request.user) {
@@ -211,6 +212,56 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
         }).then(function(portfolioInstance){
             //Will DEFINITELY need to make this look better. I'll let Front end decide what they want in the return.
             response.end(JSON.stringify(portfolioInstance, null, 4))
+        })
+    })
+});
+
+// Get all the users who have access to this portfolio -- must check if user has admin/write access to this portfolio before showing them
+app.get('/api/portfolios/:portfolioId/users', function (request, response) {
+    // This checks if the instance of request.user is empty or not
+    if (!request.user) {
+        response.redirect(401, '/login');
+        return;
+    }
+    // This puts the userID directly into the var
+    var userId = request.session.passport.user;
+    var portfolioId = request.params['portfolioId'];
+
+    models.User.findById(userId).then(function(user) {
+        if (user)
+            return user.getPortfolios({where: {id: portfolioId}});
+    }).then(function(portfolios) {
+        if (portfolios.length === 0) {
+            console.log("No access to portfolio");
+            response.status(401).end('Unauthorized access to portfolio');
+			return;
+        }
+        models.Portfolio.findOne({
+            where: [{
+                id: portfolioId
+            }],
+            include: [{
+                model: models.User
+            }]
+        }).then(function(portfolioUsersInstance){
+            var count = 0;
+            var total = portfolioUsersInstance.Users.length;
+            var usersData = [];
+            console.log(total);
+            portfolioUsersInstance.Users.forEach(function(userInformation){
+                console.log(userInformation);
+                var userData = {
+                    id: userInformation.id,
+                    username: userInformation.username
+                }
+                usersData.push(userData);
+                count++;
+                if (count === total){
+                    console.log("sending users that belong to portfolio with id: " + portfolioId);
+                    response.end(JSON.stringify({'users': usersData}, null, 4))
+                }
+            })
+            //Will DEFINITELY need to make this look better. I'll let Front end decide what they want in the return.
         })
     })
 });
