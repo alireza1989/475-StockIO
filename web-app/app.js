@@ -196,6 +196,41 @@ app.get('/api/portfolios', function (request, response) {
 	})
 });
 
+// This is to edit a portfolio
+app.post('/api/portfolios/:portfolioId', function (request, response) {
+	if (!request.user) {
+		response.redirect(401, '/login');
+		return;
+	}
+
+    var portfolioId = request.params['portfolioId'];
+	var sessionUserId = request.session.passport.user;
+	models.Users_Portfolios.findOne({
+        where: [{
+            PortfolioId: portfolioId,
+            UserId: sessionUserId
+        }]
+    }).then(function(portfolio) {
+        if(portfolio.length === 0){
+            console.log("No access to portfolio");
+            response.status(401).end('Unauthorized access to portfolio');
+			return;
+        }
+        var permission = portfolio.Permission;
+        if(permission !== "admin" || permission !== "write"){
+            console.log("You have the wrong permissions");
+            response.status(401).end('Unauthorized access to portfolio');
+			return;
+        }
+        else{
+            var companyId = request.body.companyId;
+            portfolio.addCompany(companyId);
+            response.end(JSON.stringify(portfolio));
+			console.log("CompanyId: " + companyId + " , added to PortfolioId: " + portfolioId);
+        }
+	})
+});
+
 app.post('/api/portfolios/:portfolioId/invite', function(request, response)
 {
 	if (!request.user) {
