@@ -124,23 +124,35 @@ app.get('/api/users/current', function(request, response) {
 	});
 })
 
-// returns portfolio IDs for the user and their permission
+// returns portfolio IDs and names for the current user
 app.get('/api/portfolios', function (request, response) {
-    if (!request.user) {
-        response.redirect(401, '/login');
-        return;
-    }
+	if (!request.user) {
+		response.redirect(401, '/login');
+		return;
+	}
 
-    var userId = request.session.passport.user;
-     models.User.findById(userId, {include: [ models.Portfolio]} )
-    .then(function(user) {
-        if (user)
-            return user.getPortfolios({include: [models.Company]});
-    })
-    .then(function(portfolios) {
+	var sessionUserId = request.session.passport.user;
 
-        response.end(JSON.stringify(portfolios));
-    })
+	models.User.findById(sessionUserId).then(function(user) {
+		if (user)
+			return user.getPortfolios();
+	}).then(function(portfolios) {
+        var count = 0;
+        var total = portfolios.length;
+        var portfoliosData = [];
+        portfolios.forEach(function(portfolioList) {
+            var portfolioData = {
+                id: portfolioList.id,
+                name: portfolioList.name
+            }
+            portfoliosData.push(portfolioData);
+            count++;
+            if (count === total){
+                console.log("sending portfolio data");
+                response.end(JSON.stringify({'portfolios': portfoliosData}, null, 4))
+            }
+        });
+	})
 });
 
 app.get('/api/portfolios/:portfolioId', function (request, response) {
