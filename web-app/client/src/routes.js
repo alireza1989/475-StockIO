@@ -5,7 +5,7 @@ import App from './pages/App';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 
-// Define our routes
+// Define application routes
 const routes = (
     <Route path='/' component={App}>
         <IndexRoute component={Dashboard} />
@@ -13,6 +13,5 @@ const routes = (
         <Route path='dashboard' component={Dashboard} />
     </Route>
 );
-
 
 export default routes;
