@@ -1,26 +1,32 @@
 import React, { Component } from 'react';
-import CloseIcon from '../assets/close.svg';
+import './PortfolioAdmin.css';
 
-class ListAdmin extends Component {
+class PortfolioAdmin extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-            name:           props.company.name,
-            ticker:         props.company.symbol,
-            price:          props.company.last_price,
-            change_price:   props.company.change_price,
-            change_percent: props.company.change_percent
+            name: props.portfolio.name,
 		};
 	}
 
 	render() {
 		return (
-            <div className="ListAdmin">
-
+            <div className="portfolio-admin">
+                <div className="portfolio-admin-form">
+                    <h3>{this.state.name}</h3>
+                    
+                    <ul id="portfolio-admin-stocks">
+                        <li>Stock 1</li>
+                    </ul>
+                    
+                    <ul id="portfolio-admin-users">
+                        <li>User 1</li>
+                    </ul>
+                </div>
             </div>
 		)
 	}
 }
 
-export default StockPopup;
+export default PortfolioAdmin;

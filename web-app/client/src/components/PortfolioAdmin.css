@@ -1,0 +1,17 @@
+/* Elliot Barer, ebarer [at] mac [dot] com, 2017-03-25 */
+
+
+/* PORTFOLIO-ADMIN */
+.portfolio-admin {
+    background: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.portfolio-admin-form {
+    background: red;
+    height: 500px;
+    width: 80%;
+    margin: 0 auto;
+}

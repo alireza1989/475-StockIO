@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Portfolio from '../components/Portfolio';
+import PortfolioAdmin from '../components/PortfolioAdmin';
 import logo from "../assets/logo-white.svg";
 import './Dashboard.css';
 
@@ -9,7 +10,7 @@ class Dashboard extends Component {
     constructor() {
         super();
         this.state = {
-            portfolios : []
+            portfolios: []
         };
     }
 
@@ -19,21 +20,27 @@ class Dashboard extends Component {
             this.setState({portfolios});
         });
     }
+    
+    editPortfolio(name) {
+        console.log(name);
+    }
 
     render() {
         return (
             <div className="App">
                 <nav>
                     <ul>
-                        <li className="nav-title">
-                            Stock.I<img src={logo} alt="O"/>
-                        </li>
+                        <li className="nav-title">Stock.I<img src={logo} alt="O"/></li>
                         <li className="nav-button nav-account">{this.props.name}</li>
                     </ul>
                 </nav>
 
                 <div className="Dashboard">
-                    {this.state.portfolios.map((portfolio, i) => <Portfolio key={i} name={portfolio.name}/>)}
+                    {this.state.portfolios.map((portfolio, i) =>
+                            <Portfolio key={i} name={portfolio.name}
+                                       editPortfolio={this.editPortfolio}
+                            />)
+                    }
                 </div>
             </div>
         );
