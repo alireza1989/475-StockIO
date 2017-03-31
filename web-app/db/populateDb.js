@@ -46,12 +46,23 @@ models.sequelize.sync({force: true}).then(function() {
                 lastname: user.lastname,
                 username: user.username,
                 password: user.password
-            }).then(function(newUser) {
-                models.Portfolio.create({ name: 'Admin Portfolio'}).then(function (portfolio) {
-                    newUser.addPortfolio(portfolio, { permission: 'admin' });
-                    portfolio.setCompanies(user.companies);
-                });
             });
         });
     });
+
+    fs.readFile('./portfolios.json', function(err, data) {
+        var portfolios = JSON.parse(data).portfolios;
+
+        portfolios.forEach(function(portfolio) {
+            models.Portfolio.create({
+                name: portfolio.name
+            }).then(function(portfolioDb) {
+                portfolioDb.addCompanies(portfolio.companies);
+                portfolioDb.addUsers(portfolio.users, {permission: 'admin'});
+            })
+        });
+    });
+
+
+
 });

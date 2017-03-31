@@ -39,7 +39,8 @@ module.exports = function(sequelize, DataType) {
             },
             associate: function(models) {
                 User.belongsToMany(models.Portfolio, {through: 'Users_Portfolios', timestamps: false});  
-                User.hasMany(models.Invitation, {as: 'Invitations'});       
+                User.hasMany(models.Invitation, {as: 'Invitations'});     
+                User.belongsToMany(models.Session, { through: 'Users_Sessions', foreignKeyConstraint: true });  
             }
         }
     });

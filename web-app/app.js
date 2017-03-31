@@ -1,29 +1,31 @@
-/* TrueNorth, CMPT 470, 2017-03-23 */
-
 //////////////////////////////////////////////////
 // CONSTANTS
 //////////////////////////////////////////////////
-
 const PORT = 3001;
 const UPDATE_FREQUENCY = 10000 //ms
-
-var COMPANIES = [];  //This data is retrieved from the DB on app start.
-
 //////////////////////////////////////////////////
 // REQUIREMENTS
 //////////////////////////////////////////////////
-
 var fs = require('fs');
 var path = require('path');
+var cheerio = require('cheerio');
+
+//Server
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var request = require('request');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var cheerio = require('cheerio');
 var models = require('./db/models');
+var request = require('request');
 
+//Session Management
+var passport = require('passport');
+var session = require('express-session');
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
+var LocalStrategy = require('passport-local').Strategy;
+
+//Passport strategy modules
+var localLoginStrategy = require('./server/passport/local-login');
+var localSignupStrategy = require('./server/passport/local-signup');
 //////////////////////////////////////////////////
 // CONFIGURE APP + REAL-TIME SOCKET
 //////////////////////////////////////////////////
@@ -36,71 +38,24 @@ app.use('/static', express.static(__dirname + '/static'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use(require('express-session')({
+app.use(session({
     secret: 'keyboard kitty',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new SequelizeStore({db: models.sequelize, table: 'Session'})
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 //////////////////////////////////////////////////
 // 			SESSION MANAGEMENT
 //////////////////////////////////////////////////
-
-passport.use('login', new LocalStrategy(function (username, password, done) {
-	models.User.findOne({where: {username: username}}).then(function(user) {
-		if (!user)
-			return done(null, false, { message: 'Incorrect username'});
-
-		var correctPassword = user.validPassword(password);
-
-		if (!correctPassword)
-			return done(null, false, {message: 'Incorrect password'});
-
-		return done(null, user);
-	});
-}));
-
-passport.use('signup', new LocalStrategy ({passReqToCallback : true}, function (request, username, password, done) {
-	var firstname = request.body['firstname'];
-	var lastname = request.body['lastname'];
-	var companies = request.body['companies']; // Array of id's
-
-	//Check if password is long enough; otherwise send error.
-	if (password.length < 8)
-		return done(null, false, {message:'Password length must be at least 8 characters.'});
-
-    models.User.create({
-    	firstname: firstname,
-    	lastname: lastname,
-    	username: username,
-    	password: models.User.hashPassword(password)
-    }).then(function(user) {
-    	//Create the user's first portfolio
-    	models.Portfolio.create({ name: 'My First Portfolio'}).then(function (portfolio) {
-    		user.addPortfolio(portfolio, { permission: 'admin' });
-
-		console.log("Companies " + companies);
-    		if (companies != '' && companies != null)
-    			portfolio.setCompanies(companies);  //Add companies to it if the user has specified any.
-
-    		done(null, user);
-    	});
-    }).catch(function(error) {
-    	console.log('Error: something wrong when creating new user: ' + error);
-    	done(null, false, {message: JSON.stringify(error['errors'])});
-    });
-}));
-
+passport.use('signup', localSignupStrategy);
+passport.use('login', localLoginStrategy);
 passport.serializeUser(function(user, done) {
-	console.log("serialize user:");
-  return done(null, user.id);
+	return done(null, user.id);
 });
-
 passport.deserializeUser(function(userId, done) {
-	console.log('deserailizeuser');
 	models.User.findById(userId).then(function (user) {
 		if (!user)
 			return done(null, false);
@@ -109,10 +64,11 @@ passport.deserializeUser(function(userId, done) {
 	})
 });
 
-
 //////////////////////////////////////////////////
 // PAGES
 //////////////////////////////////////////////////
+
+//Not used at moment.
 // app.get('/', function(request, response) {
 //     response.redirect(301, 'http://localhost:3000/dashboard');
 // });
@@ -121,84 +77,103 @@ passport.deserializeUser(function(userId, done) {
 //     loadPage(request, response, 'index.html');
 // });
 
-var loadPage = function(request, response, page) {
-//     if (request.session) {
-        response.status(200);
-        response.setHeader('Content-Type', 'text/html');
+// var loadPage = function(request, response, page) {
+//         response.status(200);
+//         response.setHeader('Content-Type', 'text/html');
 
-        var fPath = path.join(__dirname, page);
-        fs.createReadStream(fPath).pipe(response);
+//         var fPath = path.join(__dirname, page);
+//         fs.createReadStream(fPath).pipe(response);
 //    } else {
 //        response.redirect(301, 'http://localhost:3000/login');
 //    }
-}
+//}
 
-// Middleware managed. Do not alter route.
-app.post('/accounts/signup', passport.authenticate('signup', {
+//////////////////////////////////////////////////
+//                      API
+//////////////////////////////////////////////////
+
+//Middleware Managed API
+app.post('api/users/signup', passport.authenticate('signup', {
 	successRedirect: '/dashboard',
     failureRedirect: '/login',
     session: true
 }));
 
-// Middleware managed. Do not alter route.
-app.post('/accounts/login', passport.authenticate('login', {
+//Middleware Managed API
+app.post('/api/users/login', passport.authenticate('login', {
 	successRedirect: '/dashboard',
     failureRedirect: '/login',
     session: true
 }));
 
-// Middleware managed. Do not alter route.
-app.get('/accounts/logout', function(request, response) {
+//Middleware Managed API
+app.post('/api/users/logout', function(request, response) {
   request.logout();
-  response.redirect('/');
+  response.redirect('/login');
 });
 
-//////////////////////////////////////////////////
-// 						API
-//////////////////////////////////////////////////
-
-app.get('/api/quotes/', function (request, response) {
-	models.Company.findAll({attributes: ['id', 'symbol', 'last_price']}).then(function(prices) {
-		response.send(JSON.stringify(prices));
-	})
-});
-
-app.get('/api/quotes/:symbol', function (request, response) {
-    var symbol = request.params['symbol'];
-	models.Company.findOne({where: {symbol: symbol}, attributes: ['id', 'symbol', 'last_price']}).then(function(price) {
-		if (!price)
-			response.status(400).send("Invalid Symbol (Case sensitive)");
-		else
-			response.send(JSON.stringify(price));
-	})
-});
-
-app.get('/api/companies', function (request, response) {
-	models.Company.findAll().then(function(companies) {
-		response.send(JSON.stringify(companies));
+app.get('/api/users/current', function(request, response) {
+    if (!request.user) {
+        response.redirect(401, '/login');
+        return;
+    }
+    var sessionUserId = request.session.passport.user;
+    models.User.findById(sessionUserId, {attributes: ['id', 'firstname', 'lastname' ]})
+    .then(function (user) {
+        response.send(JSON.stringify(user));
 	});
-});
-
+})
 
 // returns portfolio IDs for the user and their permission
 app.get('/api/portfolios', function (request, response) {
-	if (!request.user) {
-		response.redirect(401, '/login');
-		return;
-	}
+    if (!request.user) {
+        response.redirect(401, '/login');
+        return;
+    }
 
-	var sessionUserId = request.session.passport.user;
-	 models.User.findById(sessionUserId)
-	.then(function(user) {
-		if (user)
-			return user.getPortfolios();
-	})
-	.then(function(portfolios) {
-		response.end(JSON.stringify(portfolios));
+    var userId = request.session.passport.user;
+     models.User.findById(userId, {include: [ models.Portfolio]} )
+    .then(function(user) {
+        if (user)
+            return user.getPortfolios({include: [models.Company]});
+    })
+    .then(function(portfolios) {
+
+        response.end(JSON.stringify(portfolios));
+    })
+});
+
+app.get('/api/portfolios/:portfolioId', function (request, response) {
+    if (!request.user) {
+        response.redirect(401, '/login');
+        return;
+    }
+    var userId = request.session.passport.user;
+    var portfolioId = request.params['portfolioId'];
+
+    models.User.findById(userId)
+    .then(function(user) {
+        return user.getPortfolios({where: {id: portfolioId}});
+    }).then(function(portfolio) {
+       if (portfolio.length == 0)
+           response.send(401, 'Unauthorized');
+       else
+           response.send(JSON.stringify(portfolio));
+    });
+});
+
+app.get('/api/stocks/:symbol', function (request, response) {
+    var symbol = request.params['symbol'];
+    models.Company.findOne({where: {symbol: symbol}}).then(function(stock) {
+        if (!stock)
+            response.status(400).send("Invalid Symbol (Case sensitive)");
+        else
+            response.send(JSON.stringify(stock));
 	})
 });
 
-// This is to edit a portfolio
+
+// This is to add a company to a portfolio
 app.post('/api/portfolios/:portfolioId', function (request, response) {
 	if (!request.user) {
 		response.redirect(401, '/login');
@@ -206,31 +181,31 @@ app.post('/api/portfolios/:portfolioId', function (request, response) {
 	}
 
     var portfolioId = request.params['portfolioId'];
-	var sessionUserId = request.session.passport.user;
-	models.Users_Portfolios.findOne({
-        where: [{
-            PortfolioId: portfolioId,
-            UserId: sessionUserId
-        }]
+    var userId = request.session.passport.user;
+
+    models.User.findById(userId)
+    .then(function(user) {
+        return user.getPortfolios({where: {id: portfolioId }});
     }).then(function(portfolio) {
-        if(portfolio.length === 0){
+        if (portfolio.length === 0) {
             console.log("No access to portfolio");
             response.status(401).end('Unauthorized access to portfolio');
 			return;
         }
+
         var permission = portfolio.Permission;
-        if(permission !== "admin" || permission !== "write"){
+        if(permission !== "admin" || permission !== "write") {
             console.log("You have the wrong permissions");
             response.status(401).end('Unauthorized access to portfolio');
 			return;
         }
-        else{
+        else {
             var companyId = request.body.companyId;
             portfolio.addCompany(companyId);
             response.end(JSON.stringify(portfolio));
 			console.log("CompanyId: " + companyId + " , added to PortfolioId: " + portfolioId);
         }
-	})
+	});
 });
 
 app.post('/api/portfolios/:portfolioId/invite', function(request, response)
@@ -405,6 +380,7 @@ io.on('connection', function(socket) {
 	});
 });
 
+var COMPANIES = [];  //This data is retrieved from the DB on app start.
 var listenForStockUpdates = function() {
 	var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + COMPANIES;
 	setInterval(function() {request(url, onStocksUpdate)}, UPDATE_FREQUENCY);
@@ -427,9 +403,10 @@ var onStocksUpdate = function(error, response, body) {
 		quote.change_percent = stock.cp;
 		quote.last_trade_time = stock.lt;
         quote.previous_close_price = stock.pcls_fix;
-        quote.dividend = stock.div;
-        quote.yield = stock.yld;
+        quote.dividend = (stock.div == '') ? 0 : stock.div;
+        quote.yield = (stock.yld == '') ? 0 : stock.yld;
 
+console.log(quote);
 		models.Company.findOne({where: {symbol: quote.ticker}}).then(function(company) {
 
 			if (company.last_price != quote.price) {

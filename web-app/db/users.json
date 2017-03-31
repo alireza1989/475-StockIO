@@ -1,10 +1,24 @@
 {
    "users":[
 	{
-		 "firstname": "Jon",
+		 "firstname": "Elliot",
 		 "lastname": "Snow",
-		 "username": "admin@email.com",
+		 "username": "elliot@elliot.com",
 		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e",
-		 "companies": [1,2,3,4,5,6,7,8,9,10]
+		 "companies": []
+	},
+	{
+		 "firstname": "Bonnie",
+		 "lastname": "Snow",
+		 "username": "bonnie@bonnie.com",
+		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e",
+		 "companies": []
+	},
+	{
+		 "firstname": "Sherlock",
+		 "lastname": "Snow",
+		 "username": "sherlock@sherlock.com",
+		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e",
+		 "companies": []
 	}]
 }
