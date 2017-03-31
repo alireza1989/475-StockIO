@@ -6,7 +6,7 @@ class PortfolioAdmin extends Component {
 		super(props);
 
 		this.state = {
-            name: props.portfolio.name,
+            name: props.name,
 		};
 	}
 
