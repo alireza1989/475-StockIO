@@ -10,6 +10,8 @@ class Dashboard extends Component {
     constructor() {
         super();
         this.state = {
+            username: 'Elliot',
+            overlay: false,
             selectedPortfolio: undefined,
             portfolios: []
         };
@@ -27,16 +29,25 @@ class Dashboard extends Component {
     }
     
     editPortfolio(id) {
-        this.setState({selectedPortfolio: id});
+        this.setState({
+            overlay: true,
+            selectedPortfolio: id
+        });
     }
     
     cancelPortfolioChanges() {
-        this.setState({selectedPortfolio: undefined});
+        this.setState({
+            overlay: false,
+            selectedPortfolio: undefined
+        });
     }
     
     savePortfolioChanges() {
         // Save changes
-        this.setState({selectedPortfolio: undefined});        
+        this.setState({
+            overlay: false,
+            selectedPortfolio: undefined
+        });        
     }
     
     renderAdminPanel() {
@@ -50,11 +61,11 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <div className="App">
+            <div className={`App ${this.state.overlay ? 'no-scroll' : ''}`}>
                 <nav>
                     <ul>
                         <li className="nav-title">Stock.I<img src={logo} alt="O"/></li>
-                        <li className="nav-button nav-account">{this.props.name}</li>
+                        <li className="nav-button nav-account">{this.state.username}</li>
                     </ul>
                 </nav>
 

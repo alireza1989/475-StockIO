@@ -7,7 +7,7 @@
     height: 100%;
     width: 100%;
     position: absolute;
-    z-index: 500;
+    z-index: 1500;
     top: 0;
     left: 0;
 }
@@ -55,4 +55,22 @@
     box-sizing: border-box;
     border-top: 1px solid black;
     overflow-y: scroll;
+}
+
+@media only screen and (max-width: 500px) {
+    .portfolio-admin-form {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .portfolio-admin-form input[name="portfolio-name"] {
+        margin: 10px;
+    }
+    
+    .portfolio-admin-form button[name="close-form"] {
+        right: 0
+    }
+
 }

@@ -142,5 +142,6 @@ transform: scale(1.2);
     
     .stock-tile-content .price-change {
         float: none;
+        display: block;
     }
 }

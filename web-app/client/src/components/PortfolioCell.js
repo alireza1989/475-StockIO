@@ -29,7 +29,7 @@ class PortfolioCell extends Component {
         return (
             <li className="stock-tile">
 
-                <div className={'stock-tile-content ' + ((this.state.change_price > 0) ? 'up' : 'down')} onClick={this.toggleSummary}>
+                <div className={`stock-tile-content ${ (this.state.change_price > 0) ? 'up' : 'down'}`} onClick={this.toggleSummary}>
                     <div className="info">
                         <p className="name">{this.state.name}</p>
                         <h1>{this.state.ticker}</h1>

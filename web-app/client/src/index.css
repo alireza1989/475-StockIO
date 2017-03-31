@@ -41,7 +41,11 @@ html, body, #app {
     -webkit-font-smoothing: antialiased;
 }
 
-.App {
+.App, .Root {
     height: 100%;
     width: 100%;
+}
+
+.App.no-scroll {
+    overflow: hidden;
 }
