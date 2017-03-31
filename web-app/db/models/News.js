@@ -1,5 +1,9 @@
 module.exports = function(sequelize, DataType) {
     var News = sequelize.define('News', {
+        company: {
+            type: DataType.STRING,
+            field: 'company'
+        },
         title: {
             type: DataType.STRING,
             field: 'title'
