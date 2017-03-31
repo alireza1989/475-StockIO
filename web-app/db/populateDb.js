@@ -15,7 +15,10 @@ models.sequelize.sync({force: true}).then(function() {
                 sector: stock.sector,
                 last_price: 0.00,
                 change_price: 0.00,
-                change_percent: 0.00
+                change_percent: 0.00,
+                previous_close_price: 0.00,
+                dividend: 0.00,
+                yield: 0.00
             });
         });
     });

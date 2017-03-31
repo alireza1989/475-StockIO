@@ -40,12 +40,27 @@ module.exports = function(sequelize, DataType) {
             field: 'change_percent',
             allowNull: false
         },
+        previous_close_price: {
+            type: DataType.DECIMAL,
+            field: 'previous_close_price',
+            allowNull: false
+        },
+        dividend: {
+            type: DataType.DECIMAL,
+            field: 'dividend',
+            allowNull: false
+        },
+        yield: {
+            type: DataType.DECIMAL,
+            field: 'yield',
+            allowNull: false
+        }
 
     }, {
         timestamps: false,
         classMethods: {
             associate: function(models) {
-                Company.belongsToMany(models.Portfolio, {through: 'Companies_Portfolios', timestamps: false});         
+                Company.belongsToMany(models.Portfolio, {through: 'Companies_Portfolios', timestamps: false});
             }
         }
     });

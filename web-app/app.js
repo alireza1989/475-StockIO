@@ -179,6 +179,8 @@ app.get('/api/companies', function (request, response) {
 	});
 });
 
+
+// returns portfolio IDs for the user and their permission
 app.get('/api/portfolios', function (request, response) {
 	if (!request.user) {
 		response.redirect(401, '/login');
@@ -424,12 +426,15 @@ var onStocksUpdate = function(error, response, body) {
 		quote.change_price = stock.c;
 		quote.change_percent = stock.cp;
 		quote.last_trade_time = stock.lt;
+        quote.previous_close_price = stock.pcls_fix;
+        quote.dividend = stock.div;
+        quote.yield = stock.yld;
 
 		models.Company.findOne({where: {symbol: quote.ticker}}).then(function(company) {
 
 			if (company.last_price != quote.price) {
 				console.log("Price change! From " + company.last_price + ' to ' + quote.price + " for company " + quote.ticker);
-				return company.update({last_price: parseFloat(quote.price), change_price: parseFloat(quote.change_price), change_percent: parseFloat(quote.change_percent)});
+				return company.update({last_price: parseFloat(quote.price), change_price: parseFloat(quote.change_price), change_percent: parseFloat(quote.change_percent), previous_close_price: parseFloat(quote.previous_close_price), dividend: parseFloat(quote.dividend), yield: parseFloat(quote.yield)});
 			}
 		}).then(function(updatedCompany) {
 			if (updatedCompany) {
