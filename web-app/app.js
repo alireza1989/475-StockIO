@@ -137,6 +137,7 @@ app.get('/api/portfolios', function (request, response) {
 		if (user)
 			return user.getPortfolios();
 	}).then(function(portfolios) {
+        console.log(JSON.stringify(portfolios));
         var count = 0;
         var total = portfolios.length;
         var portfoliosData = [];
@@ -150,6 +151,45 @@ app.get('/api/portfolios', function (request, response) {
             if (count === total){
                 console.log("sending portfolio data");
                 response.end(JSON.stringify({'portfolios': portfoliosData}, null, 4))
+            }
+        });
+	})
+});
+
+// Get Information of a single portfolio that the user has permissions to.
+app.get('/api/portfolios/:portfolioId', function (request, response) {
+	if (!request.user) {
+		response.redirect(401, '/login');
+		return;
+	}
+
+	var sessionUserId = request.session.passport.user;
+    var portfolioId = request.params['portfolioId'];
+    console.log();
+    console.log(sessionUserId);
+    console.log();
+
+	models.User.findById(sessionUserId).then(function(user) {
+		if (user)
+			return user.getPortfolios();
+	}).then(function(portfolios) {
+        var portfoliosData = [];
+        var count = 0;
+        var total = portfolios.length;
+        portfolios.forEach(function(portfolioList) {
+            if (portfolioList.id == portfolioId){
+                var portfolioData = {
+                    id: portfolioList.id,
+                    name: portfolioList.name
+                }
+                portfoliosData.push(portfolioData);
+                console.log("sending portfolio data");
+                response.end(JSON.stringify(portfoliosData, null, 4))
+            }
+            count++;
+            if (count === total){
+                console.log("Invalid portfolio id");
+                response.status(400).send("Invalid portfolio id");
             }
         });
 	})
