@@ -15,10 +15,14 @@ class StockProperty extends Component {
 		return (
 			<li className="StockProperty">
 				<h4>{this.state.name}</h4>
-				<p>{this.state.value}</p>
+				{(this.state.value == null) ? 
+					<p>N/A</p>
+					: <p>{this.state.value}</p>
+				}
 			</li>
 		);
 	}
 }
 
 export default StockProperty;
+

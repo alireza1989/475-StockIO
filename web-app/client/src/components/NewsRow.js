@@ -18,9 +18,9 @@ class NewsRow extends Component {
     render() {
         return (
             <li className="news-article">   
-                <h4> Title: {this.state.title} </h4>
-                <h5> Date: {this.state.date} </h5>
-                <p> Summary: {this.state.summary} </p>
+                <h5> {this.state.title} </h5>
+                <p className="date"> Date: {this.state.date} </p>
+                <p> {this.state.summary} </p>
                 <a> {this.state.url} </a>
             </li>
         );

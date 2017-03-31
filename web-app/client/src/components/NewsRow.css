@@ -1,0 +1,10 @@
+.news-article {
+	overflow: hidden;
+	text-overflow: wrap;
+	margin: 3px;
+}
+.news-article p {
+}
+p.date {
+
+}
