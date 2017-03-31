@@ -137,7 +137,6 @@ app.get('/api/portfolios', function (request, response) {
 		if (user)
 			return user.getPortfolios();
 	}).then(function(portfolios) {
-        console.log(JSON.stringify(portfolios));
         var count = 0;
         var total = portfolios.length;
         var portfoliosData = [];
@@ -158,60 +157,62 @@ app.get('/api/portfolios', function (request, response) {
 
 // Get Information of a single portfolio that the user has permissions to.
 app.get('/api/portfolios/:portfolioId', function (request, response) {
-	if (!request.user) {
-		response.redirect(401, '/login');
-		return;
-	}
-
-	var sessionUserId = request.session.passport.user;
-    var portfolioId = request.params['portfolioId'];
-    console.log();
-    console.log(sessionUserId);
-    console.log();
-
-	models.User.findById(sessionUserId).then(function(user) {
-		if (user)
-			return user.getPortfolios();
-	}).then(function(portfolios) {
-        var portfoliosData = [];
-        var count = 0;
-        var total = portfolios.length;
-        portfolios.forEach(function(portfolioList) {
-            if (portfolioList.id == portfolioId){
-                var portfolioData = {
-                    id: portfolioList.id,
-                    name: portfolioList.name
-                }
-                portfoliosData.push(portfolioData);
-                console.log("sending portfolio data");
-                response.end(JSON.stringify(portfoliosData, null, 4))
-            }
-            count++;
-            if (count === total){
-                console.log("Invalid portfolio id");
-                response.status(400).send("Invalid portfolio id");
-            }
-        });
-	})
-});
-
-app.get('/api/portfolios/:portfolioId', function (request, response) {
     if (!request.user) {
         response.redirect(401, '/login');
         return;
     }
     var userId = request.session.passport.user;
     var portfolioId = request.params['portfolioId'];
-
-    models.User.findById(userId)
-    .then(function(user) {
-        return user.getPortfolios({where: {id: portfolioId}});
+    models.User.findById(userId).then(function(user) {
+        if (user)
+            return user.getPortfolios({where: {id: portfolioId}});
     }).then(function(portfolio) {
-       if (portfolio.length == 0)
-           response.send(401, 'Unauthorized');
-       else
-           response.send(JSON.stringify(portfolio));
-    });
+        if (portfolio.length == 0)
+        {
+            response.send('401', 'Not authorized');
+            return;
+        }
+        var portfoliosData = [];
+        portfolioData = {
+            id: portfolio[0].id,
+            name: portfolio[0].name
+        }
+        portfoliosData.push(portfolioData);
+        response.end(JSON.stringify(portfoliosData, null, 4))
+    })
+});
+
+app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
+    // This checks if the instance of request.user is empty or not
+    if (!request.user) {
+        response.redirect(401, '/login');
+        return;
+    }
+    // This puts the userID directly into the var
+    var userId = request.session.passport.user;
+    var portfolioId = request.params['portfolioId'];
+
+    models.User.findById(userId).then(function(user) {
+        if (user)
+            return user.getPortfolios({where: {id: portfolioId}});
+    }).then(function(portfolios) {
+        if (portfolios.length === 0) {
+            console.log("No access to portfolio");
+            response.status(401).end('Unauthorized access to portfolio');
+			return;
+        }
+        models.Portfolio.findOne({
+            where: [{
+                id: portfolioId
+            }],
+            include: [{
+                model: models.Company
+            }]
+        }).then(function(portfolioInstance){
+            //Will DEFINITELY need to make this look better. I'll let Front end decide what they want in the return.
+            response.end(JSON.stringify(portfolioInstance, null, 4))
+        })
+    })
 });
 
 app.get('/api/stocks/:symbol', function (request, response) {
