@@ -6,15 +6,49 @@ class PortfolioAdmin extends Component {
 		super(props);
 
 		this.state = {
-            name: props.portfolio.name,
+            name: props.name,
 		};
 	}
+	
+    componentWillMount() {
+        // API call to get admin details for portfolio
+        this.setState({
+            name: 'Technology',
+            stocks: ['AAPL', 'MSFT', 'TSLA', 'AMZN', 'FB', 'INTL'],
+            members: [
+                {
+                    id: 1,
+                    name: 'Elliot'
+                }, {
+                    id: 2,
+                    name: 'Bonnie'
+                }, {
+                    id: 3,
+                    name: 'Sherlock'
+                }, {
+                    id: 3,
+                    name: 'Sarah'
+                }, {
+                    id: 5,
+                    name: 'Ali'
+                }
+            ]
+        });
+    }
+    
+    closeForm() {
+        console.log('hide');
+    }
 
 	render() {
 		return (
             <div className="portfolio-admin">
                 <div className="portfolio-admin-form">
-                    <h3>{this.state.name}</h3>
+                    <input type="text" name="portfolio-name" defaultValue={this.state.name}/>
+
+                    <button name="close-form" onClick={() => {
+                        this.props.cancelChanges();
+                    }}>X</button>
                     
                     <ul id="portfolio-admin-stocks">
                         <li>Stock 1</li>

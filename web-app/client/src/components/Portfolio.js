@@ -10,6 +10,8 @@ class Portfolio extends Component {
         this.state = {
             companies: []
         };
+        
+        
     }
    
     componentWillMount() {
@@ -25,13 +27,15 @@ class Portfolio extends Component {
 
     render() {
         return (
-            <section className="stock-list">
-                <h2 className="stock-list-header">
+            <section className="portfolio">
+                <h2 className="portfolio-header">
                     {this.props.name}
-                    <span className="stock-list-edit" onClick={this.editPortfolio.bind(this)}>Edit</span>
-                </h2>
+                    <span className="portfolio-edit" onClick={() => {
+                        this.props.editPortfolio(this.props.id);
+                    }}>Edit</span>
+                </h2> 
                 
-                <div className="stock-list-navigation">
+                <div className="portfolio-navigation">
                     <span className="nav-button prev">&lsaquo;</span>
                     <span className="nav-button next">&rsaquo;</span>
                 </div>
