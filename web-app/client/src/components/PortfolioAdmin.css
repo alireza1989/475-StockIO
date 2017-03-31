@@ -3,15 +3,56 @@
 
 /* PORTFOLIO-ADMIN */
 .portfolio-admin {
-    background: black;
+    background: rgba(0,0,0,0.5);
+    height: 100%;
+    width: 100%;
     position: absolute;
+    z-index: 500;
     top: 0;
     left: 0;
 }
 
 .portfolio-admin-form {
-    background: red;
-    height: 500px;
+    background: #2e2e2e;
+    height: 600px;
+    width: 700px;
+    margin: 100px auto;
+    box-sizing: border-box ;
+    border-radius: 20px;
+}
+
+.portfolio-admin-form button[name="close-form"] {
+    background: transparent;
+    color: white;
+    font: 30px/1px Arial;
+    height: 50px;
+    width: 50px;
+    border: none;
+    border-radius: 50px;
+    position: relative;
+    top: 1px;
+    right: -25px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.portfolio-admin-form input[name="portfolio-name"] {
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    font-size: 24px;
+    margin: 25px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
     width: 80%;
-    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.portfolio-admin-form ul {
+    height: 250px;
+    padding: 25px;
+    box-sizing: border-box;
+    border-top: 1px solid black;
+    overflow-y: scroll;
 }

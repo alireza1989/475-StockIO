@@ -15,6 +15,8 @@ class Dashboard extends Component {
         };
         
         this.editPortfolio = this.editPortfolio.bind(this);
+        this.cancelPortfolioChanges = this.cancelPortfolioChanges.bind(this);
+        this.savePortfolioChanges = this.savePortfolioChanges.bind(this);
     }
 
     componentWillMount() {
@@ -25,14 +27,24 @@ class Dashboard extends Component {
     }
     
     editPortfolio(id) {
-        console.log(id);
         this.setState({selectedPortfolio: id});
+    }
+    
+    cancelPortfolioChanges() {
+        this.setState({selectedPortfolio: undefined});
+    }
+    
+    savePortfolioChanges() {
+        // Save changes
+        this.setState({selectedPortfolio: undefined});        
     }
     
     renderAdminPanel() {
         if (this.state.selectedPortfolio) {
-            console.log("Show admin pane");
-            return <PortfolioAdmin name={this.state.selectedPortfolio} />
+            return <PortfolioAdmin  name={this.state.selectedPortfolio}
+                                    cancelChanges={this.cancelPortfolioChanges}
+                                    saveChanges={this.savePortfolioChanges}
+                    />
         }
     }
 
