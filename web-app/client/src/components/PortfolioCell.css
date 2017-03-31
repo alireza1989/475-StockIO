@@ -1,8 +1,8 @@
 /* Elliot Barer, ebarer [at] mac [dot] com, 2017-03-25 */
 
 
-/* STOCK-TILE */
-.stock-tile {
+/* PORTFOLIO-CELL */
+.portfolio-cell {
     height: 125px;
     width: 20%;
     margin: 25px 0;
@@ -13,18 +13,18 @@
     cursor: pointer;
 }
 
-.stock-tile:hover ~ .stock-tile {
+.portfolio-cell:hover ~ .portfolio-cell {
 /*     transform: translate3d(71px, 0, 0); */
 }
 
-.stock-tile:last-of-type {
+.portfolio-cell:last-of-type {
     margin: 25px 4% 0 0;
 }
 
-.stock-tile-content {
+.portfolio-cell-content {
     height: 100%;
     width: 100%;
-    padding: 8px;
+    padding: 8px 15px;
     border-radius: 8px;
     overflow: hidden;
     box-sizing: border-box;
@@ -34,34 +34,34 @@
     transform-origin: center;
 }
 
-.stock-tile-content:hover {
+.portfolio-cell-content:hover {
     -webkit-backdrop-filter: saturate(180%) blur(25px);
-transform: scale(1.2);
+    transform: scale(1.2);
     z-index: 60;
 }
 
-.stock-tile-content.up {
+.portfolio-cell-content.up {
     background: rgba(0, 255, 0, 0.5);
 }
 
-.stock-tile-content.down {
+.portfolio-cell-content.down {
     background: rgba(255, 0, 0, 0.5);
 }
 
-.stock-tile-content h1 {
+.portfolio-cell-content h1 {
     font: bold 26px/30px Helvetica;
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.stock-tile-content p.name {
+.portfolio-cell-content p.name {
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.stock-tile-content .details {
+.portfolio-cell-content .details {
     width: 100%;
     clear: both;
     font-size: 14px;
@@ -69,78 +69,78 @@ transform: scale(1.2);
     text-overflow: ellipsis;
 }
 
-.stock-tile-content .price {
+.portfolio-cell-content .price {
     font: 18px/24px Helvetica;
     float: left;    
 }
 
-.stock-tile-content .price-change {
+.portfolio-cell-content .price-change {
     font: 18px/24px Helvetica;
     float: right;
 }
 
-.stock-tile-content .price-currency {
+.portfolio-cell-content .price-currency {
     font: 12px/24px Helvetica;
     color: rgba(255, 255, 255, 0.5);
 }
 
 .arrow-up {
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #0f0;
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #0f0;
 }
 
 .arrow-down {
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid #f00;
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #f00;
 }
 
 @media only screen and (max-width: 500px) {
-    .stock-tile {
-        height: 65px;
+    .portfolio-cell {
+        height: auto;
         width: 100%;
         margin: 5px 0;
         padding: 0;
     }
     
-    .stock-tile:first-of-type {
+    .portfolio-cell:first-of-type {
         margin-top: 0;
     }
     
-    .stock-tile:last-of-type {
+    .portfolio-cell:last-of-type {
         margin: 0;
     }
     
-    .stock-tile-content:hover {
+    .portfolio-cell-content:hover {
         transform: scale(1);
     }
 
-    .stock-tile-content .info {
+    .portfolio-cell-content .info {
         width: 60%;
         float: left;
     }
     
-    .stock-tile-content p.name {
+    .portfolio-cell-content p.name {
         height: 20px;
     }
     
-    .stock-tile-content .details {
+    .portfolio-cell-content .details {
         width: auto;
         float: right;
         clear: none;
         text-align: right;
     }
     
-    .stock-tile-content .price {
+    .portfolio-cell-content .price {
         float: none;
     }
     
-    .stock-tile-content .price-change {
+    .portfolio-cell-content .price-change {
         float: none;
         display: block;
     }
