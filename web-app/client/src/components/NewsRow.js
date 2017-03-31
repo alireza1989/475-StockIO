@@ -17,15 +17,11 @@ class NewsRow extends Component {
 
     render() {
         return (
-            <li>   
-                <div className="news-article">
-                    <h4> Title: {this.state.title} </h4>
-                    <h5> Date: {this.state.date} </h5>
-                    <p> Summary: {this.state.summary} </p>
-                    <a> {this.state.url} </a>
-                </div>
-                <div>=========================================</div>
-
+            <li className="news-article">   
+                <h4> Title: {this.state.title} </h4>
+                <h5> Date: {this.state.date} </h5>
+                <p> Summary: {this.state.summary} </p>
+                <a> {this.state.url} </a>
             </li>
         );
     }
