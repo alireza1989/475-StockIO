@@ -276,39 +276,30 @@ app.get('/api/stocks/:symbol', function (request, response) {
 });
 
 
-// This is to add a company to a portfolio
-app.post('/api/portfolios/:portfolioId', function (request, response) {
+// This is used to create a new portfolio with the current user as admin.
+app.post('/api/portfolios', function (request, response) {
 	if (!request.user) {
         response.status(306).json({'redirect': '/login'});
 		return;
 	}
 
-    var portfolioId = request.params['portfolioId'];
     var userId = request.session.passport.user;
+    var portfolioName = request.name;
+    var portfolioId;
 
-    models.User.findById(userId)
-    .then(function(user) {
-        return user.getPortfolios({where: {id: portfolioId }});
-    }).then(function(portfolio) {
-        if (portfolio.length === 0) {
-            console.log("No access to portfolio");
-            response.status(401).end('Unauthorized access to portfolio');
-			return;
-        }
+    models.Portfolio.create({
+        name: portfolioName
+    }).then(function(portfolioInstance){
+        portfolioId = portfolioInstance.id;
+    })
 
-        var permission = portfolio.Permission;
-        if(permission !== "admin" || permission !== "write") {
-            console.log("You have the wrong permissions");
-            response.status(401).end('Unauthorized access to portfolio');
-			return;
-        }
-        else {
-            var companyId = request.body.companyId;
-            portfolio.addCompany(companyId);
-            response.end(JSON.stringify(portfolio));
-			console.log("CompanyId: " + companyId + " , added to PortfolioId: " + portfolioId);
-        }
-	});
+    models.Users_Portfolios.create({
+        permission: "admin"
+    }).then(function(users_portfolio){
+        users_portfolio.addPortfolioId(portfolioId);
+        users_portfolio.addUserId(userId);
+        response.end(JSON.stringify(users_portfolio, null, 4))
+    });
 });
 
 app.post('/api/portfolios/:portfolioId/invite', function(request, response)
