@@ -1,13 +1,9 @@
 /* Elliot Barer, ebarer [at] mac [dot] com, 2017-03-25 */
 
-@font-face {
-    font-family: nf-icon;
-    src: url('/../assets/nf-icon.woff');
-}
-
 /* PORTFOLIO-ADMIN */
 .portfolio-admin {
-    background: rgba(0,0,0,0.5);
+    background: rgba(50, 50, 50, 0.7);
+    -webkit-backdrop-filter: saturate(100%) blur(5px);
     height: 100%;
     width: 100%;
     position: absolute;
@@ -17,7 +13,7 @@
 }
 
 .portfolio-admin-form {
-    background: #2e2e2e;
+    background: black;
     height: auto;
     width: 700px;
     margin: 100px auto;
@@ -25,11 +21,27 @@
     border-radius: 20px;
 }
 
+
+/* FORM HEADER */
+.portfolio-admin-form .form-header {
+    height: 44px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #666;
+}
+
+.portfolio-admin-form .form-header a {
+    font-size: 18px;
+    color: #999;
+    padding: 10px;
+    cursor: pointer;
+}
+
 .portfolio-admin-form a.close-button {
-    background: transparent;
-    color: white;
-    font: 50px/100% Arial, sans-serif;
-    padding: 25px;
+    color: #999;
+    font: 18px/50px Arial, sans-serif;
+    margin: 20px;
+    padding: 5px;
     float: right;
     cursor: pointer;
 }
@@ -39,43 +51,57 @@
 }
 
 .portfolio-admin-form a.close-button:after {
-    content: '×';
+    content: 'Done'; /* × */
 }
 
 .portfolio-admin-form input[name="portfolio-name"] {
-    background: rgba(0, 0, 0, 0.4);
+    background: black;
     color: white;
     font-size: 24px;
-    margin: 25px;
+    width: 70%;
+    margin: 25px 0 25px 25px;
     padding: 10px;
-    border-radius: 5px;
-    border: 1px solid black;
-    width: 80%;
     box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+
+.portfolio-admin-form input[name="portfolio-name"]::placeholder {
+    color: #666;
 }
 
 .portfolio-admin-form ul {
     height: auto;
-    padding: 25px;
+    padding: 0 0 0 25px;
     box-sizing: border-box;
     border-top: 1px solid black;
     overflow-y: scroll;
 }
 
-@media only screen and (max-width: 500px) {
+.portfolio-admin-form ul#portfolio-admin-stocks {
+    max-height: 400px;
+    margin-bottom: 10px;
+}
+
+.portfolio-admin-form ul#portfolio-admin-members {
+    padding: 15px 25px;
+}
+
+@media screen and (max-width:750px) {
     .portfolio-admin-form {
         height: 100%;
         width: 100%;
         margin: 0;
         border-radius: 0;
     }
-    
+}
+
+@media screen and (max-width:500px) {
     .portfolio-admin-form input[name="portfolio-name"] {
         margin: 10px;
     }
     
-    .portfolio-admin-form button[name="close-form"] {
-        right: 0
+    .portfolio-admin-form a.close-button {
+        margin: 5px 5px 5px 0;
     }
-
 }

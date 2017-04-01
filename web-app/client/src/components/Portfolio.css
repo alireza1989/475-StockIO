@@ -26,7 +26,7 @@
     margin-left: 10px;
     padding: 3px 10px;
     position: relative;
-    top: -1px;
+    top: -2px;
     font: 14px/18px Helvetica;
     color: black;
     cursor: pointer;
@@ -68,7 +68,7 @@
 }
 
 .portfolio .nav-button {
-    background: rgba(20, 20, 20, 1);
+    background: rgba(20, 20, 20, 0.6);
     -webkit-backdrop-filter: saturate(50%) blur(25px);
     font: 64px Arial;
     text-align: center;
@@ -88,6 +88,7 @@
 }
 
 .portfolio .nav-button.prev {
+    display: none;
     border-radius: 0 8px 8px 0;
 }
 

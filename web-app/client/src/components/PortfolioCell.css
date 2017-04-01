@@ -36,8 +36,8 @@
 
 .portfolio-cell-content:hover {
     -webkit-backdrop-filter: saturate(180%) blur(25px);
-    transform: scale(1.1);
-    z-index: 60;
+    transform: scale(1.2);
+    z-index: 150;
 }
 
 .portfolio-cell-content.up {

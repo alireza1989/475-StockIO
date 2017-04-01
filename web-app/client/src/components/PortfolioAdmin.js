@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Client from './Client';
-import PortfolioStock from './PortfolioStock';
-import PortfolioStockEntry from './PortfolioStockEntry';
-import PortfolioMember from './PortfolioMember';
+import PortfolioAdminStockEntry from './PortfolioAdminStockEntry';
+import PortfolioAdminStock from './PortfolioAdminStock';
+import PortfolioAdminMemberEntry from './PortfolioAdminMemberEntry';
+import PortfolioAdminMember from './PortfolioAdminMember';
 import './PortfolioAdmin.css';
 
 class PortfolioAdmin extends Component {
@@ -10,11 +11,10 @@ class PortfolioAdmin extends Component {
 		super(props);
 		
 		this.state = {
-            name: undefined,
+            name: '',
             stocks: [],
             members: []
 		};
-		
 
         this.updatePortfolioName = this.updatePortfolioName.bind(this);
         this.addMember = this.addMember.bind(this);
@@ -25,9 +25,6 @@ class PortfolioAdmin extends Component {
 	
     componentWillMount() {
         Client.getStocks(this.props.id, (portfolio) => { 
-            console.log(portfolio.name);
-            console.log(portfolio.Companies);
-            
             this.setState({
                 name: portfolio.name,
                 stocks: portfolio.Companies
@@ -35,61 +32,55 @@ class PortfolioAdmin extends Component {
         });
         
         Client.getMembers(this.props.id, (members) => { 
-            console.log(members.users);
             this.setState({members: members.users});
         });
     }
     
-    closeForm() {
-        console.log('hide');
-    }
-    
-    updatePortfolioName() {
-        
+    updatePortfolioName(event) {
+        console.log(`Update portfolio name to "${event.target.value}"`);
+        this.setState({name: event.target.value});
     }
     
     addMember() {
-        
+        console.log("Adding member");
     }
     
-    removeMember() {
-        
+    removeMember(id) {
+        console.log(`Removing member ${id}`);
     }
     
     addStock() {
-        
+        console.log("Adding stock");
     }
     
-    removeStock() {
-        
+    removeStock(id) {
+        console.log(`Removing stock ${id}`);
     }
 
 	render() {
 		return (
             <div className="portfolio-admin">
                 <div className="portfolio-admin-form">
-                    <input type="text" name="portfolio-name" placeholder="Portfolio Name"
-                           defaultValue={this.state.name ? this.state.name : ''}
-                           onChange={(e) => {
-                               console.log(e);
-                           }
-                    }/>
+                    <a className="close-button" role="button" onClick={() => {this.props.closeForm();}}></a>
 
-                    <a className="close-button" role="button" aria-label="Close"
-                       onClick={() => {this.props.cancelChanges();}}></a>
+                    <input type="text"  name="portfolio-name" placeholder="Portfolio Name"
+                                        value={this.state.name} onChange={this.updatePortfolioName}/>
                     
-                    <ul id="portfolio-admin-stocks">                        
+                    <PortfolioAdminStockEntry />
+                    
+                    <ul id="portfolio-admin-stocks">
                         {this.state.stocks.map((stock, i) =>
-                            <PortfolioMember key={i} name={stock.name} symbol={stock.symbol}
-                                             removeStock={this.removeStock}
-                            />
+                            <PortfolioAdminStock key={i} id={stock.id} name={stock.name} symbol={stock.symbol}
+                                                 removeStock={this.removeStock}/>
                         )}
                     </ul>
                     
+                    <PortfolioAdminMemberEntry />
+                    
                     <ul id="portfolio-admin-members">
                         {this.state.members.map((member, i) =>
-                            <PortfolioMember key={i} name={member.username}
-                                             removeMember={this.removeMember}
+                            <PortfolioAdminMember key={i} id={member.id} name={member.username}
+                                                  removeMember={this.removeMember}
                             />
                         )}
                     </ul>

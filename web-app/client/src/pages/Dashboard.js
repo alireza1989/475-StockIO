@@ -17,8 +17,6 @@ class Dashboard extends Component {
         };
         
         this.editPortfolio = this.editPortfolio.bind(this);
-        this.cancelPortfolioChanges = this.cancelPortfolioChanges.bind(this);
-        this.savePortfolioChanges = this.savePortfolioChanges.bind(this);
     }
 
     componentDidMount() {
@@ -37,32 +35,16 @@ class Dashboard extends Component {
     
     editPortfolio(id) {
         this.setState({
-            overlay: true,
-            selectedPortfolio: id
+            overlay: !this.state.overlay,
+            selectedPortfolio: this.state.selectedPortfolio ? undefined : id
         });
-    }
-    
-    cancelPortfolioChanges() {
-        this.setState({
-            overlay: false,
-            selectedPortfolio: undefined
-        });
-    }
-    
-    savePortfolioChanges() {
-        // Save changes
-        this.setState({
-            overlay: false,
-            selectedPortfolio: undefined
-        });        
     }
     
     renderAdminPanel() {
         if (this.state.selectedPortfolio) {
             return <PortfolioAdmin  id={this.state.selectedPortfolio}
-                                    cancelChanges={this.cancelPortfolioChanges}
-                                    saveChanges={this.savePortfolioChanges}
-            />
+                                    closeForm={this.editPortfolio}
+                   />
         }
     }
 

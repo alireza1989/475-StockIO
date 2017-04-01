@@ -1,0 +1,34 @@
+/* Elliot Barer, ebarer [at] mac [dot] com, 2017-03-25 */
+
+/* PORTFOLIO-STOCK */
+.portfolio-stock {
+    font: 18px Helvetica;
+    padding: 14px;
+    border-bottom: 1px solid #333;
+}
+
+.portfolio-stock .delete-button {
+    font: 21px/21px Arial;
+    text-indent: 0;
+    color: white;
+    background: red;
+    display: block;
+    float: left;
+    margin: 0 10px 0 0;
+    padding: 0 4.5px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.portfolio-stock .delete-button:hover {
+    background: white;
+    color: red;
+}
+
+.portfolio-stock .delete-button:after {
+    content: '\D7';
+}
+
+.portfolio-stock:last-of-type {
+    border-bottom: none;
+}

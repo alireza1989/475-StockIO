@@ -1,0 +1,15 @@
+/* Elliot Barer, ebarer [at] mac [dot] com, 2017-03-25 */
+
+/* PORTFOLIO-MEMBER-ENTRY */
+input[name="portfolio-member-entry"] {
+    background: #111;
+    color: white;
+    font-size: 18px;
+    width: 100%;
+    margin: 0;
+    padding: 14px 40px;
+    box-sizing: border-box;
+    border: none;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
