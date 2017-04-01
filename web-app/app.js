@@ -293,7 +293,7 @@ app.post('/api/portfolios/:portfolioId/users', function(request, response){
 					id: portfolioId
 				}]
 			}).then(function(portfolio){
-				portfolio.addUser(userId).then(function() {
+				portfolio.addUser(userId, {'permission' : 'admin'}).then(function() {
                                 response.statusCode = 200;
                                 response.end();
                 });
