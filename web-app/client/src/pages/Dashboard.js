@@ -59,7 +59,7 @@ class Dashboard extends Component {
     
     renderAdminPanel() {
         if (this.state.selectedPortfolio) {
-            return <PortfolioAdmin name={this.state.selectedPortfolio}
+            return <PortfolioAdmin  id={this.state.selectedPortfolio}
                                     cancelChanges={this.cancelPortfolioChanges}
                                     saveChanges={this.savePortfolioChanges}
             />
@@ -79,8 +79,8 @@ class Dashboard extends Component {
 
                 <div className="Dashboard">
                     {this.state.portfolios.map((portfolio, i) =>
-                            <Portfolio key={i} name={portfolio.name} id={portfolio.id}
-                                    editPortfolio={this.editPortfolio}
+                        <Portfolio key={i} name={portfolio.name} id={portfolio.id}
+                                   editPortfolio={this.editPortfolio}
                         />)
                     }
                 </div>

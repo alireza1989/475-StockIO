@@ -18,7 +18,7 @@
 
 .portfolio-admin-form {
     background: #2e2e2e;
-    height: 600px;
+    height: auto;
     width: 700px;
     margin: 100px auto;
     box-sizing: border-box ;
@@ -55,7 +55,7 @@
 }
 
 .portfolio-admin-form ul {
-    height: 250px;
+    height: auto;
     padding: 25px;
     box-sizing: border-box;
     border-top: 1px solid black;

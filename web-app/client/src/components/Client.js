@@ -19,7 +19,16 @@ function getPortfolios(callback) {
 }
 
 function getStocks(portfolioId, callback) {
-    return fetch('/api/portfolios/' + portfolioId + '/stocks', {
+    return fetch(`/api/portfolios/${portfolioId}/stocks`, {
+        accept: 'application/json',
+        credentials: 'include'
+    }).then(checkStatus)
+      .then(parseJSON)
+      .then(callback);
+}
+
+function getMembers(portfolioId, callback) {
+    return fetch(`/api/portfolios/${portfolioId}/users`, {
         accept: 'application/json',
         credentials: 'include'
     }).then(checkStatus)
@@ -76,5 +85,5 @@ function parseJSON(response) {
         return response.json();
 }
 
-const Client = { getUser, getPortfolios, getNews, getStocks, logout, currentUser };
+const Client = { getUser, getPortfolios, getMembers, getNews, getStocks, logout, currentUser };
 export default Client;

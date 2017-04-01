@@ -14,7 +14,6 @@ class Portfolio extends Component {
    
     componentWillMount() {
         Client.getStocks(this.props.id, (companiesList) => { 
-            console.log(companiesList);
             const stocks = companiesList.Companies; 
             this.setState({stocks});
         });
