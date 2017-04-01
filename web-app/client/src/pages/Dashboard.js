@@ -10,22 +10,18 @@ class Dashboard extends Component {
     constructor() {
         super();
         this.state = {
-            username: 'Elliot',
+            user: {},
             overlay: false,
             selectedPortfolio: undefined,
             portfolios: []
         };
 
         Client.getUser((currentUser) => {
-            if (currentUser) {
-                this.setState({username: currentUser.username});
-            }
+            this.setState({user: currentUser});
         });
         
         Client.getPortfolios((portfoliosList) => { 
-            if (portfoliosList) {
-                this.setState({portfolios: portfoliosList.portfolios});
-            }
+            this.setState({portfolios: portfoliosList.portfolios});
         });
     }
     
@@ -39,6 +35,7 @@ class Dashboard extends Component {
     renderAdminPanel() {
         if (this.state.selectedPortfolio) {
             return <PortfolioAdmin  id={this.state.selectedPortfolio}
+                                    currentUser={this.state.user}
                                     closeForm={this.editPortfolio}
                    />
         }
@@ -51,7 +48,7 @@ class Dashboard extends Component {
                     <ul>
                         <li className="nav-title">Stock.I<img src={logo} alt="O"/></li>
                         <li onClick={() => {Client.logout()}} className="right nav-button">Logout</li>
-                        <li className="right">{this.state.username}</li>
+                        <li className="right">{this.state.user.username}</li>
                     </ul>
                 </nav>
 
