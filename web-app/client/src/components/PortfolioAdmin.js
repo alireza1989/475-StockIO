@@ -46,9 +46,8 @@ class PortfolioAdmin extends Component {
                 <div className="portfolio-admin-form">
                     <input type="text" name="portfolio-name" defaultValue={this.state.name}/>
 
-                    <button name="close-form" onClick={() => {
-                        this.props.cancelChanges();
-                    }}>X</button>
+                    <a className="close-button" role="button" aria-label="Close"
+                       onClick={() => {this.props.cancelChanges();}}></a>
                     
                     <ul id="portfolio-admin-stocks">
                         <li>Stock 1</li>

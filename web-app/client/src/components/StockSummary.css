@@ -43,7 +43,8 @@ h3 {
 	width: 100%;
 	height: auto;
 }
-.close-button {
+
+.StockSummary .close-button {
 	position: fixed;
 	z-index: 999;
 	height: 20px;
@@ -52,7 +53,7 @@ h3 {
 	margin: 10px;
 	transition: transform .25s ease-in-out;
 }
-.close-button:hover {	
+.StockSummary .close-button:hover {	
     transform: rotate(180deg);
 }
 

@@ -22,10 +22,15 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
+        Client.getUser((currentUser) => {
+            if (currentUser) {
+                this.setState({username: currentUser.username});
+            }
+        });
+        
         Client.getPortfolios((portfoliosList) => { 
             if (portfoliosList) {
-                const portfolios = portfoliosList.portfolios;
-                this.setState({portfolios});
+                this.setState({portfolios: portfoliosList.portfolios});
             }
         });
     }

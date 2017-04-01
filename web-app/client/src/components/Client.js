@@ -1,5 +1,14 @@
 import {browserHistory} from 'react-router';
 
+function getUser(callback) {
+    return fetch('/api/users/current', {
+        accept: 'application/json',
+        credentials: 'include'
+    }).then(checkStatus)
+      .then(parseJSON)
+      .then(callback);
+}
+
 function getPortfolios(callback) {
     return fetch('/api/portfolios', {
         accept: 'application/json',
@@ -67,5 +76,5 @@ function parseJSON(response) {
         return response.json();
 }
 
-const Client = { getPortfolios, getNews, getStocks, logout, currentUser };
+const Client = { getUser, getPortfolios, getNews, getStocks, logout, currentUser };
 export default Client;
