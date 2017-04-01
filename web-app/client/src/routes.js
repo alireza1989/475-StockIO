@@ -9,13 +9,12 @@ import Client from './components/Client';
 function requireAuth(nextState, replace, callback) {
     Client.currentUser((user)=> {
         if (user === undefined) {
-            console.log('req auth');
             replace({
                 pathname: '/login',
                 state: { nextPathname: nextState.location.pathname }
             });
-            callback();
         }
+        callback();
     });
 }
 
