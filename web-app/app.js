@@ -301,14 +301,14 @@ app.post('/api/portfolios', function (request, response) {
 
 
 // This is used to delete a portfolio that you have admin power to.
-app.delete('/api/portfolios', function (request, response) {
+app.delete('/api/portfolios/:portfolioId', function (request, response) {
 	if (!request.user) {
         response.status(306).json({'redirect': '/login'});
 		return;
 	}
 
     var userId = request.session.passport.user;
-    var portfolioId = request.body.portfolioId;
+    var portfolioId = request.params['portfolioId'];
 
     models.User.findById(userId)
     .then(function(user) {
