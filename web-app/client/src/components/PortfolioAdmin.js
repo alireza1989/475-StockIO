@@ -12,6 +12,7 @@ class PortfolioAdmin extends Component {
 		
 		this.state = {
             name: '',
+            permission: 'read',
             stocks: [],
             members: []
 		};
@@ -23,8 +24,15 @@ class PortfolioAdmin extends Component {
             });
         });
         
-        Client.getMembers(this.props.id, (members) => {             
-            this.setState({members: members.users});
+        Client.getMembers(this.props.id, (members) => {            
+            var userPermission = members.users.find((member) => {
+                return member.id === this.props.currentUser.id ? member : null;
+            }).permission;
+
+            this.setState({
+                members: members.users,
+                permission: userPermission
+            });
         });
 	}
 	
@@ -64,17 +72,13 @@ class PortfolioAdmin extends Component {
         }
     }
     
-    renderMembers = () => {
-        var permission = this.state.members.find((member) => {
-            if (member.id === this.props.currentUser.id) {
-                return member.permission;
-            }
-        });
-        
+    renderMembers = () => {        
         if (this.state.members.length > 0) {
+            console.log(this.state.permission);
+            
             return this.state.members.map((member, i) =>
                 <PortfolioAdminMember key={i} id={member.id} name={member.username}
-                                      permission={permission}  
+                                      permission={this.state.permission} 
                                       removeMember={this.removeMember}/>
             );
         } else {
