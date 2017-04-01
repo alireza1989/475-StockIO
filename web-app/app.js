@@ -118,7 +118,7 @@ app.get('/api/users/current', function(request, response) {
         return;
     }
     var sessionUserId = request.session.passport.user;
-    models.User.findById(sessionUserId, {attributes: ['id', 'username']})
+    models.User.findById(sessionUserId, {attributes: ['id', 'username', 'firstname', 'lastname']})
     .then(function (user) {
         response.end(JSON.stringify(user, null, 4));
 	});
@@ -254,6 +254,8 @@ app.get('/api/portfolios/:portfolioId/users', function (request, response) {
                 var userData = {
                     id: userInformation.id,
                     username: userInformation.username,
+                    firstname: userInformation.firstname,
+                    lasname: userInformation.lastname,
                     permission: userInformation.Users_Portfolios.permission
                 }
                 usersData.push(userData);
