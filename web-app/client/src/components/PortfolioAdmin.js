@@ -52,20 +52,24 @@ class PortfolioAdmin extends Component {
     removeStock = (id) => {
         console.log(`Removing stock ${id}`);
     }
-    
-    renderStocks = () => {
+
+    renderStocks = () => {        
         if (this.state.stocks.length > 0) {
-            console.log("Populating stocks");
+            return this.state.stocks.map((stock, i) =>
+                <PortfolioAdminStock key={i} id={stock.id} name={stock.name} symbol={stock.symbol}
+                                     removeStock={this.removeStock}/>
+            );
         } else {
-            console.log("No stocks");
+            return <li>No stocks</li>
         }
     }
-
+    
     renderMembers = () => {
         if (this.state.members.length > 0) {
-            return {this.state.stocks.map((stock, i) =>
-                <PortfolioAdminStock key={i} id={stock.id} name={stock.name} symbol={stock.symbol}
-                                     removeStock={this.removeStock}/>}
+            return this.state.members.map((member, i) =>
+                <PortfolioAdminMember key={i} id={member.id} name={member.username}
+                                      removeMember={this.removeMember}/>
+            );
         } else {
             return <li>No members</li>
         }
@@ -84,23 +88,13 @@ class PortfolioAdmin extends Component {
                     <PortfolioAdminStockEntry />
                     
                     <ul id="portfolio-admin-stocks">
-                        {this.state.stocks.map((stock, i) =>
-                            <PortfolioAdminStock key={i} id={stock.id} name={stock.name} symbol={stock.symbol}
-                                                 removeStock={this.removeStock}/>
-                        )}
+                        {this.renderStocks()}
                     </ul>
-                    
-                    {this.renderStocks()}
-                    {this.renderMembers()}
                     
                     <PortfolioAdminMemberEntry />
                     
                     <ul id="portfolio-admin-members">
-                        {this.state.members.map((member, i) =>
-                            <PortfolioAdminMember key={i} id={member.id} name={member.username}
-                                                  removeMember={this.removeMember}
-                            />
-                        )}
+                        {this.renderMembers()}
                     </ul>
                 </div>
             </div>

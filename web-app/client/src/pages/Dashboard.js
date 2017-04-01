@@ -15,11 +15,7 @@ class Dashboard extends Component {
             selectedPortfolio: undefined,
             portfolios: []
         };
-        
-        this.editPortfolio = this.editPortfolio.bind(this);
-    }
 
-    componentDidMount() {
         Client.getUser((currentUser) => {
             if (currentUser) {
                 this.setState({username: currentUser.username});
@@ -33,7 +29,7 @@ class Dashboard extends Component {
         });
     }
     
-    editPortfolio(id) {
+    editPortfolio = (id) => {
         this.setState({
             overlay: !this.state.overlay,
             selectedPortfolio: this.state.selectedPortfolio ? undefined : id
