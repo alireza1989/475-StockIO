@@ -21,10 +21,12 @@ class Dashboard extends Component {
         this.savePortfolioChanges = this.savePortfolioChanges.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         Client.getPortfolios((portfoliosList) => { 
-            const portfolios = portfoliosList.portfolios;
-            this.setState({portfolios});
+            if (portfoliosList) {
+                const portfolios = portfoliosList.portfolios;
+                this.setState({portfolios});
+            }
         });
     }
     
@@ -65,6 +67,7 @@ class Dashboard extends Component {
                 <nav>
                     <ul>
                         <li className="nav-title">Stock.I<img src={logo} alt="O"/></li>
+                        <li onClick={() => {Client.logout()}} className="nav-button nav-account">Logout</li>
                         <li className="nav-button nav-account">{this.state.username}</li>
                     </ul>
                 </nav>

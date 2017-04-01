@@ -4,8 +4,8 @@ import News from './News'
 import CloseIcon from '../assets/close.svg';
 import StockProperty from './StockProperty';
 import DummyGraph from '../assets/graph.gif';
-const io = require('socket.io-client');
-const socket = io();
+// const io = require('socket.io-client');
+// const socket = io();
 
 class StockPopup extends Component {
     constructor(props) {
