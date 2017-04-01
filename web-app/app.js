@@ -271,7 +271,7 @@ app.get('/api/stocks/:symbol', function (request, response) {
         if (!stock)
             response.status(400).send("Invalid Symbol (Case sensitive)");
         else
-            response.send(JSON.stringify(stock));
+            response.end(JSON.stringify(stock, null, 4));
 	})
 });
 
