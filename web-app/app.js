@@ -143,7 +143,8 @@ app.get('/api/portfolios', function (request, response) {
         portfolios.forEach(function(portfolioList) {
             var portfolioData = {
                 id: portfolioList.id,
-                name: portfolioList.name
+                name: portfolioList.name,
+                permission: portfolioList.Users_Portfolios.permission
             }
             portfoliosData.push(portfolioData);
             count++;
