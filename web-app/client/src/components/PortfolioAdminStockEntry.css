@@ -13,3 +13,10 @@ input[name="portfolio-stock-entry"] {
     border-top: 1px solid #333;
     border-bottom: 1px solid #333;
 }
+
+
+@media screen and (max-width:500px) {
+    input[name="portfolio-stock-entry"] {
+        padding: 14px 10px;
+    }
+}

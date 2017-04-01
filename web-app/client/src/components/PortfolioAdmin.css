@@ -84,6 +84,7 @@
 }
 
 .portfolio-admin-form ul#portfolio-admin-members {
+    max-height: 150px;
     padding: 15px 25px;
 }
 
@@ -103,5 +104,13 @@
     
     .portfolio-admin-form a.close-button {
         margin: 5px 5px 5px 0;
+    }
+    
+    .portfolio-admin-form ul#portfolio-admin-stocks {
+        max-height: none;
+    }
+    
+    .portfolio-admin-form ul#portfolio-admin-members {
+        max-height: none;
     }
 }
