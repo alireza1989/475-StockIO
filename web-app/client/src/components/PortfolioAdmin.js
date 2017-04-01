@@ -23,7 +23,7 @@ class PortfolioAdmin extends Component {
             });
         });
         
-        Client.getMembers(this.props.id, (members) => { 
+        Client.getMembers(this.props.id, (members) => {             
             this.setState({members: members.users});
         });
 	}
@@ -65,9 +65,16 @@ class PortfolioAdmin extends Component {
     }
     
     renderMembers = () => {
+        var permission = this.state.members.find((member) => {
+            if (member.id === this.props.currentUser.id) {
+                return member.permission;
+            }
+        });
+        
         if (this.state.members.length > 0) {
             return this.state.members.map((member, i) =>
                 <PortfolioAdminMember key={i} id={member.id} name={member.username}
+                                      permission={permission}  
                                       removeMember={this.removeMember}/>
             );
         } else {
