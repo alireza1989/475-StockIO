@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './NewsRow.css';
 
 class NewsRow extends Component {
     constructor(props) {
@@ -18,10 +18,11 @@ class NewsRow extends Component {
     render() {
         return (
             <li className="news-article">   
-                <h5> {this.state.title} </h5>
-                <p className="date"> Date: {this.state.date} </p>
-                <p> {this.state.summary} </p>
-                <a> {this.state.url} </a>
+                <a hfre={this.state.url}>
+                    <h5> {this.state.title} </h5>
+                </a>
+                <p className="date">{this.state.date} </p><br/>
+                <p className="summary"> {this.state.summary} </p>
             </li>
         );
     }

@@ -1,10 +1,29 @@
-.news-article {
+li.news-article {
+	display: block;
 	overflow: hidden;
-	text-overflow: wrap;
-	margin: 3px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #666;
+	padding-bottom: 5px;
 }
-.news-article p {
+.news-article a {
+	color: white;
 }
-p.date {
-
+.news-article a:hover {
+	color: #00aeff;
+}
+.news-article p.date {
+	color: grey;
+}
+.news-article h5 {
+	font: normal 14px/16px Helvetica; 
+	word-break: break-all;
+	white-space: normal;
+}
+.news-article p.summary {
+	max-height: 50px;	
+	color: grey;
+	display: block;
+	width: 100%;
+	word-break: break-all;
+	white-space: normal;
 }

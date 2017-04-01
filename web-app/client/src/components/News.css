@@ -3,7 +3,16 @@
 	width: 35%;
 	float: left;
 	box-sizing: border-box;
-	padding: 2%;
+	padding: 4% 4% 4% 2%;
+	overflow: hidden;
+	border-left: 1px solid #666;
+}
+.news-sidebar ul {
+	height: 93%;
+	overflow: scroll;
+}
+.news-sidebar ul::-webkit-scrollbar { 
+    display: none;
 }
 h3 {
 	font-size: 16pt;

@@ -1,12 +1,23 @@
+.StockSummary-background {
+    background: rgba(50, 50, 50, 0.7);
+    -webkit-backdrop-filter: saturate(100%) blur(5px);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1500;
+    top: 0;
+    left: 0;
+}
+
 .StockSummary {
-	background: rgba(0, 0, 0, 0.9);
+	background: black;
 	z-index: 998;
-	border-radius: 7px;
+	border-radius: 20px;
 	height: 80%;
-	width: 80%;
+	width: 90%;
 	position: fixed;
 	top: 10%;
-	left: 10%;
+	left: 5%;
 	overflow: hidden;
 }
 h3 {
@@ -17,9 +28,9 @@ h3 {
 .stock-information {
 	box-sizing: border-box;
 	/*background: rgba(44, 44, 44, 0.5);*/
-	height: 30%;
+	height: 35%;
 	width: 65%;
-	padding: 2%;
+	padding: 4% 2% 2% 4%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	float: left;
@@ -34,14 +45,15 @@ h3 {
 .interactive-chart {
 	/*background: rgba(22, 22, 22, 0.5);*/
 	box-sizing: border-box;
-	height: 70%;
+	height: 65%;
 	width: 65%;
 	position: absolute;
 	bottom: 0;
+	padding: 2% 2% 4% 4%;
 }
 .interactive-chart img {
-	width: 100%;
-	height: auto;
+	width: auto;
+	height: 100%;		
 }
 
 .StockSummary .close-button {
