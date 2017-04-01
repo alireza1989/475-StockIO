@@ -13,6 +13,7 @@
     font: 500 20px/25px 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #888;
     margin-left: 4%;
+    padding-left: 5px;
     position: absolute;
     top: 0px;
     z-index: 20;
@@ -35,10 +36,13 @@
     background: rgba(255, 255, 255, 0.5);
 }
 
+.portfolio .portfolio-contents {
+    position: relative;
+}
+
 .portfolio .stocks {
     width: 100%;
-    padding: 0 4%;
-    margin-top: 10px;
+    padding: 35px 4%;
     box-sizing: border-box;
     position: relative;
     overflow-y: hidden;
@@ -50,40 +54,58 @@
 }
 
 .portfolio ul {
-    height: 175px;
     white-space: nowrap;
 }
 
-.portfolio .nav-button {
-    background: rgba(20, 20, 20, 0.5);
-    -webkit-backdrop-filter: saturate(50%) blur(25px);
-    height: 125px;
-    width: 4%;
-    margin: 35px 0 25px;
+
+/* PORTFOLIO NAVIGATION */
+.portfolio-navigation {
+    height: 100%;
+    width: 100%;
+    padding: 35px 0;
+    box-sizing: border-box;
     position: absolute;
-    top: 0;
+}
+
+.portfolio .nav-button {
+    background: rgba(20, 20, 20, 1);
+    -webkit-backdrop-filter: saturate(50%) blur(25px);
+    font: 64px Arial;
+    text-align: center;
+    color: white;
+    height: 100%;
+    width: 4%;
+    float: left;
+    position: relative;
     z-index: 100;
     cursor: pointer;
-    font-family: Arial;
-    font-size: 64px;
-    line-height: 125px;
-    color: white;
-    text-align: center;
+}
+
+.portfolio .nav-button:before {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
 }
 
 .portfolio .nav-button.prev {
-    left: 0;
     border-radius: 0 8px 8px 0;
-    display: none;
+}
+
+.portfolio .nav-button.prev:before {
+    content: '\2039';
 }
 
 .portfolio .nav-button.next {
-    right: 0;
+    float: right;
     border-radius: 8px 0 0 8px;
 }
 
+.portfolio .nav-button.next:before {
+    content: '\203A';
+}
 
-@media only screen and (max-width: 500px) {
+
+@media only screen and (max-width: 449px) {
     .portfolio {
         height: auto;
         display: inline-block;
@@ -96,7 +118,7 @@
     
     .portfolio .stocks {
         margin-top: 0;
-        padding-bottom: 10px;
+        padding: 0 4%;
     }
     
     .portfolio .stocks ul {
@@ -109,5 +131,14 @@
     }
 }
 
+@media screen and (min-width:450px) and (max-width:949px) {
+    .portfolio h2           { margin-left: 7%; }
+    .portfolio .stocks      { padding: 35px 7%; }
+    .portfolio .nav-button  { width: 7%; }
+}
 
-
+@media screen and (min-width:950px) and (max-width:1129px) {
+    .portfolio h2           { margin-left: 5%; }
+    .portfolio .stocks      { padding: 35px 5%; }
+    .portfolio .nav-button  { width: 5%; }
+}

@@ -72,8 +72,8 @@ class Dashboard extends Component {
                 <nav>
                     <ul>
                         <li className="nav-title">Stock.I<img src={logo} alt="O"/></li>
-                        <li onClick={() => {Client.logout()}} className="nav-button nav-account">Logout</li>
-                        <li className="nav-button nav-account">{this.state.username}</li>
+                        <li onClick={() => {Client.logout()}} className="right nav-button">Logout</li>
+                        <li className="right">{this.state.username}</li>
                     </ul>
                 </nav>
 
@@ -81,8 +81,8 @@ class Dashboard extends Component {
                     {this.state.portfolios.map((portfolio, i) =>
                         <Portfolio key={i} name={portfolio.name} id={portfolio.id}
                                    editPortfolio={this.editPortfolio}
-                        />)
-                    }
+                        />
+                    )}
                 </div>
                 
                 {this.renderAdminPanel()}

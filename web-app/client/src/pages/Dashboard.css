@@ -21,15 +21,15 @@ nav ul {
 }
 
 nav ul li {
-    float: left;
     font-family: 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 70px;
+    float: left;
+    margin-right: 15px;
 }
 
 nav ul li.nav-title {
     font-size: 24px;
     font-weight: 500;
-    display: table;
 }
 
 nav ul li.nav-title img {
@@ -40,9 +40,10 @@ nav ul li.nav-title img {
 }
 
 nav ul li.nav-button {
-    float: right;
+    background: rgba(255, 255, 255, 0.1);
     padding: 10px 20px;
-    margin: 15px 0 15px 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 16px;
@@ -51,25 +52,13 @@ nav ul li.nav-button {
     transition: 100ms all;
 }
 
-nav ul li.nav-account {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-nav ul li.nav-login {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: red;
-}
-
-nav ul li.nav-signin {
-    background: rgba(255, 255, 255, 0.3);
-}
-
 nav ul li.nav-button:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.3);
 }
 
-nav ul li.nav-account:hover {
-    background: rgba(255, 255, 255, 0.1);
+nav ul li.right {
+    margin-right: 0;
+    margin-left: 15px;
 }
 
 /* DASHBOARD */
@@ -85,7 +74,7 @@ nav ul li.nav-account:hover {
 }
 
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 750px) {
     nav {
         height: 44px;
     }
@@ -95,6 +84,7 @@ nav ul li.nav-account:hover {
     }
 
     nav ul li {
+        font-size: 14px;
         line-height: 44px;
     }
 
@@ -112,11 +102,12 @@ nav ul li.nav-account:hover {
     nav ul li.nav-button {
         font-size: 14px;
         padding: 5px 10px;
-        margin: 7px 0px 7px 5px;
+        margin-top: 7px;
+        margin-bottom: 7px;
     }
 
     .Dashboard {
         white-space: nowrap;
-        padding-top: 55px;
+        padding-top: 54px;
     }
 }

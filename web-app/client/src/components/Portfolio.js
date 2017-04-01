@@ -32,14 +32,16 @@ class Portfolio extends Component {
                         this.props.editPortfolio(this.props.id);
                     }}>Edit</span>
                 </h2> 
-                
-                <div className="portfolio-navigation">
-                    <span className="nav-button prev">&lsaquo;</span>
-                    <span className="nav-button next">&rsaquo;</span>
-                </div>
-                
-                <div className="stocks">
-                    <ul>{this.state.stocks.map((stock, i) => <PortfolioCell key={i} stock={stock}/>)}</ul>
+                                
+                <div className="portfolio-contents">
+                    <div className="portfolio-navigation">
+                        <a className="nav-button prev"></a>
+                        <a className="nav-button next"></a>
+                    </div>
+                    
+                    <div className="stocks">
+                        <ul>{this.state.stocks.map((stock, i) => <PortfolioCell key={i} stock={stock}/>)}</ul>
+                    </div>
                 </div>
             </section>
         );
