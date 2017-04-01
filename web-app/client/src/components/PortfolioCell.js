@@ -10,17 +10,20 @@ class PortfolioCell extends Component {
             name: props.stock.name,
             ticker: props.stock.symbol,
             price: props.stock.last_price,
+            last_price: props.stock.last_price,
+            prev_close: props.stock.previous_close_price,
             change_price: props.stock.change_price,
             change_percent: props.stock.change_percent,
             dividend: props.stock.dividend,
             yield: props.stock.yield,
+            sector: props.stock.sector,
+            ceo: props.stock.ceo,
             summary_visible: false
         };
-
-        this.toggleSummary = this.toggleSummary.bind(this);
+        
     }
 
-    toggleSummary() {
+    toggleSummary = () => {
         this.setState({
             summary_visible: !this.state.summary_visible
         });
