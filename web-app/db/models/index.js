@@ -12,7 +12,7 @@ var Sequelize = require("sequelize");
 
 //Don't delete this guy. Need for development
 var dbPath = path.normalize(__dirname + '/..') + '/stockio.db';
-var sequelize = new Sequelize('stockio', null, null, {dialect: 'sqlite', storage: dbPath})
+var sequelize = new Sequelize('stockio', null, null, {dialect: 'sqlite', storage: dbPath, logging: false})
 
 var db = {};
 fs
