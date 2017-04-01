@@ -249,10 +249,11 @@ app.get('/api/portfolios/:portfolioId/users', function (request, response) {
             var usersData = [];
             // console.log(total);
             portfolioUsersInstance.Users.forEach(function(userInformation){
-                // console.log(userInformation);
+                // console.log(userInformation.Users_Portfolios.permission);
                 var userData = {
                     id: userInformation.id,
-                    username: userInformation.username
+                    username: userInformation.username,
+                    permission: userInformation.Users_Portfolios.permission
                 }
                 usersData.push(userData);
                 count++;
