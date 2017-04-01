@@ -107,14 +107,14 @@ app.post('/api/users/login', passport.authenticate('login', {
 //Middleware Managed API
 app.post('/api/users/logout', function(request, response) {
     request.session.destroy(function (err) {
-    response.redirect('/login');
+        response.status(306).json({'redirect': '/login'});
   });
 });
 
 // This is to get the current user session user id and return id and username of current user
 app.get('/api/users/current', function(request, response) {
     if (!request.user) {
-        response.redirect(401, '/login');
+        response.status(306).json({'redirect': '/login'});
         return;
     }
     var sessionUserId = request.session.passport.user;
@@ -127,7 +127,7 @@ app.get('/api/users/current', function(request, response) {
 // returns portfolio IDs and names for the current user
 app.get('/api/portfolios', function (request, response) {
 	if (!request.user) {
-		response.redirect(401, '/login');
+        response.status(306).json({'redirect': '/login'});
 		return;
 	}
 
@@ -158,7 +158,7 @@ app.get('/api/portfolios', function (request, response) {
 // Get Information of a single portfolio that the user has permissions to.
 app.get('/api/portfolios/:portfolioId', function (request, response) {
     if (!request.user) {
-        response.redirect(401, '/login');
+        response.status(306).json({'redirect': '/login'});
         return;
     }
     var userId = request.session.passport.user;
@@ -186,7 +186,7 @@ app.get('/api/portfolios/:portfolioId', function (request, response) {
 app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
     // This checks if the instance of request.user is empty or not
     if (!request.user) {
-        response.redirect(401, '/login');
+        response.status(306).json({'redirect': '/login'});
         return;
     }
     // This puts the userID directly into the var
@@ -220,7 +220,7 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
 app.get('/api/portfolios/:portfolioId/users', function (request, response) {
     // This checks if the instance of request.user is empty or not
     if (!request.user) {
-        response.redirect(401, '/login');
+        response.status(306).json({'redirect': '/login'});
         return;
     }
     // This puts the userID directly into the var
@@ -269,7 +269,7 @@ app.get('/api/stocks/:symbol', function (request, response) {
     var symbol = request.params['symbol'];
     models.Company.findOne({where: {symbol: symbol}}).then(function(stock) {
         if (!stock)
-            response.status(400).send("Invalid Symbol (Case sensitive)");
+            response.status(306).json({'redirect': '/login'});
         else
             response.end(JSON.stringify(stock, null, 4));
 	})
@@ -279,7 +279,7 @@ app.get('/api/stocks/:symbol', function (request, response) {
 // This is to add a company to a portfolio
 app.post('/api/portfolios/:portfolioId', function (request, response) {
 	if (!request.user) {
-		response.redirect(401, '/login');
+        response.status(306).json({'redirect': '/login'});
 		return;
 	}
 
@@ -314,7 +314,7 @@ app.post('/api/portfolios/:portfolioId', function (request, response) {
 app.post('/api/portfolios/:portfolioId/invite', function(request, response)
 {
 	if (!request.user) {
-		response.redirect(401, '/login');
+        response.status(306).json({'redirect': '/login'});
 		return;
 	}
 
@@ -360,7 +360,7 @@ app.post('/api/portfolios/:portfolioId/invite', function(request, response)
 // Function to remove a company from a certain portfolio.
 app.delete('/api/portfolios/:portfolioId', function(request,response){
     if (!request.user) {
-        response.redirect(401, '/login');
+        response.status(306).json({'redirect': '/login'});
         return;
     }
     var sessionUserId = request.session.passport.user;
@@ -386,7 +386,7 @@ app.delete('/api/portfolios/:portfolioId', function(request,response){
 
 app.get('/api/invitation', function(request, response) {
 	if (!request.user) {
-		response.redirect(401, '/login');
+        response.status(306).json({'redirect': '/login'});
 		return;
 	}
 	var sessionUserId = request.session.passport.user;
@@ -401,7 +401,7 @@ app.get('/api/invitation', function(request, response) {
 //Accept or decline invitation
 app.post('/api/invitation/:invitationId', function(request, response) {
 	if (!request.user) {
-		response.redirect(401, '/login');
+        response.status(306).json({'redirect': '/login'});
 		return;
 	}
 
