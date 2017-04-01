@@ -284,21 +284,18 @@ app.post('/api/portfolios', function (request, response) {
 	}
 
     var userId = request.session.passport.user;
-    var portfolioName = request.name;
+    var portfolioName = request.body.name;
     var portfolioId;
 
     models.Portfolio.create({
         name: portfolioName
-    }).then(function(portfolioInstance){
+    }).then(function(portfolioInstance) {
         portfolioId = portfolioInstance.id;
-    })
-
-    models.Users_Portfolios.create({
-        permission: "admin"
-    }).then(function(users_portfolio){
-        users_portfolio.addPortfolioId(portfolioId);
-        users_portfolio.addUserId(userId);
-        response.end(JSON.stringify(users_portfolio, null, 4))
+        portfolioInstance.addUser(userId, {'permission' : 'admin'});
+        var portfolio = {
+            'portfolioId' : portfolioId
+        };
+        response.end(JSON.stringify(portfolio, null, 4));
     });
 });
 
@@ -311,30 +308,85 @@ app.delete('/api/portfolios', function (request, response) {
 	}
 
     var userId = request.session.passport.user;
-    var portfolioName = request.name;
-    var portfolioId = request.body.id;
+    var portfolioId = request.body.portfolioId;
 
     models.User.findById(userId)
     .then(function(user) {
-        return user.getPortfolios({where: {id: portfolioId }});
+        user.getPortfolios({where: {id: portfolioId }}).then(function(portfolio) {
+            if (portfolio.length === 0) {
+                console.log("No access to portfolio");
+                response.status(401).end('No Unauthorized access to portfolio');
+    			return;
+            }
+
+            var permission = portfolio[0].Users_Portfolios.permission;
+            console.log(permission);
+            if(permission === "admin" || permission === 'write') {
+                user.removePortfolio(portfolio);
+                response.end("You have deleted your portfolio " + portfolioId);
+            }
+            else {
+                console.log("You have the wrong permissions");
+                response.status(401).end('Unauthorized access to portfolio');
+    			return;
+            }
+        });
+	});
+});
+
+// Function to remove a company from a certain portfolio.
+app.delete('/api/portfolios/:portfolioId/stocks', function(request,response){
+    if (!request.user) {
+        response.status(306).json({'redirect': '/login'});
+        return;
+    }
+
+    var userId = request.session.passport.user;
+    var portfolioId = request.params['portfolioId'];
+    var stockId = request.body['stockId'];
+
+    models.User.findById(userId).then(function(user) {
+        if (user)
+            return user.getPortfolios({where: {id: portfolioId}});
     }).then(function(portfolio) {
         if (portfolio.length === 0) {
-            console.log("No access to portfolio");
             response.status(401).end('Unauthorized access to portfolio');
-			return;
+            return;
         }
-        var permission = portfolio.Permission;
-        if(permission === "admin") {
-            portfolio.removeid(portfolioId);
-            response.end("CompanyId: " + companyId + " , added to PortfolioId: " + portfolioId);
-			console.log("CompanyId: " + companyId + " , added to PortfolioId: " + portfolioId);
-        }
-        else {
-            console.log("You have the wrong permissions");
+
+        models.Portfolio.findById(portfolioId).then(function(portfolio) {
+            portfolio.removeCompany(stockId);
+            response.end(JSON.stringify(portfolio, null, 4));
+        });
+    });
+});
+
+// Function to add a company from a certain portfolio.
+app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
+    if (!request.user) {
+        response.status(306).json({'redirect': '/login'});
+        return;
+    }
+
+    var userId = request.session.passport.user;
+    var portfolioId = request.params['portfolioId'];
+    var stockId = request.body['stockId'];
+
+    models.User.findById(userId).then(function(user) {
+        if (user)
+            return user.getPortfolios({where: {id: portfolioId}});
+    }).then(function(portfolio) {
+        if (portfolio.length === 0) {
             response.status(401).end('Unauthorized access to portfolio');
-			return;
+            return;
         }
-	});
+
+        models.Portfolio.findById(portfolioId).then(function(portfolio) {
+            portfolio.addCompany(stockId);
+            response.end(JSON.stringify(portfolio), null, 4);
+        });
+
+    });
 });
 
 app.post('/api/portfolios/:portfolioId/invite', function(request, response)
@@ -383,32 +435,6 @@ app.post('/api/portfolios/:portfolioId/invite', function(request, response)
 	});
 });
 
-// Function to remove a company from a certain portfolio.
-app.delete('/api/portfolios/:portfolioId', function(request,response){
-    if (!request.user) {
-        response.status(306).json({'redirect': '/login'});
-        return;
-    }
-    var sessionUserId = request.session.passport.user;
-    var portfolioId = request.params['portfolioId'];
-    var companyId = request.body['companyId'];
-    models.User.findById(sessionUserId).then(function(user) {
-        if (user)
-            return user.getPortfolios({where: {id: portfolioId}});
-    }).then(function(portfolio) {
-        console.log("PORTFOLIO LENGTH " + portfolio.length);
-        if (portfolio.length === 0) {
-            console.log("No access to portfolio");
-            response.status(401).end('Unauthorized access to portfolio');
-            return;
-        }
-        models.Portfolio.findById(portfolioId).then(function(portfolioInstance){
-            portfolioInstance.removeCompany(companyId);
-            response.end(JSON.stringify(portfolioInstance));
-            console.log("Session User: " + sessionUserId);
-        });
-	});
-});
 
 app.get('/api/invitation', function(request, response) {
 	if (!request.user) {
@@ -557,7 +583,7 @@ models.sequelize.sync().then(function() {
 	COMPANIES = Object.keys(companies).map(function (key) { return companies[key].symbol; }); //Stores stock symbols in array
 
 	var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + COMPANIES;
-	request(url, onStocksUpdate);
+	//request(url, onStocksUpdate);
 
 	//listenForStockUpdates();
 
