@@ -10,17 +10,10 @@ class Portfolio extends Component {
         this.state = {
             stocks: []
         };
-    }
-   
-    componentWillMount() {
+        
         Client.getStocks(this.props.id, (companiesList) => { 
-            const stocks = companiesList.Companies; 
-            this.setState({stocks});
+            this.setState({stocks : companiesList.Companies});
         });
-    }
-    
-    editPortfolio() {
-        this.props.editPortfolio(this.props.id);
     }
 
     render() {

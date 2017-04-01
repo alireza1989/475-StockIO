@@ -15,15 +15,7 @@ class PortfolioAdmin extends Component {
             stocks: [],
             members: []
 		};
-
-        this.updatePortfolioName = this.updatePortfolioName.bind(this);
-        this.addMember = this.addMember.bind(this);
-        this.removeMember = this.removeMember.bind(this);
-        this.addStock = this.addStock.bind(this);
-        this.removeStock = this.removeStock.bind(this);
-	}
-	
-    componentWillMount() {
+		
         Client.getStocks(this.props.id, (portfolio) => { 
             this.setState({
                 name: portfolio.name,
@@ -34,27 +26,49 @@ class PortfolioAdmin extends Component {
         Client.getMembers(this.props.id, (members) => { 
             this.setState({members: members.users});
         });
-    }
+	}
+	
+	componentDidMount() {
+        this.portfolioNameInput.focus();
+	}
     
-    updatePortfolioName(event) {
-        console.log(`Update portfolio name to "${event.target.value}"`);
+    updatePortfolioName = (e) => {
+        console.log(`Update portfolio name to "${e.target.value}"`);
         this.setState({name: event.target.value});
     }
     
-    addMember() {
+    addMember = () => {
         console.log("Adding member");
     }
     
-    removeMember(id) {
+    removeMember = (id) => {
         console.log(`Removing member ${id}`);
     }
     
-    addStock() {
+    addStock = () => {
         console.log("Adding stock");
     }
     
-    removeStock(id) {
+    removeStock = (id) => {
         console.log(`Removing stock ${id}`);
+    }
+    
+    renderStocks = () => {
+        if (this.state.stocks.length > 0) {
+            console.log("Populating stocks");
+        } else {
+            console.log("No stocks");
+        }
+    }
+
+    renderMembers = () => {
+        if (this.state.members.length > 0) {
+            return {this.state.stocks.map((stock, i) =>
+                <PortfolioAdminStock key={i} id={stock.id} name={stock.name} symbol={stock.symbol}
+                                     removeStock={this.removeStock}/>}
+        } else {
+            return <li>No members</li>
+        }
     }
 
 	render() {
@@ -63,8 +77,9 @@ class PortfolioAdmin extends Component {
                 <div className="portfolio-admin-form">
                     <a className="close-button" role="button" onClick={() => {this.props.closeForm();}}></a>
 
-                    <input type="text"  name="portfolio-name" placeholder="Portfolio Name"
-                                        value={this.state.name} onChange={this.updatePortfolioName}/>
+                    <input type="text"  name="portfolio-name" placeholder="Portfolio Name" 
+                                        value={this.state.name} onChange={this.updatePortfolioName}
+                                        ref={(input) => { this.portfolioNameInput = input; }}/>
                     
                     <PortfolioAdminStockEntry />
                     
@@ -74,6 +89,9 @@ class PortfolioAdmin extends Component {
                                                  removeStock={this.removeStock}/>
                         )}
                     </ul>
+                    
+                    {this.renderStocks()}
+                    {this.renderMembers()}
                     
                     <PortfolioAdminMemberEntry />
                     
