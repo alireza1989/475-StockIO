@@ -38,15 +38,18 @@
 }
 
 .portfolio-admin-form a.close-button {
+    background: rgba(255, 255, 255, 0.1);
     color: #999;
-    font: 18px/50px Arial, sans-serif;
-    margin: 20px;
-    padding: 5px;
+    font: 18px/40px Arial, sans-serif;
+    margin: 25px 20px;
+    padding: 5px 15px;
+    border-radius: 5px;
     float: right;
     cursor: pointer;
 }
 
 .portfolio-admin-form a.close-button:hover {
+    background: rgba(255, 255, 255, 0.2);
     color: #ddd;
 }
 
@@ -79,8 +82,8 @@
 }
 
 .portfolio-admin-form ul#portfolio-admin-stocks {
-    max-height: 400px;
-    margin-bottom: 10px;
+    max-height: 280px;
+    padding-bottom: 10px;
 }
 
 .portfolio-admin-form ul#portfolio-admin-members {
@@ -103,7 +106,7 @@
     }
     
     .portfolio-admin-form a.close-button {
-        margin: 5px 5px 5px 0;
+        margin: 10px 10px 10px 0;
     }
     
     .portfolio-admin-form ul#portfolio-admin-stocks {
