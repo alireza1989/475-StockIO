@@ -266,6 +266,79 @@ app.get('/api/portfolios/:portfolioId/users', function (request, response) {
     })
 });
 
+
+// Add a user to a portfolio by calling the following api
+app.post('/api/portfolios/:portfolioId/users', function(request, response){
+	if (!request.user) {
+		response.status(306).json({'redirect': '/login'});
+		return;
+	}
+
+	// adminID, userId, portfolioId
+	var adminId = request.session.passport.user;
+	var portfolioId = request.params['portfolioId'];
+	var userId = request.body.userId;
+
+	// Check if the request comes from portfolio's admin
+	models.User.findById(adminId).then(function(user) {
+		if (user)
+			return user.getPortfolios({where: {id: portfolioId}});
+	}).then(function(portfolios) {
+		if (portfolios.length === 0) {
+			response.status(401).end('Unauthorized access to portfolio');
+			return;
+		}else{
+			models.Portfolio.findOne({
+				where: [{
+					id: portfolioId
+				}]
+			}).then(function(portfolio){
+				portfolio.addUser(userId).then(function() {
+                                response.statusCode = 200;
+                                response.end();
+                });
+			})
+		}
+	})
+});
+
+// Delete a user from a portfolio by calling the following api
+app.delete('/api/portfolios/:portfolioId/users', function(request, response){
+	if (!request.user) {
+		response.status(306).json({'redirect': '/login'});
+		return;
+	}
+
+	// adminID, userId, portfolioId
+	var adminId = request.session.passport.user;
+	var portfolioId = request.params['portfolioId'];
+	var userId = request.body.userId;
+
+	// Check if the request comes from portfolio's admin
+	models.User.findById(userId).then(function(user) {
+		if (user)
+			return user.getPortfolios({where: {id: portfolioId}});
+	}).then(function(portfolios) {
+		if (portfolios.length === 0) {
+			console.log("No access to portfolio");
+			response.status(401).end('Unauthorized access to portfolio');
+			return;
+		}else{
+			models.Portfolio.findOne({
+				where: [{
+					id: portfolioId
+				}]
+			}).then(function(portfolio){
+				portfolio.removeUser(userId).then(function() {
+                                response.statusCode = 200;
+                                response.end();
+            	});
+			})
+		}
+	})
+
+});
+
 app.get('/api/stocks/:symbol', function (request, response) {
     var symbol = request.params['symbol'];
     models.Company.findOne({where: {symbol: symbol}}).then(function(stock) {
