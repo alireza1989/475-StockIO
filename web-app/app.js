@@ -216,7 +216,7 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
     })
 });
 
-// Get all the users who have access to this portfolio -- must check if user has admin/write access to this portfolio before showing them
+    // Get all the users who have access to this portfolio -- must check if user has admin/write access to this portfolio before showing them
 app.get('/api/portfolios/:portfolioId/users', function (request, response) {
     // This checks if the instance of request.user is empty or not
     if (!request.user) {
@@ -300,6 +300,41 @@ app.post('/api/portfolios', function (request, response) {
         users_portfolio.addUserId(userId);
         response.end(JSON.stringify(users_portfolio, null, 4))
     });
+});
+
+
+// This is used to delete a portfolio that you have admin power to.
+app.delete('/api/portfolios', function (request, response) {
+	if (!request.user) {
+        response.status(306).json({'redirect': '/login'});
+		return;
+	}
+
+    var userId = request.session.passport.user;
+    var portfolioName = request.name;
+    var portfolioId = request.body.id;
+
+    models.User.findById(userId)
+    .then(function(user) {
+        return user.getPortfolios({where: {id: portfolioId }});
+    }).then(function(portfolio) {
+        if (portfolio.length === 0) {
+            console.log("No access to portfolio");
+            response.status(401).end('Unauthorized access to portfolio');
+			return;
+        }
+        var permission = portfolio.Permission;
+        if(permission === "admin") {
+            portfolio.removeid(portfolioId);
+            response.end("CompanyId: " + companyId + " , added to PortfolioId: " + portfolioId);
+			console.log("CompanyId: " + companyId + " , added to PortfolioId: " + portfolioId);
+        }
+        else {
+            console.log("You have the wrong permissions");
+            response.status(401).end('Unauthorized access to portfolio');
+			return;
+        }
+	});
 });
 
 app.post('/api/portfolios/:portfolioId/invite', function(request, response)
