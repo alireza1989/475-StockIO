@@ -2,22 +2,18 @@
 
 .landing-page-form {
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     float: right;
-    /*min-height: 700px;*/
     height: 100%;
     width: 50%;
     display: block;
-    transition: 300ms all ease; 
-    -moz-transition: 300ms all ease;
-    -webkit-transition: 300ms all ease;
-
 }
 
 .landing-page-form form {
     display: block;
     margin: 300px;
     margin-left: 25%;
-    /*width: 50%;*/
 }
 /*override above for sign up piece*/
 .signup form {
@@ -38,9 +34,6 @@
     margin: 15px 0 15px 10px;
     display: block;
     opacity: 0.8;
-}
-.landing-page-form form > input[type=text], input[type=password] {
-
 }
 
 .landing-page-form form > input[type=submit] {

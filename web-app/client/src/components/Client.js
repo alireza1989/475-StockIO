@@ -1,4 +1,10 @@
 import {browserHistory} from 'react-router';
+
+{/* Intrinio constants*/}
+const username = "17440ee7fe0d7aeb1962fb3a18df9607";
+const password = "bd8d650b82b0f07cf98d893a9fde0bb7";
+var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
+var url = "https://api.intrinio.com/news?identifier=";
     
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -16,7 +22,10 @@ function parseJSON(response) {
     if (response) { return response.json(); }
 }
 
+
 const Client = module.exports = {
+
+
     getUser: function(callback) {
         return fetch('/api/users/current', {
             accept: 'application/json',
@@ -69,12 +78,15 @@ const Client = module.exports = {
     },
     
 // NEWS
-    getNews: function(callback) {
-        return fetch('/api/news', {
-            accept: 'application/json',
-        }).then(checkStatus)
-          .then(parseJSON)
-          .then(callback);
+    getNews: function(symbol, callback) {
+      return fetch(url + symbol,{
+        headers: {
+            "Authorization": auth
+        },
+          accept: 'application/json',
+      }).then(checkStatus)
+        .then(parseJSON)
+        .then(callback);
     },
     
 // ACCOUNT

@@ -8,11 +8,18 @@ class StockNews extends Component {
         super(props);
 
         this.state = {
+            ticker: props.symbol,
             news: []
         };
 
-        Client.getNews((news) => {
-            this.setState({news: news});
+        var symbol = this.state.ticker;
+
+        Client.getNews(symbol, (newsList) => {
+            const news = newsList.data.map(obj => obj);
+            this.setState({news});
+        }).catch(function() {
+            const news = StockNews.news;
+            this.setState({news});
         });
     }
 
