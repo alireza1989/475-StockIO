@@ -44,7 +44,7 @@ const Client = module.exports = {
           .then(callback);
     },
     
-    postStocks: function(portfolioId, stockSymbol, callback) {
+    addStock: function(portfolioId, stockSymbol, callback) {
         fetch(`/api/portfolios/${portfolioId}/stocks`, {
             method: 'POST',
             headers: {

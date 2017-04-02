@@ -19,7 +19,7 @@
 .stock-summary-form {
 	height: auto;
 	width: 900px;
-	margin: 100px auto;
+	margin: 100px auto 25px;
     box-sizing: border-box;
 	border-radius: 20px;
     position: relative;

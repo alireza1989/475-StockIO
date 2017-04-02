@@ -45,8 +45,12 @@ class PortfolioAdmin extends Component {
         console.log(`Removing member ${id}`);
     }
     
-    addStock = () => {
+    addStock = (symbol) => {
         console.log("Adding stock");
+        Client.addStock(this.props.portfolio.id, symbol, (response) => {
+            console.log("Stock added?");
+            console.log(response);
+        });
     }
     
     removeStock = (id) => {
@@ -87,7 +91,7 @@ class PortfolioAdmin extends Component {
                                         value={this.state.name} onChange={this.updatePortfolioName}
                                         ref={(input) => { this.portfolioNameInput = input; }}/>
                     
-                    <PortfolioAdminStockEntry/>
+                    <PortfolioAdminStockEntry addStock={this.addStock}/>
                     
                     <ul id="portfolio-admin-stocks">
                         {this.renderStocks()}

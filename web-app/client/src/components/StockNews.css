@@ -24,10 +24,6 @@
     display: none;
 }
 
-.stock-news .stock-news-items {
-	overflow: scroll;
-}
-
 @media screen and (max-width:500px) {
     .stock-news {
         background: black;
