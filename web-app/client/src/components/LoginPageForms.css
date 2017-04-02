@@ -1,23 +1,31 @@
-.landing-login {
+/* Bonnie Ng 2017-04-02*/
+
+.landing-page-form {
     box-sizing: border-box;
     float: right;
     /*min-height: 700px;*/
     height: 100%;
     width: 50%;
     display: block;
-    /*background: red;*/
-}
-.landing-login {
-    height: 50%;
+    transition: 300ms all ease; 
+    -moz-transition: 300ms all ease;
+    -webkit-transition: 300ms all ease;
+
 }
 
-.landing-login form {
+.landing-page-form form {
     display: block;
-    margin: 300px auto 0;
-    width: 50%;
+    margin: 300px;
+    margin-left: 25%;
+    /*width: 50%;*/
+}
+/*override above for sign up piece*/
+.signup form {
+    margin: 200px;
+    margin-left: 25%;
 }
 
-.landing-login form > input {
+.landing-page-form form > input {
     border-style: none;
     border-radius: 5px;
     box-sizing: border-box;
@@ -30,46 +38,51 @@
     margin: 15px 0 15px 10px;
     display: block;
     opacity: 0.8;
-    transition: 300ms all; 
 }
-.landing-login form > input[type=text], input[type=password] {
+.landing-page-form form > input[type=text], input[type=password] {
 
 }
 
-.landing-login form > input[type=submit] {
+.landing-page-form form > input[type=submit] {
     cursor: pointer;
     background-color: #FF0058;
     color: white;
     width: 232px;
 }
-.landing-login form > input[type=submit]:hover {
+.landing-page-form form > input[type=submit]:hover {
     cursor: pointer;
     background-color: #36D7D6;
     color: rgba(0, 0, 0, 0.8);
 }
-.landing-login-extra {
+.landing-page-form-extra {
 	margin: 15px 0 15px 10px;
 	width: 232px;
 }
-.landing-login-extra > li > a:hover {
+.landing-page-form-extra > li > a:hover {
 	cursor: pointer;
 }
 
 @media only screen and (max-width: 500px) {
 
-    .landing-login {
+    .landing-page-form {
         width: 100%;
         max-height: 30%;
         float: none;
     }
-    .landing-login form {
-        margin: 10px auto 0;    
+    .landing-page-form form {
+        margin: 0;
+        margin-left: 10%;
+        width: 80%;
+    }
+    .landing-page-form form > input  {
+        width: 200px;
+        margin: 15px auto;
+    }
+    .landing-page-form form > input[type=submit]  {
         width: 200px;
     }
-    .landing-login form > input  {
+    .landing-page-form-extra {
         width: 200px;
-    }
-    .landing-login form > input[type=submit]  {
-        width: 200px;
+        margin: 0 auto;
     }
 }
