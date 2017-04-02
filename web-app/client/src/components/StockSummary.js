@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './StockSummary.css';
-import News from './News'
-import CloseIcon from '../assets/close.svg';
 import StockProperty from './StockProperty';
-import DummyGraph from '../assets/graph.gif';
+import StockNews from './StockNews';
 // const io = require('socket.io-client');
 // const socket = io();
 
@@ -48,14 +46,10 @@ class StockPopup extends Component {
                             <StockProperty name="Sector" value={this.state.sector}/>
                         </ul>
 
-                        <div className="stock-summary-chart">
-                            <img src={DummyGraph} alt="dummy graph here"/>
-                        </div>
+                        <div className="stock-summary-chart"></div>
                     </div>
 
-                    <News />
-
-                    <img onClick={this.props.toggleSummary} className="close-button" src={CloseIcon} alt="X"/>
+                    <StockNews />
                 </div>
             </div>
         )

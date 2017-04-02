@@ -50,7 +50,6 @@ class PortfolioCell extends Component {
 
                 {this.state.summary_visible ?
                     <StockSummary stock={this.state} closeForm={this.toggleSummary}/> : ''}
-
             </li>
 
 

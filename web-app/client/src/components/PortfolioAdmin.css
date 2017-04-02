@@ -15,7 +15,7 @@
 .portfolio-admin-form {
     background: black;
     height: auto;
-    width: 700px;
+    width: 900px;
     margin: 100px auto;
     box-sizing: border-box ;
     border-radius: 20px;
@@ -26,9 +26,9 @@
 .portfolio-admin-form a.close-button {
     background: rgba(255, 255, 255, 0.1);
     color: #999;
-    font: 18px/40px Arial, sans-serif;
-    margin: 25px 20px;
+    font: 18px/30px Arial, sans-serif;
     padding: 5px 15px;
+    margin: 15px 25px 15px 0;
     border-radius: 5px;
     float: right;
     cursor: pointer;
@@ -50,8 +50,8 @@
     color: white;
     font-size: 24px;
     width: 70%;
-    margin: 25px 0 25px 25px;
-    padding: 10px;
+    margin: 15px 0 15px 25px;
+    padding: 5px;
     box-sizing: border-box;
     border-radius: 5px;
     border: 1px solid #333;
@@ -88,6 +88,7 @@
     padding: 14px;
     cursor: default;
 }
+
 
 @media screen and (max-width:750px) {
     .portfolio-admin-form {

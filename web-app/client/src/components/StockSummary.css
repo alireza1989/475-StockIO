@@ -20,25 +20,26 @@
     box-sizing: border-box;
 	border-radius: 20px;
     position: relative;
+    overflow: auto;
 }
 
 
 /* SUMMARY HEADER */
 .stock-header {
-    height: 34px;
+    height: auto;
     padding: 15px 25px;
     border-bottom: 1px solid #333;
 }
 
 .stock-header h3 {
 	font-size: 24px;
-	line-height: 34px;
+	line-height: 40px;
 }
 
 .stock-header a.close-button {
     background: rgba(255, 255, 255, 0.1);
     color: #999;
-    font: 18px/24px Arial, sans-serif;
+    font: 18px/30px Arial, sans-serif;
     padding: 5px 15px;
     border-radius: 5px;
     float: right;
@@ -57,38 +58,23 @@
 
 /* SUMMARY LEFT (DETAILS) */
 .stock-information {
-    background: red;
     height: auto;
     width: 50%;
-    clear: both;
+    float: left;
+    box-sizing: border-box;
+    position: relative;
 }
 
 .stock-information ul {
     height: auto;
+    overflow: auto;
     clear: both;
-}
-
-.stock-information li {
-    width: 50%; float: left;
-    padding: 5px;
+    border-bottom: 1px solid #333;
 }
 
 .stock-summary-chart {
-    display: none;
-	box-sizing: border-box;
-	height: 65%;
-	width: 65%;
-	position: absolute;
-	bottom: 0;
-	padding: 2% 2% 4% 4%;
-}
-.interactive-chart img {
-	width: auto;
-	height: 100%;		
-}
-
-.stock-news {
-    display: none;    
+    height: 365px;
+    width: 100%;
 }
 
 

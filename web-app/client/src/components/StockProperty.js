@@ -13,12 +13,9 @@ class StockProperty extends Component {
 
 	render() {
 		return (
-			<li className="StockProperty">
-				<h4>{this.state.name}</h4>
-				{(this.state.value == null) ? 
-					<p>N/A</p>
-					: <p>{this.state.value}</p>
-				}
+			<li className="stock-property">
+                {this.state.name}
+                <span className="stock-property-value">{(this.state.value == null) ? 'N/A' : this.state.value}</span>
 			</li>
 		);
 	}
