@@ -48,7 +48,8 @@ class PortfolioCell extends Component {
                     </div>
                 </div>
 
-                {this.state.summary_visible ? <StockSummary toggleSummary={this.toggleSummary} stock={this.state}/> : null}
+                {this.state.summary_visible ?
+                    <StockSummary stock={this.state} closeForm={this.toggleSummary}/> : ''}
 
             </li>
 

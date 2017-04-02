@@ -23,20 +23,6 @@
 
 
 /* FORM HEADER */
-.portfolio-admin-form .form-header {
-    height: 44px;
-    padding: 0 10px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #666;
-}
-
-.portfolio-admin-form .form-header a {
-    font-size: 18px;
-    color: #999;
-    padding: 10px;
-    cursor: pointer;
-}
-
 .portfolio-admin-form a.close-button {
     background: rgba(255, 255, 255, 0.1);
     color: #999;
@@ -57,6 +43,8 @@
     content: 'Done'; /* × */
 }
 
+
+/* FORM DETAILS */
 .portfolio-admin-form input[name="portfolio-name"] {
     background: black;
     color: white;

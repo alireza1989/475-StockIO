@@ -67,8 +67,6 @@ class PortfolioAdmin extends Component {
     
     renderMembers = () => {         
         if (this.state.members.length > 0) {
-            console.log(this.state.permission);
-            
             return this.state.members.map((member, i) =>
                 <PortfolioAdminMember key={i} id={member.id} name={member.username}
                                       permission={this.state.permission} 

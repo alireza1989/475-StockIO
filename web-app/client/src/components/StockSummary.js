@@ -28,26 +28,29 @@ class StockPopup extends Component {
 
     render() {
         return (
-            <div className="StockSummary-background">
-                <div className="StockSummary">
-                    <div className="stock-information">
-                    <h3>{this.state.name}</h3>                              
-                    <ul>
-                        <StockProperty name="Price" value={this.state.price}/>
-                        <StockProperty name="Last Price" value={this.state.last_price}/>
-                        <StockProperty name="Previous Close Price" value={this.state.prev_close}/>
-                        <StockProperty name="Change" value={this.state.change_price}/>
-                        <StockProperty name="Percent Change" value={this.state.change_percent}/>
-                    </ul>
-                    <ul>
-                        <StockProperty name="Dividend" value={this.state.dividend}/>
-                        <StockProperty name="Yield" value={this.state.yield}/>
-                        <StockProperty name="CEO" value={this.state.ceo}/>
-                        <StockProperty name="Sector" value={this.state.sector}/>
-                    </ul>
+            <div className="stock-summary">
+                <div className="stock-summary-form">
+                    <div className="stock-header">
+                        <a className="close-button" role="button" onClick={() => {this.props.closeForm();}}></a>
+                        <h3>{this.state.name}</h3>
                     </div>
-                    <div className="interactive-chart">
-                    <img src={DummyGraph} alt="dummy graph here"/>
+
+                    <div className="stock-information">
+                        <ul>
+                            <StockProperty name="Price" value={this.state.price}/>
+                            <StockProperty name="Last Price" value={this.state.last_price}/>
+                            <StockProperty name="Previous Close Price" value={this.state.prev_close}/>
+                            <StockProperty name="Change" value={this.state.change_price}/>
+                            <StockProperty name="Percent Change" value={this.state.change_percent}/>
+                            <StockProperty name="Dividend" value={this.state.dividend}/>
+                            <StockProperty name="Yield" value={this.state.yield}/>
+                            <StockProperty name="CEO" value={this.state.ceo}/>
+                            <StockProperty name="Sector" value={this.state.sector}/>
+                        </ul>
+
+                        <div className="stock-summary-chart">
+                            <img src={DummyGraph} alt="dummy graph here"/>
+                        </div>
                     </div>
 
                     <News />

@@ -14,15 +14,12 @@ class NewsRow extends Component {
 
     }
 
-
     render() {
         return (
-            <li className="news-article">   
-                <a href={this.state.url}>
-                    <h5> {this.state.title} </h5>
-                </a>
-                <p className="date">{this.state.date} </p><br/>
-                <p className="summary"> {this.state.summary} </p>
+            <li className="news-article">
+                <p className="date">{new Date(this.state.date).toDateString()}</p>
+                <a onClick={() => {window.open(this.state.url, '_blank')}}><h5>{this.state.title}</h5></a>
+                <p className="summary">{this.state.summary}</p>
             </li>
         );
     }

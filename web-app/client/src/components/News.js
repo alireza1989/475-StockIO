@@ -4,36 +4,28 @@ import NewsRow from './NewsRow';
 import './News.css';
 
 class News extends Component {
+    constructor(props) {
+        super(props);
 
-  constructor(props) {
-      super(props);
+        this.state = {
+            news: []
+        };
 
-      this.state = {
-          news: []
-      };
-  }
+        Client.getNews((news) => {
+            this.setState({news: news});
+        });
+    }
 
-  componentWillMount() {
-      Client.getNews((newsList) => {
-          const news = newsList.map(obj => obj);
-          this.setState({news});
-      }).catch(function(){
-          const news = News.news;
-          this.setState({news});
-      });
-  }
-
-
-  render() {
-      return(
-        <div className="news-sidebar">
-          <h3> Related News </h3>
-          <ul>
-            {this.state.news.map((news, i) => <NewsRow key={i} news={news}/>)}
-          </ul>
-        </div>
-      );
-  }
+    render() {
+        return(
+            <div className="stock-news">
+                <h3>Related News</h3>
+                <ul className="stock-news-items">
+                    {this.state.news.map((news, i) => <NewsRow key={i} news={news}/>)}
+                </ul>
+            </div>
+        );
+    }
 
 }
 
