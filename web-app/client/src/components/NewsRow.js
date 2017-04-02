@@ -18,7 +18,7 @@ class NewsRow extends Component {
     render() {
         return (
             <li className="news-article">   
-                <a hfre={this.state.url}>
+                <a href={this.state.url}>
                     <h5> {this.state.title} </h5>
                 </a>
                 <p className="date">{this.state.date} </p><br/>
