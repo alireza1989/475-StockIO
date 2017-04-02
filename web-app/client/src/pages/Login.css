@@ -7,21 +7,9 @@
 .landing-brand {
 	box-sizing: border-box;
 	float: left;
-	/*min-height: 700px;*/
 	height: 100%;
 	width: 50%;
 	display: block;
-	/*background: blue;*/
-}
-
-.landing-login {
-	box-sizing: border-box;
-	float: right;
-	/*min-height: 700px;*/
-	height: 100%;
-	width: 50%;
-	display: block;
-	/*background: red;*/
 }
 
 .landing-logo {	
@@ -36,55 +24,6 @@
 .landing-logo img {
 	height: 65px;
 	margin-left: -7px;
-}
-
-.landing-login {
-	height: 50%;
-}
-
-.landing-login form {
-	display: block;
-	margin: 300px auto 0;
-	width: 50%;
-}
-
-.landing-login form > input {
-	border-style: none;
-    border-radius: 5px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    font-size: 16px;
-    line-height: 20px;
-    transition: 100ms all; 
-	padding: 10px 20px;
-    margin: 15px 0 15px 10px;
-    display: block;
-	opacity: 0.8;
-	transition: 300ms all; 
-}
-
-.landing-login form > input[type=text], input[type=password] {
-
-}
-
-.landing-login form > input[type=submit] {
-    cursor: pointer;
-    background-color: #FF0058;
-    color: white;
-    width: 232px;
-}
-.landing-login form > input[type=submit]:hover {
-    cursor: pointer;
-    background-color: #36D7D6;
-    color: rgba(0, 0, 0, 0.8);
-}
-.landing-login-extra {
-	margin: 15px 0 15px 10px;
-	width: 232px;
-}
-.landing-login-extra > li > a:hover {
-	cursor: pointer;
 }
 
 .ScrollAbout{
@@ -108,22 +47,12 @@
 		margin: 0;
 	}
 
-	.landing-login, .landing-brand {
+	.landing-brand {
 		width: 100%;
 		max-height: 30%;
 		float: none;
 	}
 	.landing-logo {		
 		margin: 125px auto 0;
-	}
-	.landing-login form {
-		margin: 10px auto 0;	
-		width: 200px;
-	}
-	.landing-login form > input  {
-		width: 200px;
-	}
-	.landing-login form > input[type=submit]  {
-		width: 200px;
 	}
 }
