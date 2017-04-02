@@ -78,8 +78,8 @@ const Client = module.exports = {
     },
     
 // NEWS
-    getNews: function(symbol, callback) {
-      return fetch(url + symbol,{
+    getNews: function(stockSymbol, callback) {
+      return fetch(url + stockSymbol,{
         headers: {
             "Authorization": auth
         },
