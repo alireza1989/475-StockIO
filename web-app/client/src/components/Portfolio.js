@@ -11,19 +11,28 @@ class Portfolio extends Component {
             stocks: []
         };
         
-        Client.getStocks(this.props.id, (companiesList) => { 
+        Client.getStocks(this.props.portfolio.id, (companiesList) => { 
             this.setState({stocks : companiesList.Companies});
         });
+    }
+    
+    renderEditButton = () => {
+        var p = this.props.portfolio.permission;
+        if (p === 'admin' || p === 'write') {
+            return (
+                <span className="portfolio-edit" onClick={() => {
+                    this.props.editPortfolio(this.props.portfolio);
+                }}>Edit</span>
+            )
+        }
     }
 
     render() {
         return (
             <section className="portfolio">
                 <h2 className="portfolio-header">
-                    {this.props.name}
-                    <span className="portfolio-edit" onClick={() => {
-                        this.props.editPortfolio(this.props.id);
-                    }}>Edit</span>
+                    {this.props.portfolio.name}
+                    {this.renderEditButton()}
                 </h2> 
                                 
                 <div className="portfolio-contents">
