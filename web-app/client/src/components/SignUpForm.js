@@ -7,7 +7,7 @@ class SignUpForm extends Component {
 	render() {
 		return (
 			<div className="landing-page-form signup">
-				<form action="" method="post">					
+				<form action="api/users/signup" method="post">					
 					<input type="text" name="firstname" placeholder="firstname"/>
 					<input type="text" name="lastname" placeholder="lastname"/>
 					<input type="text" name="username" placeholder="email"/>
