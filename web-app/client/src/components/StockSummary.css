@@ -10,10 +10,10 @@
     z-index: 1500;
     top: 0;
     left: 0;
+    overflow: scroll;
 }
 
 .stock-summary-form {
-	background: black;
 	height: auto;
 	width: 900px;
 	margin: 100px auto;
@@ -26,6 +26,7 @@
 
 /* SUMMARY HEADER */
 .stock-header {
+	background: black;
     height: auto;
     padding: 15px 25px;
     border-bottom: 1px solid #333;
@@ -34,6 +35,23 @@
 .stock-header h3 {
 	font-size: 24px;
 	line-height: 40px;
+}
+
+.stock-header h3 span.stock-price {
+    font-size: 18px;
+    margin-left: 15px;
+    padding: 3px 6px;
+    border-radius: 5px;
+    position: relative;
+    top: -2px;
+}
+
+.stock-header h3 span.stock-price.up {
+    background: rgba(0, 255, 0, 0.8);
+}
+
+.stock-header h3 span.stock-price.down {
+    background: rgba(255, 0, 0, 0.8);
 }
 
 .stock-header a.close-button {
@@ -58,6 +76,7 @@
 
 /* SUMMARY LEFT (DETAILS) */
 .stock-information {
+	background: black;
     height: auto;
     width: 50%;
     float: left;
@@ -73,36 +92,28 @@
 }
 
 .stock-summary-chart {
-    height: 365px;
+    height: 412px;
     width: 100%;
+    overflow: hidden;
 }
 
 
-@media only screen and (max-width: 500px) {
-	.StockSummary {
-		height: 80%;
-		width: 80%;
-		top: 10%;
-		left: 10%;
-		overflow: scroll;
-	}	
-	.stock-information {
-		display: block;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		width: 100%;
-		height: auto;
-	}
-	.stock-information ul {
-		box-sizing: border-box;
-		float: left;
-		width: 100%;
-		height: 200px;
-	}
-	.interactive-chart {
-		width: 100%;
-		display: block;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+
+@media screen and (max-width:950px) {
+    .stock-summary-form {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .stock-header {
+        padding: 10px;
+    }
+    
+    .stock-information {
+        width: 100%;
+    }
 }

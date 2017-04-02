@@ -110,6 +110,7 @@
     .portfolio {
         height: auto;
         display: inline-block;
+        vertical-align: top;
     }
     
     .portfolio h2 {

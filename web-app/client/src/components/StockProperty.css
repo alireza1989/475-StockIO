@@ -11,12 +11,16 @@
 	border-bottom: 1px solid #333;
 }
 
-.stock-property:last-of-type {
+ul > .stock-property:nth-last-of-type(-n+2) {
     border: none;
 }
 
 .stock-property span.stock-property-value {
     color: white;
     font-weight: bold;
-	float: right;
+    white-space: nowrap;
+    float: right;
+    max-width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

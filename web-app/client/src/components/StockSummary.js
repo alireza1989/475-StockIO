@@ -11,7 +11,7 @@ class StockPopup extends Component {
 
         this.state = {
             name: props.stock.name,
-            ticker: props.stock.symbol,
+            ticker: props.stock.ticker,
             price: props.stock.price,
             last_price: props.stock.last_price,
             prev_close: props.stock.prev_close,
@@ -25,25 +25,29 @@ class StockPopup extends Component {
     }
 
     render() {
+        console.log(this.state);
+        
         return (
             <div className="stock-summary">
                 <div className="stock-summary-form">
                     <div className="stock-header">
                         <a className="close-button" role="button" onClick={() => {this.props.closeForm();}}></a>
-                        <h3>{this.state.name}</h3>
+                        <h3>
+                            {this.state.name}
+                            <span className={`stock-price ${(this.state.change_price > 0) ? 'up' : 'down'}`}>{this.state.price}</span>
+                        </h3>
                     </div>
 
                     <div className="stock-information">
                         <ul>
-                            <StockProperty name="Price" value={this.state.price}/>
-                            <StockProperty name="Last Price" value={this.state.last_price}/>
-                            <StockProperty name="Previous Close Price" value={this.state.prev_close}/>
                             <StockProperty name="Change" value={this.state.change_price}/>
-                            <StockProperty name="Percent Change" value={this.state.change_percent}/>
+                            <StockProperty name="Pct. Change" value={`${this.state.change_percent}%`}/>
+                            <StockProperty name="Last Price" value={this.state.last_price}/>
+                            <StockProperty name="Prev. Close" value={this.state.prev_close}/>
                             <StockProperty name="Dividend" value={this.state.dividend}/>
                             <StockProperty name="Yield" value={this.state.yield}/>
-                            <StockProperty name="CEO" value={this.state.ceo}/>
                             <StockProperty name="Sector" value={this.state.sector}/>
+                            <StockProperty name="CEO" value={this.state.ceo}/>
                         </ul>
 
                         <div className="stock-summary-chart"></div>
