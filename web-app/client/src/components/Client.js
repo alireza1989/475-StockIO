@@ -44,7 +44,7 @@ const Client = module.exports = {
           .then(callback);
     },
     
-    postStocks: function(portfolioId, stockSymbol) {
+    postStocks: function(portfolioId, stockSymbol, callback) {
         fetch(`/api/portfolios/${portfolioId}/stocks`, {
             method: 'POST',
             headers: {
@@ -53,8 +53,10 @@ const Client = module.exports = {
             },
             body: JSON.stringify({
                 symbol: stockSymbol
-            });
-        });;
+            })
+        }).then(checkStatus)
+          .then(parseJSON)
+          .then(callback);
     },
     
     getMembers: function(portfolioId, callback) {
