@@ -24,7 +24,7 @@
 	overflow: scroll;
 }
 
-.stock-news .stock-news-items::-webkit-scrollbar { 
+.stock-news::-webkit-scrollbar,  .stock-news-items::-webkit-scrollbar{ 
     display: none;
 }
 

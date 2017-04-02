@@ -12,6 +12,9 @@
     left: 0;
     overflow: scroll;
 }
+.stock-summary::-webkit-scrollbar {
+	display: none;
+}
 
 .stock-summary-form {
 	height: auto;
