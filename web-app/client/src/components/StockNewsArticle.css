@@ -1,0 +1,46 @@
+/* Elliot Barer, ebarer [at] mac [dot] com, 2017-03-25 */
+
+/* STOCK-NEWS-ARTICLE */
+.stock-news-article {
+	display: block;
+	overflow: hidden;
+	border-bottom: 1px solid #333;
+}
+
+.stock-news-article:last-of-type {
+    border: noneZ
+}
+
+.stock-news-article a {
+    display: block;
+    padding: 10px;
+}
+
+.stock-news-article a span.article-title {
+    display: block;
+    font: 16px Helvetica;
+    color: white;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stock-news-article a:hover span.article-title {
+    color: #00aeff;
+}
+
+.stock-news-article a span.article-date {
+    display: block;
+    font: 12px Helvetica;
+    color: #999;
+    margin: 5px 0;
+}
+
+.stock-news-article a span.article-summary {
+    display: block;
+    font: 12px Helvetica;
+    color: white;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
