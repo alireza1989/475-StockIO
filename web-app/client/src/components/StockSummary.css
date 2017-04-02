@@ -17,6 +17,7 @@
 }
 
 .stock-summary-form {
+	background: black;
 	height: auto;
 	width: 900px;
 	margin: 100px auto 25px;
@@ -29,7 +30,6 @@
 
 /* SUMMARY HEADER */
 .stock-header {
-	background: black;
     height: auto;
     padding: 15px 25px;
     border-bottom: 1px solid #333;
@@ -79,7 +79,6 @@
 
 /* SUMMARY LEFT (DETAILS) */
 .stock-information {
-	background: black;
     height: auto;
     width: 50%;
     float: left;
@@ -101,13 +100,16 @@
 }
 
 
-
 @media screen and (max-width:950px) {
     .stock-summary-form {
         height: 100%;
         width: 100%;
         margin: 0;
         border-radius: 0;
+    }
+    
+    .stock-information {
+        height: 100%;
     }
 }
 
@@ -117,6 +119,7 @@
     }
     
     .stock-information {
+        height: auto;
         width: 100%;
     }
 }
