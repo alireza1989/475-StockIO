@@ -15,7 +15,8 @@ class PortfolioAdminMember extends Component {;
         return (
             <li className="portfolio-member">   
                 {this.props.name}
-                <a className="delete-button" onClick={this.removeMember}></a>
+                {(this.props.permission === 'admin') ?
+                    <a className="delete-button" onClick={this.removeMember}></a> : ''}
             </li>
         );
     }

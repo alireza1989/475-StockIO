@@ -77,8 +77,12 @@
     height: auto;
     padding: 0 0 0 25px;
     box-sizing: border-box;
-    border-top: 1px solid black;
+    border-top: 1px solid #333;
     overflow-y: scroll;
+}
+
+.portfolio-admin-form ul::-webkit-scrollbar { 
+    display: none;
 }
 
 .portfolio-admin-form ul#portfolio-admin-stocks {
@@ -89,6 +93,12 @@
 .portfolio-admin-form ul#portfolio-admin-members {
     max-height: 150px;
     padding: 15px 25px;
+}
+
+.portfolio-admin-form li.empty-section-row {
+    font: 18px Helvetica;
+    padding: 14px;
+    cursor: default;
 }
 
 @media screen and (max-width:750px) {

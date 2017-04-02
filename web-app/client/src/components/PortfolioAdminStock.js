@@ -15,7 +15,8 @@ class PortfolioAdminStock extends Component {
         return (
             <li className="portfolio-stock">   
                 {this.props.symbol}
-                <a className="delete-button" onClick={this.removeStock}></a>
+                {(this.props.permission === 'admin' || this.props.permission === 'write') ?
+                    <a className="delete-button" onClick={this.removeStock}></a> : ''}
             </li>
         );
     }

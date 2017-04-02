@@ -11,7 +11,6 @@ input[name="portfolio-member-entry"] {
     box-sizing: border-box;
     border: none;
     border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
 }
 
 @media screen and (max-width:500px) {

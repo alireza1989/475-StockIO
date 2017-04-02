@@ -25,16 +25,16 @@ class Dashboard extends Component {
         });
     }
     
-    editPortfolio = (id) => {
+    editPortfolio = (portfolio) => {
         this.setState({
             overlay: !this.state.overlay,
-            selectedPortfolio: this.state.selectedPortfolio ? undefined : id
+            selectedPortfolio: this.state.selectedPortfolio ? undefined : portfolio
         });
     }
     
     renderAdminPanel() {
         if (this.state.selectedPortfolio) {
-            return <PortfolioAdmin  id={this.state.selectedPortfolio}
+            return <PortfolioAdmin  portfolio={this.state.selectedPortfolio}
                                     currentUser={this.state.user}
                                     closeForm={this.editPortfolio}
                    />
@@ -54,7 +54,7 @@ class Dashboard extends Component {
 
                 <div className="Dashboard">
                     {this.state.portfolios.map((portfolio, i) =>
-                        <Portfolio key={i} name={portfolio.name} id={portfolio.id}
+                        <Portfolio key={i} portfolio={portfolio}
                                    editPortfolio={this.editPortfolio}
                         />
                     )}

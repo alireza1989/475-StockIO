@@ -11,28 +11,20 @@ class PortfolioAdmin extends Component {
 		super(props);
 		
 		this.state = {
-            name: '',
-            permission: 'read',
+            name: this.props.portfolio.name,
+            permission: this.props.portfolio.permission,
             stocks: [],
             members: []
 		};
 		
-        Client.getStocks(this.props.id, (portfolio) => { 
-            this.setState({
-                name: portfolio.name,
-                stocks: portfolio.Companies
-            });
+        Client.getStocks(this.props.portfolio.id, (portfolio) => { 
+            this.setState({stocks: portfolio.Companies});
         });
         
-        Client.getMembers(this.props.id, (members) => {            
-            var userPermission = members.users.find((member) => {
-                return member.id === this.props.currentUser.id ? member : null;
-            }).permission;
-
-            this.setState({
-                members: members.users,
-                permission: userPermission
-            });
+        Client.getMembers(this.props.portfolio.id, (members) => {
+            // Remove current user from list
+            members = members.users.filter(member => !(member.id === this.props.currentUser.id));
+            this.setState({members: members});
         });
 	}
 	
@@ -65,14 +57,15 @@ class PortfolioAdmin extends Component {
         if (this.state.stocks.length > 0) {
             return this.state.stocks.map((stock, i) =>
                 <PortfolioAdminStock key={i} id={stock.id} name={stock.name} symbol={stock.symbol}
+                                     permission={this.state.permission} 
                                      removeStock={this.removeStock}/>
             );
         } else {
-            return <li>No stocks</li>
+            return <li className="empty-section-row">No stocks</li>
         }
     }
     
-    renderMembers = () => {        
+    renderMembers = () => {         
         if (this.state.members.length > 0) {
             console.log(this.state.permission);
             
@@ -82,7 +75,7 @@ class PortfolioAdmin extends Component {
                                       removeMember={this.removeMember}/>
             );
         } else {
-            return <li>No members</li>
+            return <li className="empty-section-row">No other members</li>
         }
     }
 
@@ -96,14 +89,13 @@ class PortfolioAdmin extends Component {
                                         value={this.state.name} onChange={this.updatePortfolioName}
                                         ref={(input) => { this.portfolioNameInput = input; }}/>
                     
-                    <PortfolioAdminStockEntry />
+                    <PortfolioAdminStockEntry/>
                     
                     <ul id="portfolio-admin-stocks">
                         {this.renderStocks()}
                     </ul>
                     
-                    <PortfolioAdminMemberEntry />
-                    
+                    {(this.state.permission === 'admin') ? <PortfolioAdminMemberEntry/> : ''}
                     <ul id="portfolio-admin-members">
                         {this.renderMembers()}
                     </ul>
