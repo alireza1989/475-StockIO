@@ -39,5 +39,6 @@
     .portfolio-stock {
         font: 14px Helvetica;
         line-height: 22px;
+        padding: 8px;
     }
 }

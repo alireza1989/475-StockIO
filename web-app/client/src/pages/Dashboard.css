@@ -140,4 +140,11 @@ nav ul li.right {
         white-space: nowrap;
         padding-top: 54px;
     }
+    
+    #new-portfolio-button {
+        height: 54px;
+        width: 54px;
+        bottom: 24px;
+        right: 24px;
+    }
 }

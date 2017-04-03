@@ -62,11 +62,11 @@ class Dashboard extends Component {
                                    editPortfolio={this.editPortfolio}
                         />
                     )}
-                                    
-                    {this.renderAdminPanel()}
                     
                     <button id="new-portfolio-button" onClick={this.addPortfolio}></button>
                 </div>
+                
+                {this.renderAdminPanel()}
             </div>
         );
     }

@@ -206,14 +206,14 @@ app.post('/api/portfolios', function (request, response) {
 		return;
 	}
 
-    var userId = request.session.passport.user;
+    var userID = request.session.passport.user;
     var portfolioName = request.body.name;
 
     models.Portfolio.create({
         name: portfolioName
-    }).then(function(portfolioInstance) {
+    }).then((portfolioInstance) => {
         var portfolioID = portfolioInstance.id;
-        portfolioInstance.addUser(userId, {permission: 'admin'});
+        portfolioInstance.addUser(userID, {permission: 'admin'});
         response.end(JSON.stringify({'portfolioID' : portfolioID}, null, 4));
     });
 });
@@ -225,12 +225,11 @@ app.delete('/api/portfolios/:portfolioId', function (request, response) {
 		return;
 	}
 
-    var userId = request.session.passport.user;
-    var portfolioId = request.params['portfolioId'];
+    var userID = request.session.passport.user;
+    var portfolioID = request.params.portfolioId;
 
-    models.User.findById(userId)
-    .then(function(user) {
-        user.getPortfolios({where: {id: portfolioId }}).then(function(portfolio) {
+    models.User.findById(userID).then((user) => {
+        user.getPortfolios({where: {id: portfolioID }}).then((portfolio) => {
             if (portfolio.length === 0) {
                 console.log("No access to portfolio");
                     response.status(401).end('No Unauthorized access to portfolio');
@@ -269,8 +268,8 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
     var portfolioID = parseInt(request.params.portfolioId);
     
     models.User.findById(userID).then((user) => {
-        user.getPortfolios().then((portfolios) => {
-            var portfolio = portfolios.find((p) => { return p.id === portfolioID });            
+        user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
+            portfolio = portfolio[0];
             if (portfolio !== undefined) {
                 portfolio.getCompanies().then((stocks) => {
                     response.status(200).end(JSON.stringify({'stocks' : stocks}, null, 4));
@@ -294,8 +293,8 @@ app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
     var stockSymbol = request.body.symbol;
     
     models.User.findById(userID).then((user) => {
-        user.getPortfolios().then((portfolios) => {
-            var portfolio = portfolios.find((p) => { return p.id === portfolioID });            
+        user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
+            portfolio = portfolio[0];
             if (portfolio !== undefined) {
                 var permission = portfolio.Users_Portfolios.permission;
                 if (permission === 'admin' || permission === 'write') {
@@ -336,8 +335,8 @@ app.delete('/api/portfolios/:portfolioId/stocks', function(request,response){
     var stockID = request.body.stockID;
     
     models.User.findById(userID).then((user) => {
-        user.getPortfolios().then((portfolios) => {
-            var portfolio = portfolios.find((p) => { return p.id === portfolioID });            
+        user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
+            portfolio = portfolio[0];
             if (portfolio !== undefined) {
                 var permission = portfolio.Users_Portfolios.permission;                
                 if (permission === 'admin' || permission === 'write') {
@@ -372,7 +371,7 @@ app.get('/api/portfolios/:portfolioId/users', function (request, response) {
     
     models.Portfolio.findById(portfolioID).then((portfolio) => {
         portfolio.getUsers().then((users) => {
-            var currentUser = users.find((u) => { return u.id === userID });            
+            var currentUser = users.find((u) => { return u.id === userID });
             if (currentUser !== undefined) {
                 users = users.map((user) => {
                     return {
@@ -404,8 +403,8 @@ app.post('/api/portfolios/:portfolioId/users', function(request, response){
     var memberUsername = request.body.username;
     
     models.User.findById(userID).then((user) => {
-        user.getPortfolios().then((portfolios) => {
-            var portfolio = portfolios.find((p) => { return p.id === portfolioID });            
+        user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
+            portfolio = portfolio[0];
             if (portfolio !== undefined) {
                 var permission = portfolio.Users_Portfolios.permission;
                 if (permission === 'admin') {
@@ -450,8 +449,8 @@ app.delete('/api/portfolios/:portfolioId/users', function(request, response){
     var memberID = request.body.memberID;
     
     models.User.findById(userID).then((user) => {
-        user.getPortfolios().then((portfolios) => {
-            var portfolio = portfolios.find((p) => { return p.id === portfolioID });            
+        user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
+            portfolio = portfolio[0];
             if (portfolio !== undefined) {
                 var permission = portfolio.Users_Portfolios.permission;                
                 if (permission === 'admin') {
