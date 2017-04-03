@@ -193,7 +193,7 @@ app.get('/api/portfolios/:portfolioId', function (request, response) {
 
 // Return all stocks held by the portfolio (portfolio defined by id)
 app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
-    // This checks if the instance of request.user is empty or not
+    // TODO: Replace with "auth" function
     if (!request.user) {
         response.status(306).json({'redirect': '/login'});
         return;
@@ -212,36 +212,6 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
             }
         });
     });
-    
-
-    
-/*
-    // This puts the userID directly into the var
-    var userId = request.session.passport.user;
-    var portfolioId = request.params['portfolioId'];
-
-    models.User.findById(userId).then(function(user) {
-        if (user)
-            return user.getPortfolios({where: {id: portfolioId}});
-    }).then(function(portfolios) {
-        if (portfolios.length === 0) {
-            console.log("No access to portfolio");
-            response.status(401).end('Unauthorized access to portfolio');
-			return;
-        }
-        models.Portfolio.findOne({
-            where: [{
-                id: portfolioId
-            }],
-            include: [{
-                model: models.Company
-            }]
-        }).then(function(portfolioInstance){
-            //Will DEFINITELY need to make this look better. I'll let Front end decide what they want in the return.
-            response.end(JSON.stringify(portfolioInstance, null, 4))
-        })
-    })
-*/
 });
 
 // Add a stock to a portfolio (portfolio defined by id, stock defined by symbol)

@@ -17,8 +17,8 @@ class PortfolioAdmin extends Component {
             members: []
 		};
 		
-        Client.getStocks(this.props.portfolio.id, (portfolio) => { 
-            this.setState({stocks: portfolio.Stocks});
+        Client.getStocks(this.props.portfolio.id, (portfolio) => {
+            this.setState({stocks: portfolio.stocks});
         });
         
         Client.getMembers(this.props.portfolio.id, (members) => {
