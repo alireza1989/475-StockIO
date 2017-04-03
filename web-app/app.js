@@ -480,7 +480,7 @@ app.get('/api/stocks/:symbol', function (request, response) {
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // Get the latest news from DB
-app.get('/api/company/news/:symbol', function(request, response){
+app.get('/api/stocks/:symbol/news', function(request, response){
 
 	// Intrinio constants for News
 	const username = "17440ee7fe0d7aeb1962fb3a18df9607";
