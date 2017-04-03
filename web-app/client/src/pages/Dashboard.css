@@ -64,7 +64,7 @@ nav ul li.right {
 /* DASHBOARD */
 .Dashboard {
     height: 100%;
-    padding-top: 90px;
+    padding: 90px 0 25px;
     box-sizing: border-box;
     overflow-y: scroll;
     position: relative;
