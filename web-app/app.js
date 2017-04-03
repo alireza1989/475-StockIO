@@ -200,12 +200,14 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
     }
     
     var userID = request.session.passport.user;
-    models.Portfolio.findById(request.params.portfolioId).then(function(portfolio) {
-        portfolio.getUsers().then(function(users){
-            var user = users.find((user) => { return user.id === userID ? true : false });
-            if (user !== undefined) {
-                portfolio.getCompanies().then(function(stocks){
-                    response.status(200).end(JSON.stringify({'stocks' : stocks}, null, 4)); 
+    var portfolioID = parseInt(request.params.portfolioId);
+    
+    models.User.findById(userID).then((user) => {
+        user.getPortfolios().then((portfolios) => {
+            var portfolio = portfolios.find((p) => { return p.id === portfolioID });            
+            if (portfolio !== undefined) {
+                portfolio.getCompanies().then((stocks) => {
+                    response.status(200).end(JSON.stringify({'stocks' : stocks}, null, 4));
                 });
             } else {
                 response.status(401).end('Unauthorized access to portfolio');
@@ -221,24 +223,36 @@ app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
         return;
     }
 
-    var userId = request.session.passport.user;
-    var portfolioId = request.params['portfolioId'];
-    var stockId = request.body['stockId'];
-
-    models.User.findById(userId).then(function(user) {
-        if (user)
-            return user.getPortfolios({where: {id: portfolioId}});
-    }).then(function(portfolio) {
-        if (portfolio.length === 0) {
-            response.status(401).end('Unauthorized access to portfolio');
-            return;
-        }
-
-        models.Portfolio.findById(portfolioId).then(function(portfolio) {
-            portfolio.addCompany(stockId);
-            response.end(JSON.stringify(portfolio), null, 4);
+    var userID = request.session.passport.user;
+    var portfolioID = parseInt(request.params.portfolioId);
+    var stockSymbol = request.body.symbol;
+    
+    models.User.findById(userID).then((user) => {
+        user.getPortfolios().then((portfolios) => {
+            var portfolio = portfolios.find((p) => { return p.id === portfolioID });
+            if (portfolio !== undefined) {
+                var permission = portfolio.Users_Portfolios.permission;
+                if (permission === 'admin' || permission === 'write') {
+                    models.Company.findOne({
+                        where: [{
+                        	symbol: stockSymbol
+                        }]
+                	}).then(function(company){
+                        if (company !== undefined) {
+                            portfolio.addCompany(company).then(() => {
+                                response.status(200).end();
+                            });
+                        } else {
+                            // Need to get the stock from Intrinio
+                        }
+                	});                    
+                } else {
+                    response.status(401).end('User does not have permission to modify portfolio.');
+                }
+            } else {
+                response.status(401).end('Unauthorized access to portfolio.');
+            }
         });
-
     });
 });
 

@@ -37,20 +37,25 @@ class PortfolioAdmin extends Component {
         this.setState({name: event.target.value});
     }
     
-    addMember = () => {
+    addMember = (event) => {
         console.log("Adding member");
+        event.preventDefault();
     }
     
     removeMember = (id) => {
         console.log(`Removing member ${id}`);
     }
     
-    addStock = (symbol) => {
+    addStock = (event) => {        
         console.log("Adding stock");
+/*
         Client.addStock(this.props.portfolio.id, symbol, (response) => {
             console.log("Stock added?");
             console.log(response);
         });
+*/
+
+        event.preventDefault();
     }
     
     removeStock = (id) => {
@@ -85,7 +90,7 @@ class PortfolioAdmin extends Component {
 		return (
             <div className="portfolio-admin">
                 <div className="portfolio-admin-form">
-                    <a className="close-button" role="button" onClick={() => {this.props.closeForm();}}></a>
+                    <a className="close-button" role="button" onClick={this.props.closeForm}></a>
 
                     // TODO: Only admin can change portfolio name
                     <input type="text"  name="portfolio-name" placeholder="Portfolio Name" 
@@ -98,7 +103,7 @@ class PortfolioAdmin extends Component {
                         {this.renderStocks()}
                     </ul>
                     
-                    {(this.state.permission === 'admin') ? <PortfolioAdminMemberEntry/> : ''}
+                    {(this.state.permission === 'admin') ? <PortfolioAdminMemberEntry addMember={this.addMember}/> : ''}
                     <ul id="portfolio-admin-members">
                         {this.renderMembers()}
                     </ul>
