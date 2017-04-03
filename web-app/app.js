@@ -508,7 +508,10 @@ app.get('/api/stocks/:symbol/news', function(request, response){
 			console.log(err);
 		}
 
-		response.status(200).end(body);
+		var news = JSON.parse(body);
+		news.data = news.data.slice(0,20);
+		
+		response.status(200).end(JSON.stringify(news));
 	});
 });
 
