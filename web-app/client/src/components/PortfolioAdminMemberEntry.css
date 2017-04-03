@@ -11,7 +11,7 @@ form.portfolio-add-member {
     position: relative;
 }
 
-input[name="portfolio-member-entry"] {
+form.portfolio-add-stock input[name="portfolio-member-entry"] {
     background: transparent;
     color: white;
     font-size: 18px;
@@ -21,7 +21,7 @@ input[name="portfolio-member-entry"] {
     border: none;
 }
 
-input[type="submit"] {
+form.portfolio-add-stock input[type="submit"] {
     font: bold 16px/27px Arial;
     text-indent: 0;
     color: #111;
@@ -37,7 +37,7 @@ input[type="submit"] {
     right: 25px;
 }
 
-input[type="submit"]:hover {
+form.portfolio-add-stock input[type="submit"]:hover {
     background: #009900;
     color: #111;
 }
@@ -48,11 +48,11 @@ input[type="submit"]:hover {
         padding-left: 10px;
     }
     
-    input[name="portfolio-member-entry"] {
+    form.portfolio-add-stock input[name="portfolio-member-entry"] {
         font-size: 14px;
     }
     
-    input[type="submit"] {
+    form.portfolio-add-stock input[type="submit"] {
         right: 10px;
     }
 }
