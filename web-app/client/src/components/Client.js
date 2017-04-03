@@ -52,12 +52,13 @@ const Client = module.exports = {
           .then(callback);
     },
     
-    addStock: function(portfolioId, stockSymbol, callback) {
+    addStock: function(portfolioId, stockSymbol, callback) {        
         return fetch(`/api/portfolios/${portfolioId}/stocks`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
-                accept: 'application/json',
-                credentials: 'include'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 symbol: stockSymbol

@@ -217,9 +217,7 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
 });
 
 // Add a stock to a portfolio (portfolio defined by id, stock defined by symbol)
-app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
-    console.log(request.user);
-    
+app.post('/api/portfolios/:portfolioId/stocks', function(request,response){    
     if (!request.user) {
         response.status(306).json({'redirect': '/login'});
         return;
@@ -231,21 +229,24 @@ app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
     
     models.User.findById(userID).then((user) => {
         user.getPortfolios().then((portfolios) => {
-            var portfolio = portfolios.find((p) => { return p.id === portfolioID });
+            var portfolio = portfolios.find((p) => { return p.id === portfolioID });            
             if (portfolio !== undefined) {
-                var permission = portfolio.Users_Portfolios.permission;
+                var permission = portfolio.Users_Portfolios.permission;                
                 if (permission === 'admin' || permission === 'write') {
+                    console.log(`Looking for ${stockSymbol}`);
                     models.Company.findOne({
                         where: [{
                         	symbol: stockSymbol
                         }]
-                	}).then(function(company){
+                	}).then(function(company){	
+	                    console.log(`Found: ${company}`);
                         if (company !== undefined) {
                             portfolio.addCompany(company).then(() => {
-                                response.status(200).end();
+                                response.status(200).end(`Added stock ${company.symbol}`);
                             });
                         } else {
                             // Need to get the stock from Intrinio
+                            response.status(200).end();
                         }
                 	});                    
                 } else {
