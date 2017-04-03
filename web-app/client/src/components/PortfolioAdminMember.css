@@ -17,7 +17,7 @@
     font: 21px/21px Arial;
     text-indent: 0;
     color: white;
-    background: red;
+    background: #cc0000;
     display: block;
     float: right;
     margin: 1px 0 0 5px;
@@ -27,7 +27,7 @@
 }
 
 .portfolio-member .delete-button:hover {
-    background: #B80000;
+    background: #990000;
     color: white;
 }
 

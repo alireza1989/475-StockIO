@@ -12,7 +12,7 @@
     font: 21px/21px Arial;
     text-indent: 0;
     color: white;
-    background: red;
+    background: #cc0000;
     display: block;
     float: left;
     margin: 0 15px 0 0;
@@ -22,7 +22,7 @@
 }
 
 .portfolio-stock .delete-button:hover {
-    background: #B80000;
+    background: #990000;
     color: white;
 }
 

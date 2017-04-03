@@ -18,7 +18,7 @@
 }
 
 .portfolio-cell:last-of-type {
-    margin-right: 4%;
+    margin-right: 5%;
 }
 
 .portfolio-cell-content {
@@ -35,17 +35,17 @@
 }
 
 .portfolio-cell-content:hover {
-    -webkit-backdrop-filter: saturate(180%) blur(25px);
     transform: scale(1.2);
     z-index: 150;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
 }
 
 .portfolio-cell-content.up {
-    background: rgba(0, 255, 0, 0.5);
+    background: #339933;
 }
 
 .portfolio-cell-content.down {
-    background: rgba(255, 0, 0, 0.5);
+    background: #cc0000;
 }
 
 .portfolio-cell-content h1 {
@@ -149,17 +149,17 @@
 
 @media screen and (min-width:450px) and (max-width:649px) {
     .portfolio-cell { width: 50% }
-    .portfolio-cell:last-of-type { margin-right: 7%; }
+    .portfolio-cell:last-of-type { margin-right: 8%; }
 }
 
 @media screen and (min-width:650px) and (max-width:949px) {
     .portfolio-cell { width: 33.333333% }
-    .portfolio-cell:last-of-type { margin-right: 7%; }
+    .portfolio-cell:last-of-type { margin-right: 8%; }
 }
 
 @media screen and (min-width:950px) and (max-width:1129px) {
     .portfolio-cell { width: 25% }
-    .portfolio-cell:last-of-type { margin-right: 5%; }
+    .portfolio-cell:last-of-type { margin-right: 6%; }
 }
 
 @media screen and (min-width:1130px) and (max-width:1399px) {

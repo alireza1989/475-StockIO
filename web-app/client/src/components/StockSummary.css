@@ -50,11 +50,11 @@
 }
 
 .stock-header h3 span.stock-price.up {
-    background: rgba(0, 255, 0, 0.8);
+    background: #339933;
 }
 
 .stock-header h3 span.stock-price.down {
-    background: rgba(255, 0, 0, 0.8);
+    background: #cc0000;
 }
 
 .stock-header a.close-button {

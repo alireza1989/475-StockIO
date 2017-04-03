@@ -67,10 +67,40 @@ nav ul li.right {
     padding-top: 90px;
     box-sizing: border-box;
     overflow-y: scroll;
+    position: relative;
 }
 
 .Dashboard::-webkit-scrollbar {
     display: none;
+}
+
+#new-portfolio-button {
+    background: #333;
+    height: 65px;
+    width: 65px;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 0 3px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    bottom: 35px;
+    right: 35px;
+    z-index: 1200;
+    cursor: pointer;
+}
+
+#new-portfolio-button:after {
+    content: '+';
+    color: white;
+    font-size: 34px;
+    line-height: 20px;
+}
+
+#new-portfolio-button:hover {
+    background: #00cc00;
+}
+
+#new-portfolio-button:active {
+    background: #009900;
 }
 
 

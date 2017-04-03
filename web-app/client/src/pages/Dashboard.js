@@ -25,6 +25,10 @@ class Dashboard extends Component {
         });
     }
     
+    addPortfolio = () => {
+        console.log('Add new portfolio');
+    }
+    
     editPortfolio = (portfolio) => {
         this.setState({
             overlay: !this.state.overlay,
@@ -58,9 +62,11 @@ class Dashboard extends Component {
                                    editPortfolio={this.editPortfolio}
                         />
                     )}
+                                    
+                    {this.renderAdminPanel()}
+                    
+                    <button id="new-portfolio-button" onClick={this.addPortfolio}></button>
                 </div>
-                
-                {this.renderAdminPanel()}
             </div>
         );
     }

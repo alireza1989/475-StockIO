@@ -68,8 +68,8 @@
 }
 
 .portfolio .nav-button {
-    background: rgba(20, 20, 20, 0.6);
-    -webkit-backdrop-filter: saturate(50%) blur(25px);
+    background: rgba(30, 30, 30, 0.8);
+/*     -webkit-backdrop-filter: saturate(50%) blur(25px); */
     font: 64px Arial;
     text-align: center;
     color: white;
