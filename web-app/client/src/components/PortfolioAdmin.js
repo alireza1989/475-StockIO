@@ -87,6 +87,7 @@ class PortfolioAdmin extends Component {
                 <div className="portfolio-admin-form">
                     <a className="close-button" role="button" onClick={() => {this.props.closeForm();}}></a>
 
+                    // TODO: Only admin can change portfolio name
                     <input type="text"  name="portfolio-name" placeholder="Portfolio Name" 
                                         value={this.state.name} onChange={this.updatePortfolioName}
                                         ref={(input) => { this.portfolioNameInput = input; }}/>

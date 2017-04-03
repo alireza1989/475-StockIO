@@ -54,7 +54,7 @@ const Client = module.exports = {
     },
     
     addStock: function(portfolioId, stockSymbol, callback) {
-        fetch(`/api/portfolios/${portfolioId}/stocks`, {
+        return fetch(`/api/portfolios/${portfolioId}/stocks`, {
             method: 'POST',
             headers: {
                 accept: 'application/json',
@@ -68,10 +68,55 @@ const Client = module.exports = {
           .then(callback);
     },
     
+    removeStock: function(portfolioId, stockID, callback) {
+        return fetch(`/api/portfolios/${portfolioId}/stocks`, {
+            method: 'DELETE',
+            headers: {
+                accept: 'application/json',
+                credentials: 'include'
+            },
+            body: JSON.stringify({
+                stockID: stockID
+            })
+        }).then(checkStatus)
+          .then(parseJSON)
+          .then(callback);
+    },
+    
     getMembers: function(portfolioId, callback) {
         return fetch(`/api/portfolios/${portfolioId}/users`, {
             accept: 'application/json',
             credentials: 'include'
+        }).then(checkStatus)
+          .then(parseJSON)
+          .then(callback);
+    },
+    
+    addMember: function(portfolioId, memberEmail, callback) {
+        return fetch(`/api/portfolios/${portfolioId}/users`, {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                credentials: 'include'
+            },
+            body: JSON.stringify({
+                email: memberEmail
+            })
+        }).then(checkStatus)
+          .then(parseJSON)
+          .then(callback);
+    },
+    
+    removeMember: function(portfolioId, memberID, callback) {
+        return fetch(`/api/portfolios/${portfolioId}/users`, {
+            method: 'DELETE',
+            headers: {
+                accept: 'application/json',
+                credentials: 'include'
+            },
+            body: JSON.stringify({
+                memberID: memberID
+            })
         }).then(checkStatus)
           .then(parseJSON)
           .then(callback);

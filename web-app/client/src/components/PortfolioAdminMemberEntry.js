@@ -18,7 +18,7 @@ class PortfolioAdminMemberEntry extends Component {
     
     render() {
         return (
-            <input type="text"  name="portfolio-member-entry" placeholder="Add new member by username or email"
+            <input type="text"  name="portfolio-member-entry" placeholder="Add new member by email"
                                 value={this.state.name} onChange={this.getMember}/>
         );
     }
