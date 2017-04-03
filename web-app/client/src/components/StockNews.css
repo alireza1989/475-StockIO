@@ -10,7 +10,6 @@
     position: relative;
     float: right;
     overflow-y: scroll;
-    border-left: 1px solid #333;
 }
 
 .stock-news h4 {

@@ -84,6 +84,7 @@
     float: left;
     box-sizing: border-box;
     position: relative;
+    border-right: 1px solid #333;
 }
 
 .stock-information ul {
@@ -121,5 +122,6 @@
     .stock-information {
         height: auto;
         width: 100%;
+        border: none;
     }
 }
