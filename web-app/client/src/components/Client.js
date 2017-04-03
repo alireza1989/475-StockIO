@@ -94,10 +94,7 @@ const Client = module.exports = {
     addMember: function(portfolioId, memberEmail, callback) {
         return fetch(`/api/portfolios/${portfolioId}/users`, {
             method: 'POST',
-            headers: {
-                accept: 'application/json',
-                credentials: 'include'
-            },
+            credentials: 'include',
             body: JSON.stringify({
                 email: memberEmail
             })
