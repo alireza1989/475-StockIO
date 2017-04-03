@@ -121,7 +121,7 @@ const Client = module.exports = {
 
 // NEWS
     getNews: function(symbol, callback) {
-        return fetch(`/api/company/news/${symbol}`, {
+        return fetch(`/api/stocks/${symbol}/news`, {
             accept: 'application/json',
             credentials: 'include'
         }).then(checkStatus)
