@@ -244,7 +244,7 @@ app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
                                 response.status(200).end(`Added stock ${company.symbol}`);
                             });
                         } else {
-                            // Need to get the stock from Intrinio
+                            // TODO: Need to get the stock from Intrinio
                             response.status(200).end('Could not add stock -- need to lookup Intrinio');
                         }
                 	});                    
@@ -427,17 +427,13 @@ app.post('/api/portfolios', function (request, response) {
 
     var userId = request.session.passport.user;
     var portfolioName = request.body.name;
-    var portfolioId;
 
     models.Portfolio.create({
         name: portfolioName
     }).then(function(portfolioInstance) {
-        portfolioId = portfolioInstance.id;
-        portfolioInstance.addUser(userId, {'permission' : 'admin'});
-        var portfolio = {
-            'portfolioId' : portfolioId
-        };
-        response.end(JSON.stringify(portfolio, null, 4));
+        var portfolioID = portfolioInstance.id;
+        portfolioInstance.addUser(userId, {permission: 'admin'});
+        response.end(JSON.stringify({'portfolioID' : portfolioID}, null, 4));
     });
 });
 
