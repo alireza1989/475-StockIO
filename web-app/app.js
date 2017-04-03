@@ -218,6 +218,8 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
 
 // Add a stock to a portfolio (portfolio defined by id, stock defined by symbol)
 app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
+    console.log(request.user);
+    
     if (!request.user) {
         response.status(306).json({'redirect': '/login'});
         return;

@@ -29,7 +29,9 @@ class PortfolioAdmin extends Component {
 	}
 	
 	componentDidMount() {
-        this.portfolioNameInput.focus();
+        if (this.portfolioNameInput !== undefined) {
+            this.portfolioNameInput.focus();
+        }
 	}
     
     updatePortfolioName = (e) => {
@@ -46,14 +48,13 @@ class PortfolioAdmin extends Component {
         console.log(`Removing member ${id}`);
     }
     
-    addStock = (event) => {        
+    addStock = (event, symbol) => {        
         console.log("Adding stock");
-/*
+
         Client.addStock(this.props.portfolio.id, symbol, (response) => {
             console.log("Stock added?");
             console.log(response);
         });
-*/
 
         event.preventDefault();
     }
@@ -92,10 +93,10 @@ class PortfolioAdmin extends Component {
                 <div className="portfolio-admin-form">
                     <a className="close-button" role="button" onClick={this.props.closeForm}></a>
 
-                    // TODO: Only admin can change portfolio name
-                    <input type="text"  name="portfolio-name" placeholder="Portfolio Name" 
-                                        value={this.state.name} onChange={this.updatePortfolioName}
-                                        ref={(input) => { this.portfolioNameInput = input; }}/>
+                    {(this.state.permission !== 'admin') ? <h3>{this.state.name}</h3> :
+                        <input type="text"  name="portfolio-name" placeholder="Portfolio Name" 
+                                            value={this.state.name} onChange={this.updatePortfolioName}
+                                            ref={(input) => { this.portfolioNameInput = input; }}/>}
                     
                     <PortfolioAdminStockEntry addStock={this.addStock}/>
                     

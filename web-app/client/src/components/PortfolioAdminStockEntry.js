@@ -6,21 +6,21 @@ class PortfolioAdminStockEntry extends Component {
 		super(props);
 		
 		this.state = {
-            name: ''
+            symbol: ''
 		};
 
         this.getStock = this.getStock.bind(this);
 	}
 
     getStock(event) {
-        this.setState({name: event.target.value});        
+        this.setState({symbol: event.target.value});        
     }
     
     render() {
         return (
-            <form onSubmit={this.props.addStock}>
+            <form onSubmit={(event) => {this.props.addStock(event, this.state.symbol)}}>
                 <input type="text"  name="portfolio-stock-entry" placeholder="Add new stock by symbol or name"
-                                    value={this.state.name} onChange={this.getStock}/>
+                                    value={this.state.symbol} onChange={this.getStock}/>
                 <input type="submit" value="Submit"/>
             </form>
         );
