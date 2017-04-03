@@ -6,22 +6,25 @@ class PortfolioAdminMemberEntry extends Component {
 		super(props);
 		
 		this.state = {
-            name: ''
+            username: ''
 		};
 
         this.getMember = this.getMember.bind(this);
 	}
 
     getMember(event) {
-        this.setState({name: event.target.value});
+        this.setState({username: event.target.value});
     }
     
     render() {
         return (
-            <form onSubmit={this.props.addMember}>
+            <form className="portfolio-add-member" onSubmit={(event) => {
+                this.props.addMember(event, this.state.username)
+                this.setState({symbol: ''});
+            }}>
                 <input type="text"  name="portfolio-member-entry" placeholder="Add new member by email"
-                                    value={this.state.name} onChange={this.getMember}/>
-                <input type="submit" value="Submit"/>
+                                    value={this.state.username} onChange={this.getMember}/>
+                <input type="submit" value="Add"/>
             </form>
         );
     }

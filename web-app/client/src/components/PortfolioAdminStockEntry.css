@@ -1,21 +1,58 @@
 /* Elliot Barer, ebarer [at] mac [dot] com, 2017-03-25 */
 
 /* PORTFOLIO-STOCK-ENTRY */
-input[name="portfolio-stock-entry"] {
+form.portfolio-add-stock {
     background: #111;
+    width: 100%;
+    margin: 0;
+    padding-left: 35px;
+    box-sizing: border-box;
+    border-top: 1px solid #333;
+    position: relative;
+}
+
+input[name="portfolio-stock-entry"] {
+    background: transparent;
     color: white;
     font-size: 18px;
     width: 100%;
-    margin: 0;
-    padding: 14px 5px 14px 40px;
+    padding: 14px 5px;
     box-sizing: border-box;
     border: none;
-    border-top: 1px solid #333;
+}
+
+input[type="submit"] {
+    font: bold 16px/27px Arial;
+    text-indent: 0;
+    color: #111;
+    background: #4CD964;
+    display: block;
+    margin: 0;
+    padding: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 12px;
+    right: 25px;
+}
+
+input[type="submit"]:hover {
+    background: #329944;
+    color: #111;
 }
 
 
 @media screen and (max-width:500px) {
+    form.portfolio-add-stock {
+        padding-left: 10px;
+    }
+
     input[name="portfolio-stock-entry"] {
-        padding: 14px 10px;
+        font-size: 14px;
+    }
+
+    input[type="submit"] {
+        right: 10px;
     }
 }

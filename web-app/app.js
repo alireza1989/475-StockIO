@@ -231,22 +231,21 @@ app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
         user.getPortfolios().then((portfolios) => {
             var portfolio = portfolios.find((p) => { return p.id === portfolioID });            
             if (portfolio !== undefined) {
-                var permission = portfolio.Users_Portfolios.permission;                
+                var permission = portfolio.Users_Portfolios.permission;
                 if (permission === 'admin' || permission === 'write') {
-                    console.log(`Looking for ${stockSymbol}`);
                     models.Company.findOne({
                         where: [{
                         	symbol: stockSymbol
                         }]
-                	}).then(function(company){	
-	                    console.log(`Found: ${company}`);
-                        if (company !== undefined) {
+                	}).then((company) => {
+                        if (company !== null) {
                             portfolio.addCompany(company).then(() => {
+                                console.log(`Added stock ${company.symbol}`);
                                 response.status(200).end(`Added stock ${company.symbol}`);
                             });
                         } else {
                             // Need to get the stock from Intrinio
-                            response.status(200).end();
+                            response.status(200).end('Could not add stock -- need to lookup Intrinio');
                         }
                 	});                    
                 } else {
@@ -266,153 +265,147 @@ app.delete('/api/portfolios/:portfolioId/stocks', function(request,response){
         return;
     }
 
-    var userId = request.session.passport.user;
-    var portfolioId = request.params['portfolioId'];
-    var stockId = request.body['stockId'];
-
-    models.User.findById(userId).then(function(user) {
-        if (user)
-            return user.getPortfolios({where: {id: portfolioId}});
-    }).then(function(portfolio) {
-        if (portfolio.length === 0) {
-            response.status(401).end('Unauthorized access to portfolio');
-            return;
-        }
-
-        models.Portfolio.findById(portfolioId).then(function(portfolio) {
-            portfolio.removeCompany(stockId);
-            response.end(JSON.stringify(portfolio, null, 4));
+    var userID = request.session.passport.user;
+    var portfolioID = parseInt(request.params.portfolioId);
+    var stockID = request.body.stockID;
+    
+    models.User.findById(userID).then((user) => {
+        user.getPortfolios().then((portfolios) => {
+            var portfolio = portfolios.find((p) => { return p.id === portfolioID });            
+            if (portfolio !== undefined) {
+                var permission = portfolio.Users_Portfolios.permission;                
+                if (permission === 'admin' || permission === 'write') {
+                    portfolio.removeCompany(stockID).then(() => {
+                        response.status(200).end(`Removed stock ${stockID}`);
+                    });
+                } else {
+                    response.status(401).end('User does not have permission to modify portfolio.');
+                }
+            } else {
+                response.status(401).end('Unauthorized access to portfolio.');
+            }
         });
     });
 });
 
 
+////////////////////////////////////////////////////////////////////////////////////////
+// Manipulate users associated with a specific portfolio
+////////////////////////////////////////////////////////////////////////////////////////
 
-
-// Get all the users who have access to this portfolio -- must check if user has admin/write access to this portfolio before showing them
+// Return all users with access to the portfolio (portfolio defined by id)
 app.get('/api/portfolios/:portfolioId/users', function (request, response) {
-    // This checks if the instance of request.user is empty or not
+    // TODO: Replace with "auth" function
     if (!request.user) {
         response.status(306).json({'redirect': '/login'});
         return;
     }
-    // This puts the userID directly into the var
-    var userId = request.session.passport.user;
-    var portfolioId = request.params['portfolioId'];
-
-    models.User.findById(userId).then(function(user) {
-        if (user)
-            return user.getPortfolios({where: {id: portfolioId}});
-    }).then(function(portfolios) {
-        if (portfolios.length === 0) {
-            console.log("No access to portfolio");
-            response.status(401).end('Unauthorized access to portfolio');
-			return;
-        }
-        models.Portfolio.findOne({
-            where: [{
-                id: portfolioId
-            }],
-            include: [{
-                model: models.User
-            }]
-        }).then(function(portfolioUsersInstance){
-            var count = 0;
-            var total = portfolioUsersInstance.Users.length;
-            var usersData = [];
-            // console.log(total);
-            portfolioUsersInstance.Users.forEach(function(userInformation){
-                // console.log(userInformation.Users_Portfolios.permission);
-                var userData = {
-                    id: userInformation.id,
-                    username: userInformation.username,
-                    firstname: userInformation.firstname,
-                    lasname: userInformation.lastname,
-                    permission: userInformation.Users_Portfolios.permission
-                }
-                usersData.push(userData);
-                count++;
-                if (count === total){
-                    console.log("sending users that belong to portfolio with id: " + portfolioId);
-                    response.end(JSON.stringify({'users': usersData}, null, 4))
-                }
-            })
-        })
-    })
-});
-
-
-// Add a user to a portfolio by calling the following api
-app.post('/api/portfolios/:portfolioId/users', function(request, response){
-	if (!request.user) {
-		response.status(306).json({'redirect': '/login'});
-		return;
-	}
-
-	// adminID, userId, portfolioId
-	var adminId = request.session.passport.user;
-	var portfolioId = request.params['portfolioId'];
-	var userId = request.body.userId;
-
-	// Check if the request comes from portfolio's admin
-	models.User.findById(adminId).then(function(user) {
-		if (user)
-			return user.getPortfolios({where: {id: portfolioId}});
-	}).then(function(portfolios) {
-		if (portfolios.length === 0) {
-			response.status(401).end('Unauthorized access to portfolio');
-			return;
-		}else{
-			models.Portfolio.findOne({
-				where: [{
-					id: portfolioId
-				}]
-			}).then(function(portfolio){
-				portfolio.addUser(userId, {'permission' : 'admin'}).then(function() {
-                                response.statusCode = 200;
-                                response.end();
+    
+    var userID = request.session.passport.user;
+    var portfolioID = parseInt(request.params.portfolioId);
+    
+    models.Portfolio.findById(portfolioID).then((portfolio) => {
+        portfolio.getUsers().then((users) => {
+            var currentUser = users.find((u) => { return u.id === userID });            
+            if (currentUser !== undefined) {
+                users = users.map((user) => {
+                    return {
+                        'id': user.id,
+                        'username': user.username,
+                        'firstname': user.firstname,
+                        'lastname': user.lastname,
+                        'permission': user.Users_Portfolios.permission
+                    }
                 });
-			})
-		}
-	})
+                
+                response.status(200).end(JSON.stringify({'users' : users}, null, 4));
+            } else {
+                response.status(401).end('Unauthorized access to portfolio');
+            }
+        });
+    });
 });
 
-// Delete a user from a portfolio by calling the following api
+// Add a user to a portfolio (portfolio defined by id, user defined by username)
+app.post('/api/portfolios/:portfolioId/users', function(request, response){
+    if (!request.user) {
+        response.status(306).json({'redirect': '/login'});
+        return;
+    }
+    
+    var userID = request.session.passport.user;
+    var portfolioID = parseInt(request.params.portfolioId);
+    var memberUsername = request.body.username;
+    
+    models.User.findById(userID).then((user) => {
+        user.getPortfolios().then((portfolios) => {
+            var portfolio = portfolios.find((p) => { return p.id === portfolioID });            
+            if (portfolio !== undefined) {
+                var permission = portfolio.Users_Portfolios.permission;
+                if (permission === 'admin') {
+                    models.User.findOne({
+                        where: [{
+                        	username: memberUsername
+                        }]
+                	}).then((member) => {
+                        if (member !== null) {
+                            // TODO: Need to pass the permission type from the frontend
+                            portfolio.addUser(member, { permission: 'write' }).then(() => {
+                                console.log(`Added member ${member.username}`);
+                                response.status(200).end(`Added member ${member.username}`);
+                            }).catch((err) => {
+                                console.log(err);
+                                response.status(401).end();
+                            });
+                        } else {
+                            response.status(200).end(`Member doesn't exist`);
+                        }
+                	});                    
+                } else {
+                    response.status(401).end('User does not have permission to modify portfolio.');
+                }
+            } else {
+                response.status(401).end('Unauthorized access to portfolio.');
+            }
+        });
+    });
+
+});
+
+// Remove a user from a portfolio (portfolio defined by id, user defined by id)
 app.delete('/api/portfolios/:portfolioId/users', function(request, response){
-	if (!request.user) {
-		response.status(306).json({'redirect': '/login'});
-		return;
-	}
+    if (!request.user) {
+        response.status(306).json({'redirect': '/login'});
+        return;
+    }
 
-	// adminID, userId, portfolioId
-	var adminId = request.session.passport.user;
-	var portfolioId = request.params['portfolioId'];
-	var userId = request.body.userId;
-
-	// Check if the request comes from portfolio's admin
-	models.User.findById(userId).then(function(user) {
-		if (user)
-			return user.getPortfolios({where: {id: portfolioId}});
-	}).then(function(portfolios) {
-		if (portfolios.length === 0) {
-			console.log("No access to portfolio");
-			response.status(401).end('Unauthorized access to portfolio');
-			return;
-		}else{
-			models.Portfolio.findOne({
-				where: [{
-					id: portfolioId
-				}]
-			}).then(function(portfolio){
-				portfolio.removeUser(userId).then(function() {
-                                response.statusCode = 200;
-                                response.end();
-            	});
-			})
-		}
-	})
-
+    var userID = request.session.passport.user;
+    var portfolioID = parseInt(request.params.portfolioId);
+    var memberID = request.body.memberID;
+    
+    models.User.findById(userID).then((user) => {
+        user.getPortfolios().then((portfolios) => {
+            var portfolio = portfolios.find((p) => { return p.id === portfolioID });            
+            if (portfolio !== undefined) {
+                var permission = portfolio.Users_Portfolios.permission;                
+                if (permission === 'admin') {
+                    portfolio.removeUser(memberID).then(() => {
+                        response.status(200).end(`Removed suer ${memberID}`);
+                    });
+                } else {
+                    response.status(401).end('User does not have permission to modify portfolio.');
+                }
+            } else {
+                response.status(401).end('Unauthorized access to portfolio.');
+            }
+        });
+    });
 });
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Stocks
+////////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/api/stocks/:symbol', function (request, response) {
     var symbol = request.params['symbol'];

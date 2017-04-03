@@ -27,8 +27,8 @@
 }
 
 .portfolio-member .delete-button:hover {
-    background: white;
-    color: red;
+    background: #B80000;
+    color: white;
 }
 
 .portfolio-member .delete-button:after {
@@ -37,4 +37,13 @@
 
 .portfolio-member:last-of-type {
     margin-right: 0;
+}
+
+
+@media screen and (max-width:500px) {
+    .portfolio-member {
+        font: 14px Helvetica;
+        line-height: 22px;
+        padding: 2px 5px;
+    }
 }

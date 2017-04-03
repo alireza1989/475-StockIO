@@ -71,9 +71,10 @@ const Client = module.exports = {
     removeStock: function(portfolioId, stockID, callback) {
         return fetch(`/api/portfolios/${portfolioId}/stocks`, {
             method: 'DELETE',
+            credentials: 'include',
             headers: {
-                accept: 'application/json',
-                credentials: 'include'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 stockID: stockID
@@ -92,24 +93,29 @@ const Client = module.exports = {
           .then(callback);
     },
     
-    addMember: function(portfolioId, memberEmail, callback) {
+    addMember: function(portfolioId, email, callback) {
         return fetch(`/api/portfolios/${portfolioId}/users`, {
             method: 'POST',
             credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
-                email: memberEmail
+                username: email
             })
         }).then(checkStatus)
           .then(parseJSON)
           .then(callback);
     },
     
-    removeMember: function(portfolioId, memberID, callback) {
+    removeMember: function(portfolioId, memberID, callback) {          
         return fetch(`/api/portfolios/${portfolioId}/users`, {
             method: 'DELETE',
+            credentials: 'include',
             headers: {
-                accept: 'application/json',
-                credentials: 'include'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 memberID: memberID

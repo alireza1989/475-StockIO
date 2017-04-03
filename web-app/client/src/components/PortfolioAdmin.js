@@ -39,28 +39,36 @@ class PortfolioAdmin extends Component {
         this.setState({name: event.target.value});
     }
     
-    addMember = (event) => {
-        console.log("Adding member");
-        event.preventDefault();
-    }
-    
-    removeMember = (id) => {
-        console.log(`Removing member ${id}`);
-    }
-    
-    addStock = (event, symbol) => {        
-        console.log("Adding stock");
-
+    addStock = (event, symbol) => {
         Client.addStock(this.props.portfolio.id, symbol, (response) => {
-            console.log("Stock added?");
+            console.log("Stock added");
             console.log(response);
         });
 
         event.preventDefault();
     }
     
-    removeStock = (id) => {
-        console.log(`Removing stock ${id}`);
+    removeStock = (stockID) => {
+        Client.removeStock(this.props.portfolio.id, stockID, (response) => {
+            console.log("Stock removed");
+            console.log(response);
+        });
+    }
+    
+    addMember = (event, username) => {
+        Client.addMember(this.props.portfolio.id, username, (response) => {
+            console.log("Member added");
+            console.log(response);
+        });
+
+        event.preventDefault();
+    }
+    
+    removeMember = (memberID) => {
+        Client.removeMember(this.props.portfolio.id, memberID, (response) => {
+            console.log("Member removed");
+            console.log(response);
+        });
     }
 
     renderStocks = () => {        

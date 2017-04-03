@@ -31,8 +31,7 @@ class PortfolioCell extends Component {
 
     render() {
         return (
-            <li className="portfolio-cell">
-
+            <li className="portfolio-cell" data-id={this.props.stock.id}>
                 <div className={`portfolio-cell-content ${(this.state.change_price > 0) ? 'up' : 'down'}`} onClick={this.toggleSummary}>
                     <div className="info">
                         <p className="name">{this.state.name}</p>
@@ -51,8 +50,6 @@ class PortfolioCell extends Component {
                 {this.state.summary_visible ?
                     <StockSummary stock={this.state} closeForm={this.toggleSummary}/> : ''}
             </li>
-
-
         );
     }
 }

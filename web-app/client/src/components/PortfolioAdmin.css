@@ -102,20 +102,29 @@
         width: 100%;
         margin: 0;
         border-radius: 0;
+        overflow: scroll;
     }
 }
 
 @media screen and (max-width:500px) {
+    .portfolio-admin-form h3 {
+        padding: 10px 0 10px 10px;
+    }
+    
     .portfolio-admin-form input[name="portfolio-name"] {
-        margin: 10px;
+        margin: 10px 0 10px 10px;
     }
     
     .portfolio-admin-form a.close-button {
         margin: 10px 10px 10px 0;
     }
     
+    .portfolio-admin-form ul {
+        padding-left: 10px;
+    }
+    
     .portfolio-admin-form ul#portfolio-admin-stocks {
-        max-height: none;
+        max-height: 50%;
     }
     
     .portfolio-admin-form ul#portfolio-admin-members {

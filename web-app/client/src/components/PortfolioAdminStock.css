@@ -22,8 +22,8 @@
 }
 
 .portfolio-stock .delete-button:hover {
-    background: white;
-    color: red;
+    background: #B80000;
+    color: white;
 }
 
 .portfolio-stock .delete-button:after {
@@ -32,4 +32,12 @@
 
 .portfolio-stock:last-of-type {
     border-bottom: none;
+}
+
+
+@media screen and (max-width:500px) {
+    .portfolio-stock {
+        font: 14px Helvetica;
+        line-height: 22px;
+    }
 }
