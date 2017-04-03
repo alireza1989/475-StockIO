@@ -1,6 +1,6 @@
 import {browserHistory} from 'react-router';
 
-{/* Intrinio constants*/}
+// Intrinio constants
 const username = "17440ee7fe0d7aeb1962fb3a18df9607";
 const password = "bd8d650b82b0f07cf98d893a9fde0bb7";
 var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
@@ -24,7 +24,6 @@ function parseJSON(response) {
 
 
 const Client = module.exports = {
-
 
     getUser: function(callback) {
         return fetch('/api/users/current', {

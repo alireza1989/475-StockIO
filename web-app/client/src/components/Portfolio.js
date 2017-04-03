@@ -11,8 +11,8 @@ class Portfolio extends Component {
             stocks: []
         };
         
-        Client.getStocks(this.props.portfolio.id, (companiesList) => { 
-            this.setState({stocks : companiesList.Companies});
+        Client.getStocks(this.props.portfolio.id, (portfolio) => {
+            this.setState({stocks: portfolio.stocks});
         });
     }
     

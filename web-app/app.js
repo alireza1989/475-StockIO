@@ -14,8 +14,11 @@ var cheerio = require('cheerio');
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var models = require('./db/models');
 var request = require('request');
+
+var Sequelize = require("sequelize");
+var models = require('./db/models');
+
 
 //Session Management
 var passport = require('passport');
@@ -183,13 +186,36 @@ app.get('/api/portfolios/:portfolioId', function (request, response) {
     })
 });
 
-// Get all the information about the stock companies that are part of this portfolioId
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Manipulate stocks associated with a specific portfolio
+////////////////////////////////////////////////////////////////////////////////////////
+
+// Return all stocks held by the portfolio (portfolio defined by id)
 app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
     // This checks if the instance of request.user is empty or not
     if (!request.user) {
         response.status(306).json({'redirect': '/login'});
         return;
     }
+    
+    var userID = request.session.passport.user;
+    models.Portfolio.findById(request.params.portfolioId).then(function(portfolio) {
+        portfolio.getUsers().then(function(users){
+            var user = users.find((user) => { return user.id === userID ? true : false });
+            if (user !== undefined) {
+                portfolio.getCompanies().then(function(stocks){
+                    response.status(200).end(JSON.stringify({'stocks' : stocks}, null, 4)); 
+                });
+            } else {
+                response.status(401).end('Unauthorized access to portfolio');
+            }
+        });
+    });
+    
+
+    
+/*
     // This puts the userID directly into the var
     var userId = request.session.passport.user;
     var portfolioId = request.params['portfolioId'];
@@ -215,9 +241,68 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
             response.end(JSON.stringify(portfolioInstance, null, 4))
         })
     })
+*/
 });
 
-    // Get all the users who have access to this portfolio -- must check if user has admin/write access to this portfolio before showing them
+// Add a stock to a portfolio (portfolio defined by id, stock defined by symbol)
+app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
+    if (!request.user) {
+        response.status(306).json({'redirect': '/login'});
+        return;
+    }
+
+    var userId = request.session.passport.user;
+    var portfolioId = request.params['portfolioId'];
+    var stockId = request.body['stockId'];
+
+    models.User.findById(userId).then(function(user) {
+        if (user)
+            return user.getPortfolios({where: {id: portfolioId}});
+    }).then(function(portfolio) {
+        if (portfolio.length === 0) {
+            response.status(401).end('Unauthorized access to portfolio');
+            return;
+        }
+
+        models.Portfolio.findById(portfolioId).then(function(portfolio) {
+            portfolio.addCompany(stockId);
+            response.end(JSON.stringify(portfolio), null, 4);
+        });
+
+    });
+});
+
+// Remove a stock from a portfolio (portfolio defined by id, stock defined by id)
+app.delete('/api/portfolios/:portfolioId/stocks', function(request,response){
+    if (!request.user) {
+        response.status(306).json({'redirect': '/login'});
+        return;
+    }
+
+    var userId = request.session.passport.user;
+    var portfolioId = request.params['portfolioId'];
+    var stockId = request.body['stockId'];
+
+    models.User.findById(userId).then(function(user) {
+        if (user)
+            return user.getPortfolios({where: {id: portfolioId}});
+    }).then(function(portfolio) {
+        if (portfolio.length === 0) {
+            response.status(401).end('Unauthorized access to portfolio');
+            return;
+        }
+
+        models.Portfolio.findById(portfolioId).then(function(portfolio) {
+            portfolio.removeCompany(stockId);
+            response.end(JSON.stringify(portfolio, null, 4));
+        });
+    });
+});
+
+
+
+
+// Get all the users who have access to this portfolio -- must check if user has admin/write access to this portfolio before showing them
 app.get('/api/portfolios/:portfolioId/users', function (request, response) {
     // This checks if the instance of request.user is empty or not
     if (!request.user) {
@@ -392,7 +477,7 @@ app.delete('/api/portfolios/:portfolioId', function (request, response) {
         user.getPortfolios({where: {id: portfolioId }}).then(function(portfolio) {
             if (portfolio.length === 0) {
                 console.log("No access to portfolio");
-                response.status(401).end('No Unauthorized access to portfolio');
+                    response.status(401).end('No Unauthorized access to portfolio');
     			return;
             }
 
@@ -411,63 +496,7 @@ app.delete('/api/portfolios/:portfolioId', function (request, response) {
 	});
 });
 
-// Function to remove a company from a certain portfolio.
-app.delete('/api/portfolios/:portfolioId/stocks', function(request,response){
-    if (!request.user) {
-        response.status(306).json({'redirect': '/login'});
-        return;
-    }
-
-    var userId = request.session.passport.user;
-    var portfolioId = request.params['portfolioId'];
-    var stockId = request.body['stockId'];
-
-    models.User.findById(userId).then(function(user) {
-        if (user)
-            return user.getPortfolios({where: {id: portfolioId}});
-    }).then(function(portfolio) {
-        if (portfolio.length === 0) {
-            response.status(401).end('Unauthorized access to portfolio');
-            return;
-        }
-
-        models.Portfolio.findById(portfolioId).then(function(portfolio) {
-            portfolio.removeCompany(stockId);
-            response.end(JSON.stringify(portfolio, null, 4));
-        });
-    });
-});
-
-// Function to add a company from a certain portfolio.
-app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
-    if (!request.user) {
-        response.status(306).json({'redirect': '/login'});
-        return;
-    }
-
-    var userId = request.session.passport.user;
-    var portfolioId = request.params['portfolioId'];
-    var stockId = request.body['stockId'];
-
-    models.User.findById(userId).then(function(user) {
-        if (user)
-            return user.getPortfolios({where: {id: portfolioId}});
-    }).then(function(portfolio) {
-        if (portfolio.length === 0) {
-            response.status(401).end('Unauthorized access to portfolio');
-            return;
-        }
-
-        models.Portfolio.findById(portfolioId).then(function(portfolio) {
-            portfolio.addCompany(stockId);
-            response.end(JSON.stringify(portfolio), null, 4);
-        });
-
-    });
-});
-
-app.post('/api/portfolios/:portfolioId/invite', function(request, response)
-{
+app.post('/api/portfolios/:portfolioId/invite', function(request, response) {
 	if (!request.user) {
         response.status(306).json({'redirect': '/login'});
 		return;
