@@ -1,11 +1,13 @@
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 // CONSTANTS
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 const PORT = 3001;
 const UPDATE_FREQUENCY = 10000 //ms
-//////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////////////
 // REQUIREMENTS
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 var fs = require('fs');
 var path = require('path');
 var cheerio = require('cheerio');
@@ -29,9 +31,11 @@ var LocalStrategy = require('passport-local').Strategy;
 //Passport strategy modules
 var localLoginStrategy = require('./server/passport/local-login');
 var localSignupStrategy = require('./server/passport/local-signup');
-//////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////////////
 // CONFIGURE APP + REAL-TIME SOCKET
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 var app = express();
 var server = require('http').Server(app);
@@ -50,9 +54,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////
 // 			SESSION MANAGEMENT
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 passport.use('signup', localSignupStrategy);
 passport.use('login', localLoginStrategy);
 passport.serializeUser(function(user, done) {
@@ -67,9 +72,10 @@ passport.deserializeUser(function(userId, done) {
 	})
 });
 
-//////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////
 // PAGES
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 //Not used at moment.
 // app.get('/', function(request, response) {
@@ -89,9 +95,9 @@ passport.deserializeUser(function(userId, done) {
 //        response.redirect(301, 'http://localhost:3000/login');
 // }
 
-//////////////////////////////////////////////////
-//                      API
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+// User account actions
+////////////////////////////////////////////////////////////////////////////////////////
 
 //Middleware Managed API
 app.post('api/users/signup', passport.authenticate('signup', {
@@ -114,20 +120,27 @@ app.post('/api/users/logout', function(request, response) {
   });
 });
 
-// This is to get the current user session user id and return id and username of current user
+// Return information for current user
 app.get('/api/users/current', function(request, response) {
     if (!request.user) {
         response.status(306).json({'redirect': '/login'});
         return;
     }
+    
     var sessionUserId = request.session.passport.user;
-    models.User.findById(sessionUserId, {attributes: ['id', 'username', 'firstname', 'lastname']})
-    .then(function (user) {
+    models.User.findById(sessionUserId, {
+        attributes: ['id', 'username', 'firstname', 'lastname']
+    }).then(function (user) {
         response.end(JSON.stringify(user, null, 4));
 	});
 })
 
-// returns portfolio IDs and names for the current user
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Manipulate portfolios
+////////////////////////////////////////////////////////////////////////////////////////
+
+// Return all portfolios for the current user
 app.get('/api/portfolios', function (request, response) {
 	if (!request.user) {
         response.status(306).json({'redirect': '/login'});
@@ -159,7 +172,7 @@ app.get('/api/portfolios', function (request, response) {
 	})
 });
 
-// Get Information of a single portfolio that the user has permissions to.
+// Return a specific portfolio (portfolio defined by id)
 app.get('/api/portfolios/:portfolioId', function (request, response) {
     if (!request.user) {
         response.status(306).json({'redirect': '/login'});
@@ -184,6 +197,59 @@ app.get('/api/portfolios/:portfolioId', function (request, response) {
         portfoliosData.push(portfolioData);
         response.end(JSON.stringify(portfoliosData, null, 4))
     })
+});
+
+// Create a new portfolio, currrent user has admin privilege
+app.post('/api/portfolios', function (request, response) {
+	if (!request.user) {
+        response.status(306).json({'redirect': '/login'});
+		return;
+	}
+
+    var userId = request.session.passport.user;
+    var portfolioName = request.body.name;
+
+    models.Portfolio.create({
+        name: portfolioName
+    }).then(function(portfolioInstance) {
+        var portfolioID = portfolioInstance.id;
+        portfolioInstance.addUser(userId, {permission: 'admin'});
+        response.end(JSON.stringify({'portfolioID' : portfolioID}, null, 4));
+    });
+});
+
+// Delete a specific portfolio (portfolio defined by id)
+app.delete('/api/portfolios/:portfolioId', function (request, response) {
+	if (!request.user) {
+        response.status(306).json({'redirect': '/login'});
+		return;
+	}
+
+    var userId = request.session.passport.user;
+    var portfolioId = request.params['portfolioId'];
+
+    models.User.findById(userId)
+    .then(function(user) {
+        user.getPortfolios({where: {id: portfolioId }}).then(function(portfolio) {
+            if (portfolio.length === 0) {
+                console.log("No access to portfolio");
+                    response.status(401).end('No Unauthorized access to portfolio');
+    			return;
+            }
+
+            var permission = portfolio[0].Users_Portfolios.permission;
+            console.log(permission);
+            if(permission === "admin" || permission === 'write') {
+                user.removePortfolio(portfolio);
+                response.end("You have deleted your portfolio " + portfolioId);
+            }
+            else {
+                console.log("You have the wrong permissions");
+                response.status(401).end('Unauthorized access to portfolio');
+    			return;
+            }
+        });
+	});
 });
 
 
@@ -418,60 +484,29 @@ app.get('/api/stocks/:symbol', function (request, response) {
 });
 
 
-// This is used to create a new portfolio with the current user as admin.
-app.post('/api/portfolios', function (request, response) {
-	if (!request.user) {
-        response.status(306).json({'redirect': '/login'});
-		return;
-	}
+////////////////////////////////////////////////////////////////////////////////////////
+// News
+////////////////////////////////////////////////////////////////////////////////////////
 
-    var userId = request.session.passport.user;
-    var portfolioName = request.body.name;
+// Get the latest news from DB
+app.get('/api/news', function(request, response){    
+    // IN production uncomment the following code
+    // if (!request.user) {
+    //   response.redirect(401, '/login');
+    //   return;
+    // }
 
-    models.Portfolio.create({
-        name: portfolioName
-    }).then(function(portfolioInstance) {
-        var portfolioID = portfolioInstance.id;
-        portfolioInstance.addUser(userId, {permission: 'admin'});
-        response.end(JSON.stringify({'portfolioID' : portfolioID}, null, 4));
+    models.News.findAll().then(function(news){
+        response.send(JSON.stringify(news));
     });
 });
 
 
-// This is used to delete a portfolio that you have admin power to.
-app.delete('/api/portfolios/:portfolioId', function (request, response) {
-	if (!request.user) {
-        response.status(306).json({'redirect': '/login'});
-		return;
-	}
+////////////////////////////////////////////////////////////////////////////////////////
+// Invitations (not used)
+////////////////////////////////////////////////////////////////////////////////////////
 
-    var userId = request.session.passport.user;
-    var portfolioId = request.params['portfolioId'];
-
-    models.User.findById(userId)
-    .then(function(user) {
-        user.getPortfolios({where: {id: portfolioId }}).then(function(portfolio) {
-            if (portfolio.length === 0) {
-                console.log("No access to portfolio");
-                    response.status(401).end('No Unauthorized access to portfolio');
-    			return;
-            }
-
-            var permission = portfolio[0].Users_Portfolios.permission;
-            console.log(permission);
-            if(permission === "admin" || permission === 'write') {
-                user.removePortfolio(portfolio);
-                response.end("You have deleted your portfolio " + portfolioId);
-            }
-            else {
-                console.log("You have the wrong permissions");
-                response.status(401).end('Unauthorized access to portfolio');
-    			return;
-            }
-        });
-	});
-});
-
+// Send user an invtation to a specific portfolio (portfolio defined by id)
 app.post('/api/portfolios/:portfolioId/invite', function(request, response) {
 	if (!request.user) {
         response.status(306).json({'redirect': '/login'});
@@ -517,7 +552,7 @@ app.post('/api/portfolios/:portfolioId/invite', function(request, response) {
 	});
 });
 
-
+// Get users current portfolio invitations
 app.get('/api/invitation', function(request, response) {
 	if (!request.user) {
         response.status(306).json({'redirect': '/login'});
@@ -532,7 +567,7 @@ app.get('/api/invitation', function(request, response) {
 	})
 });
 
-//Accept or decline invitation
+// Accept or decline a specific invitation (invitation defined by id)
 app.post('/api/invitation/:invitationId', function(request, response) {
 	if (!request.user) {
         response.status(306).json({'redirect': '/login'});
@@ -562,24 +597,10 @@ app.post('/api/invitation/:invitationId', function(request, response) {
 
 });
 
-// Get the latest news from DB
-app.get('/api/news', function(request, response){
 
-  // IN production uncomment the following code
-  // if (!request.user) {
-  //   response.redirect(401, '/login');
-  //   return;
-  // }
-
-  models.News.findAll().then(function(news){
-    response.send(JSON.stringify(news));
-  });
-});
-
-
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 // REAL-TIME
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 io.on('connection', function(socket) {
 	console.log('Client connected to websocket.');
 
