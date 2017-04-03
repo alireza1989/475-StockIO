@@ -4,7 +4,6 @@
 const PORT = 3001;
 const UPDATE_FREQUENCY = 10000 //ms
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 // REQUIREMENTS
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -16,7 +15,8 @@ var cheerio = require('cheerio');
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var request = require('request');
+var requestCall = require('request');
+
 
 var Sequelize = require("sequelize");
 var models = require('./db/models');
@@ -126,7 +126,7 @@ app.get('/api/users/current', function(request, response) {
         response.status(306).json({'redirect': '/login'});
         return;
     }
-    
+
     var sessionUserId = request.session.passport.user;
     models.User.findById(sessionUserId, {
         attributes: ['id', 'username', 'firstname', 'lastname']
@@ -147,9 +147,9 @@ app.get('/api/portfolios', function (request, response) {
         response.status(306).json({'redirect': '/login'});
         return;
     }
-    
+
     var userID = request.session.passport.user;
-    
+
     models.User.findById(userID).then((user) => {
         user.getPortfolios().then((portfolios) => {
             portfolios = portfolios.map((portfolio) => {
@@ -159,10 +159,10 @@ app.get('/api/portfolios', function (request, response) {
                     'permission': portfolio.Users_Portfolios.permission
                 }
             });
-            
+
             // Sort portfolios by ID (could substitute an "order" field
             portfolios.sort((a, b) => { return (a.id < b.id) ? -1 : 1; });
-        
+
             response.status(200).end(JSON.stringify({'portfolios' : portfolios}, null, 4));
         });
     });
@@ -255,10 +255,10 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
         response.status(306).json({'redirect': '/login'});
         return;
     }
-    
+
     var userID = request.session.passport.user;
     var portfolioID = parseInt(request.params.portfolioId);
-    
+
     models.User.findById(userID).then((user) => {
         user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
             portfolio = portfolio[0];
@@ -274,7 +274,7 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
 });
 
 // Add a stock to a portfolio (portfolio defined by id, stock defined by symbol)
-app.post('/api/portfolios/:portfolioId/stocks', function(request,response){    
+app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
     if (!request.user) {
         response.status(306).json({'redirect': '/login'});
         return;
@@ -283,7 +283,7 @@ app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
     var userID = request.session.passport.user;
     var portfolioID = parseInt(request.params.portfolioId);
     var stockSymbol = request.body.symbol;
-    
+
     models.User.findById(userID).then((user) => {
         user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
             portfolio = portfolio[0];
@@ -304,7 +304,7 @@ app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
                             // TODO: Need to get the stock from Intrinio
                             response.status(200).end('Could not add stock -- need to lookup Intrinio');
                         }
-                	});                    
+                	});
                 } else {
                     response.status(401).end('User does not have permission to modify portfolio.');
                 }
@@ -325,7 +325,7 @@ app.delete('/api/portfolios/:portfolioId/stocks', function(request,response){
     var userID = request.session.passport.user;
     var portfolioID = parseInt(request.params.portfolioId);
     var stockID = request.body.stockID;
-    
+
     models.User.findById(userID).then((user) => {
         user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
             portfolio = portfolio[0];
@@ -357,10 +357,10 @@ app.get('/api/portfolios/:portfolioId/users', function (request, response) {
         response.status(306).json({'redirect': '/login'});
         return;
     }
-    
+
     var userID = request.session.passport.user;
     var portfolioID = parseInt(request.params.portfolioId);
-    
+
     models.Portfolio.findById(portfolioID).then((portfolio) => {
         portfolio.getUsers().then((users) => {
             var currentUser = users.find((u) => { return u.id === userID });
@@ -374,7 +374,7 @@ app.get('/api/portfolios/:portfolioId/users', function (request, response) {
                         'permission': user.Users_Portfolios.permission
                     }
                 });
-                
+
                 response.status(200).end(JSON.stringify({'users' : users}, null, 4));
             } else {
                 response.status(401).end('Unauthorized access to portfolio');
@@ -389,11 +389,11 @@ app.post('/api/portfolios/:portfolioId/users', function(request, response){
         response.status(306).json({'redirect': '/login'});
         return;
     }
-    
+
     var userID = request.session.passport.user;
     var portfolioID = parseInt(request.params.portfolioId);
     var memberUsername = request.body.username;
-    
+
     models.User.findById(userID).then((user) => {
         user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
             portfolio = portfolio[0];
@@ -417,7 +417,7 @@ app.post('/api/portfolios/:portfolioId/users', function(request, response){
                         } else {
                             response.status(200).end(`Member doesn't exist`);
                         }
-                	});                    
+                	});
                 } else {
                     response.status(401).end('User does not have permission to modify portfolio.');
                 }
@@ -439,12 +439,12 @@ app.delete('/api/portfolios/:portfolioId/users', function(request, response){
     var userID = request.session.passport.user;
     var portfolioID = parseInt(request.params.portfolioId);
     var memberID = request.body.memberID;
-    
+
     models.User.findById(userID).then((user) => {
         user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
             portfolio = portfolio[0];
             if (portfolio !== undefined) {
-                var permission = portfolio.Users_Portfolios.permission;                
+                var permission = portfolio.Users_Portfolios.permission;
                 if (permission === 'admin') {
                     portfolio.removeUser(memberID).then(() => {
                         response.status(200).end(`Removed suer ${memberID}`);
@@ -480,16 +480,36 @@ app.get('/api/stocks/:symbol', function (request, response) {
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // Get the latest news from DB
-app.get('/api/news', function(request, response){    
-    // IN production uncomment the following code
-    // if (!request.user) {
-    //   response.redirect(401, '/login');
-    //   return;
-    // }
+app.get('/api/company/news/:symbol', function(request, response){
 
-    models.News.findAll().then(function(news){
-        response.send(JSON.stringify(news));
-    });
+	// Intrinio constants for News
+	const username = "17440ee7fe0d7aeb1962fb3a18df9607";
+	const password = "bd8d650b82b0f07cf98d893a9fde0bb7";
+	var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
+	var url = "https://api.intrinio.com/news?identifier=";
+
+	if (!request.user) {
+        response.status(306).json({'redirect': '/login'});
+		return;
+	}
+
+	var stocksymbol = request.params['symbol'];
+
+	const options = {
+  		method: 'GET',
+  		uri: url + stocksymbol,
+		headers: {
+			"Authorization": auth
+		}
+	}
+
+	requestCall(options, function(err, res, body){
+		if(err){
+			console.log(err);
+		}
+
+		response.status(200).end(body);
+	});
 });
 
 
