@@ -142,34 +142,30 @@ app.get('/api/users/current', function(request, response) {
 
 // Return all portfolios for the current user
 app.get('/api/portfolios', function (request, response) {
-	if (!request.user) {
+    // TODO: Replace with "auth" function
+    if (!request.user) {
         response.status(306).json({'redirect': '/login'});
-		return;
-	}
-
-	var sessionUserId = request.session.passport.user;
-
-	models.User.findById(sessionUserId).then(function(user) {
-		if (user)
-			return user.getPortfolios();
-	}).then(function(portfolios) {
-        var count = 0;
-        var total = portfolios.length;
-        var portfoliosData = [];
-        portfolios.forEach(function(portfolioList) {
-            var portfolioData = {
-                id: portfolioList.id,
-                name: portfolioList.name,
-                permission: portfolioList.Users_Portfolios.permission
-            }
-            portfoliosData.push(portfolioData);
-            count++;
-            if (count === total){
-                console.log("sending portfolio data");
-                response.end(JSON.stringify({'portfolios': portfoliosData}, null, 4))
-            }
+        return;
+    }
+    
+    var userID = request.session.passport.user;
+    
+    models.User.findById(userID).then((user) => {
+        user.getPortfolios().then((portfolios) => {
+            portfolios = portfolios.map((portfolio) => {
+                return {
+                    'id': portfolio.id,
+                    'name': portfolio.name,
+                    'permission': portfolio.Users_Portfolios.permission
+                }
+            });
+            
+            // Sort portfolios by ID (could substitute an "order" field
+            portfolios.sort((a, b) => { return (a.id < b.id) ? -1 : 1; });
+        
+            response.status(200).end(JSON.stringify({'portfolios' : portfolios}, null, 4));
         });
-	})
+    });
 });
 
 // Return a specific portfolio (portfolio defined by id)
@@ -214,38 +210,34 @@ app.post('/api/portfolios', function (request, response) {
     }).then((portfolioInstance) => {
         var portfolioID = portfolioInstance.id;
         portfolioInstance.addUser(userID, {permission: 'admin'});
-        response.end(JSON.stringify({'portfolioID' : portfolioID}, null, 4));
+        response.status(200).end(JSON.stringify({'portfolioID' : portfolioID}, null, 4));
     });
 });
 
 // Delete a specific portfolio (portfolio defined by id)
-app.delete('/api/portfolios/:portfolioId', function (request, response) {
+app.delete('/api/portfolios', function (request, response) {
 	if (!request.user) {
         response.status(306).json({'redirect': '/login'});
 		return;
 	}
 
     var userID = request.session.passport.user;
-    var portfolioID = request.params.portfolioId;
+    var portfolioID = request.body.portfolioID;
 
     models.User.findById(userID).then((user) => {
-        user.getPortfolios({where: {id: portfolioID }}).then((portfolio) => {
-            if (portfolio.length === 0) {
-                console.log("No access to portfolio");
-                    response.status(401).end('No Unauthorized access to portfolio');
-    			return;
-            }
-
-            var permission = portfolio[0].Users_Portfolios.permission;
-            console.log(permission);
-            if(permission === "admin" || permission === 'write') {
-                user.removePortfolio(portfolio);
-                response.end("You have deleted your portfolio " + portfolioId);
-            }
-            else {
-                console.log("You have the wrong permissions");
-                response.status(401).end('Unauthorized access to portfolio');
-    			return;
+        user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
+            portfolio = portfolio[0];
+            if (portfolio !== undefined) {
+                var permission = portfolio.Users_Portfolios.permission;
+                if (permission === 'admin') {
+                    user.removePortfolio(portfolio).then(() => {
+                        response.status(200).end(`You have deleted your portfolio ${portfolioID}`);
+                    })
+                } else {
+                    response.status(401).end('User does not have permission to modify portfolio.');
+                }
+            } else {
+                response.status(401).end(`Portfolio doesn't exist.`);
             }
         });
 	});
@@ -275,7 +267,7 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
                     response.status(200).end(JSON.stringify({'stocks' : stocks}, null, 4));
                 });
             } else {
-                response.status(401).end('Unauthorized access to portfolio');
+                response.status(401).end(`Portfolio doesn't exist.`);
             }
         });
     });
@@ -317,7 +309,7 @@ app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
                     response.status(401).end('User does not have permission to modify portfolio.');
                 }
             } else {
-                response.status(401).end('Unauthorized access to portfolio.');
+                response.status(401).end(`Portfolio doesn't exist.`);
             }
         });
     });
@@ -338,7 +330,7 @@ app.delete('/api/portfolios/:portfolioId/stocks', function(request,response){
         user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
             portfolio = portfolio[0];
             if (portfolio !== undefined) {
-                var permission = portfolio.Users_Portfolios.permission;                
+                var permission = portfolio.Users_Portfolios.permission;
                 if (permission === 'admin' || permission === 'write') {
                     portfolio.removeCompany(stockID).then(() => {
                         response.status(200).end(`Removed stock ${stockID}`);
@@ -347,7 +339,7 @@ app.delete('/api/portfolios/:portfolioId/stocks', function(request,response){
                     response.status(401).end('User does not have permission to modify portfolio.');
                 }
             } else {
-                response.status(401).end('Unauthorized access to portfolio.');
+                response.status(401).end(`Portfolio doesn't exist.`);
             }
         });
     });
