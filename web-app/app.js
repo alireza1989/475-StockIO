@@ -66,20 +66,20 @@ app.use(passport.session());
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// 			SESSION MANAGEMENT
+//          SESSION MANAGEMENT
 ////////////////////////////////////////////////////////////////////////////////////////
 passport.use('signup', localSignupStrategy);
 passport.use('login', localLoginStrategy);
 passport.serializeUser(function(user, done) {
-	return done(null, user.id);
+    return done(null, user.id);
 });
 passport.deserializeUser(function(userId, done) {
-	models.User.findById(userId).then(function (user) {
-		if (!user)
-			return done(null, false);
+    models.User.findById(userId).then(function (user) {
+        if (!user)
+            return done(null, false);
 
-		return done(null, user);
-	})
+        return done(null, user);
+    })
 });
 
 
@@ -111,14 +111,14 @@ passport.deserializeUser(function(userId, done) {
 
 //Middleware Managed API
 app.post('api/users/signup', passport.authenticate('signup', {
-	successRedirect: '/dashboard',
+    successRedirect: '/dashboard',
     failureRedirect: '/login',
     session: true
 }));
 
 //Middleware Managed API
 app.post('/api/users/login', passport.authenticate('login', {
-	successRedirect: '/dashboard',
+    successRedirect: '/dashboard',
     failureRedirect: '/login',
     session: true
 }));
@@ -144,7 +144,7 @@ app.get('/api/users/current', function(request, response) {
 // Return all portfolios for the current user
 app.get('/api/portfolios', function (request, response) {
     if (authenticate(request, response))
-    responseoutes.portfolios.getPortfolios(models, request, response);
+        routes.portfolios.getPortfolios(models, request, response);
 });
 
 // Return a specific portfolio (portfolio defined by id)
@@ -253,54 +253,54 @@ io.on('connection', function(socket) {
 
 var COMPANIES = [];  //This data is retrieved from the DB on app start.
 var listenForStockUpdates = function(url) {
-	setInterval(function() {request(url, onStocksUpdate)}, UPDATE_FREQUENCY);
+    setInterval(function() {request(url, onStocksUpdate)}, UPDATE_FREQUENCY);
 };
 
 var onStocksUpdate = function(error, response, body) {
-	// For google API financial data
-	try {
-		data = JSON.parse(body.substring(3));
-	} catch(e) {
-		console.log("Invalid JSON returned from stocks-update query.")
-		return false;
-	}
+    // For google API financial data
+    try {
+        data = JSON.parse(body.substring(3));
+    } catch(e) {
+        console.log("Invalid JSON returned from stocks-update query.")
+        return false;
+    }
 
-	data.forEach(function(stock) {
-		var quote = {};
-		quote.ticker = stock.t;
-		quote.price = stock.l_cur;
-		quote.change_price = stock.c;
-		quote.change_percent = stock.cp;
-		quote.last_trade_time = stock.lt;
+    data.forEach(function(stock) {
+        var quote = {};
+        quote.ticker = stock.t;
+        quote.price = stock.l_cur;
+        quote.change_price = stock.c;
+        quote.change_percent = stock.cp;
+        quote.last_trade_time = stock.lt;
         quote.previous_close_price = stock.pcls_fix;
         quote.dividend = (stock.div == '' || stock.div == undefined) ? 0 : stock.div;
         quote.yield = (stock.yld == '' || stock.ylr == undefined) ? 0 : stock.yld;
 
-		models.Company.findOne({where: {symbol: quote.ticker}}).then(function(company) {
+        models.Company.findOne({where: {symbol: quote.ticker}}).then(function(company) {
 
-			if (company.last_price != quote.price) {
-				return company.update({last_price: parseFloat(quote.price), change_price: parseFloat(quote.change_price), change_percent: parseFloat(quote.change_percent), previous_close_price: parseFloat(quote.previous_close_price), dividend: parseFloat(quote.dividend), yield: parseFloat(quote.yield)});
-			}
-		}).then(function(updatedCompany) {
-			if (updatedCompany) {
+            if (company.last_price != quote.price) {
+                return company.update({last_price: parseFloat(quote.price), change_price: parseFloat(quote.change_price), change_percent: parseFloat(quote.change_percent), previous_close_price: parseFloat(quote.previous_close_price), dividend: parseFloat(quote.dividend), yield: parseFloat(quote.yield)});
+            }
+        }).then(function(updatedCompany) {
+            if (updatedCompany) {
                 io.to(quote.ticker).emit(quote.ticker, JSON.stringify(quote));
-			} else
-				console.log("No changes for " + quote.ticker);
-		});
-	});
+            } else
+                console.log("No changes for " + quote.ticker);
+        });
+    });
 }
 
 models.sequelize.sync().then(function() {
-	return models.Company.findAll({attributes: ['symbol']});
+    return models.Company.findAll({attributes: ['symbol']});
 }).then(function (companies) {
-	COMPANIES = Object.keys(companies).map(function (key) { return companies[key].symbol; }); //Stores stock symbols in array
+    COMPANIES = Object.keys(companies).map(function (key) { return companies[key].symbol; }); //Stores stock symbols in array
 
-	var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + COMPANIES;
-	//requestCall(url, onStocksUpdate);
+    var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + COMPANIES;
+    requestCall(url, onStocksUpdate);
 
-	//listenForStockUpdates(url);
+    //listenForStockUpdates(url);
 
-	server.listen(PORT, function () {
-		console.log('StockIO server listening on port ' + PORT + '. Open and accepting socket connections.');
-	});
+    server.listen(PORT, function () {
+        console.log('StockIO server listening on port ' + PORT + '. Open and accepting socket connections.');
+    });
 });
