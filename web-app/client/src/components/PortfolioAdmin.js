@@ -134,9 +134,11 @@ class PortfolioAdmin extends Component {
                         {this.renderMembers()}
                     </ul>
                     
-                    <div className="portfolio-admin-footer">
-                        <a className="portfolio-delete-button" role="button" onClick={this.props.deletePortfolio}>Delete Portfolio</a>
-                    </div>
+                    {(this.state.permission !== 'admin') ? '' :
+                        <div className="portfolio-admin-footer">
+                            <a className="portfolio-delete-button" role="button" onClick={this.props.deletePortfolio}>Delete Portfolio</a>
+                        </div>
+                    }
                 </div>
             </div>
 		)

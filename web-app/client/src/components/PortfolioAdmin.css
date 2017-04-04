@@ -16,6 +16,7 @@
     background: black;
     height: auto;
     width: 700px;
+    padding: 1px;
     margin: 100px auto;
     box-sizing: border-box ;
     border-radius: 10px;
@@ -145,6 +146,7 @@
     .portfolio-admin-form {
         height: 100%;
         width: 100%;
+        padding: 0;
         margin: 0;
         border-radius: 0;
         overflow: scroll;
