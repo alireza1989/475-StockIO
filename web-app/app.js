@@ -132,8 +132,8 @@ app.post('/api/users/logout', function(request, response) {
 
 // Return information for current user
 app.get('/api/users/current', function(request, response) {
-    authenticate(request, response);
-    routes.users.currentUserSession(models, request, response);
+    if (authenticate(request, response))
+        routes.users.currentUserSession(models, request, response);
 })
 
 
@@ -143,26 +143,26 @@ app.get('/api/users/current', function(request, response) {
 
 // Return all portfolios for the current user
 app.get('/api/portfolios', function (request, response) {
-    authenticate(request, response);
-    routes.portfolios.getPortfolios(models, request, response);
+    if (authenticate(request, response))
+    responseoutes.portfolios.getPortfolios(models, request, response);
 });
 
 // Return a specific portfolio (portfolio defined by id)
 app.get('/api/portfolios/:portfolioId', function (request, response) {
-    authenticate(request, response);
-    routes.portfolios.getPortfolioById(models, request, response);
+    if (authenticate(request, response))
+        routes.portfolios.getPortfolioById(models, request, response);
 });
 
 // Create a new portfolio, currrent user has admin privilege
 app.post('/api/portfolios', function (request, response) {
-    authenticate(request, response);
-    routes.portfolios.createPortfolio(models, request, response);
+    if (authenticate(request, response))
+        routes.portfolios.createPortfolio(models, request, response);
 });
 
 // Delete a specific portfolio (portfolio defined by id)
 app.delete('/api/portfolios', function (request, response) {
-    authenticate(request, response);
-    routes.portfolios.deletePortfolio(io, models, request, response);
+    if (authenticate(request, response))
+        routes.portfolios.deletePortfolio(io, models, request, response);
 });
 
 
@@ -172,20 +172,20 @@ app.delete('/api/portfolios', function (request, response) {
 
 // Return all stocks held by the portfolio (portfolio defined by id)
 app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
-    authenticate(request, response);
-    routes.portfolioStocks.getStocksInPortfolio(models, request, response);
+    if (authenticate(request, response))
+        routes.portfolioStocks.getStocksInPortfolio(models, request, response);
 });
 
 // Add a stock to a portfolio (portfolio defined by id, stock defined by symbol)
 app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
-    authenticate(request, response);
-    routes.portfolioStocks.addStockToPortfolio(io, models, request, response);
+    if (authenticate(request, response))
+        routes.portfolioStocks.addStockToPortfolio(io, models, request, response);
 });
 
 // Remove a stock from a portfolio (portfolio defined by id, stock defined by id)
 app.delete('/api/portfolios/:portfolioId/stocks', function(request,response){
-    authenticate(request, response);
-    routes.portfolioStocks.deleteStockFromPortfolio(io, models, request, response);
+    if (authenticate(request, response))
+        routes.portfolioStocks.deleteStockFromPortfolio(io, models, request, response);
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -194,20 +194,20 @@ app.delete('/api/portfolios/:portfolioId/stocks', function(request,response){
 
 // Return all users with access to the portfolio (portfolio defined by id)
 app.get('/api/portfolios/:portfolioId/users', function (request, response) {
-    authenticate(request, response);
-    routes.portfolioUsers.getPortfolioUsers(models, request, response);
+    if (authenticate(request, response))
+        routes.portfolioUsers.getPortfolioUsers(models, request, response);
 });
 
 // Add a user to a portfolio (portfolio defined by id, user defined by username)
 app.post('/api/portfolios/:portfolioId/users', function(request, response){
-    authenticate(request, response);
-    routes.portfolioUsers.addUserToPortfolio(io, models, request, response);
+    if (authenticate(request, response))
+        routes.portfolioUsers.addUserToPortfolio(io, models, request, response);
 });  
 
 // Remove a user from a portfolio (portfolio defined by id, user defined by id)
 app.delete('/api/portfolios/:portfolioId/users', function(request, response){
-    authenticate(request, response);
-    routes.portfolioUsers.deleteUserFromPortfolio(io, models, request, response);
+    if (authenticate(request, response))
+        routes.portfolioUsers.deleteUserFromPortfolio(io, models, request, response);
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -230,8 +230,9 @@ app.get('/api/stocks/:symbol/news', function(request, response){
 var authenticate = function(request, response) {
     if (!request.user) {
         response.status(306).json({'redirect': '/login'});
-        return;
+        return false;
     }
+    return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
