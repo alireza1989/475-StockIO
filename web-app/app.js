@@ -4,13 +4,15 @@
 const PORT = 3001;
 const UPDATE_FREQUENCY = 10000 //ms
 
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // REQUIREMENTS
 ////////////////////////////////////////////////////////////////////////////////////////
+
 var fs = require('fs');
 var path = require('path');
 
-//Server
+// Server
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -22,7 +24,7 @@ var models = require('./db/models');
 var routes = require('./server/routes');
 
 
-//Session Management
+// Session Management
 var passport = require('passport');
 var passportSocketIo = require('passport.socketio');
 
@@ -31,7 +33,7 @@ var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var LocalStrategy = require('passport-local').Strategy;
 var sessionStore = new SequelizeStore({db: models.sequelize, table: 'Session'});
 
-//Passport strategy modules
+// Passport strategy modules
 var localLoginStrategy = require('./server/passport/local-login');
 var localSignupStrategy = require('./server/passport/local-signup');
 
@@ -66,8 +68,9 @@ app.use(passport.session());
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-//          SESSION MANAGEMENT
+// SESSION MANAGEMENT
 ////////////////////////////////////////////////////////////////////////////////////////
+
 passport.use('signup', localSignupStrategy);
 passport.use('login', localLoginStrategy);
 passport.serializeUser(function(user, done) {
@@ -109,21 +112,21 @@ passport.deserializeUser(function(userId, done) {
 // User account actions
 ////////////////////////////////////////////////////////////////////////////////////////
 
-//Middleware Managed API
+// Middleware Managed API
 app.post('/api/users/signup', passport.authenticate('signup', {
     successRedirect: '/dashboard',
     failureRedirect: '/login',
     session: true
 }));
 
-//Middleware Managed API
+// Middleware Managed API
 app.post('/api/users/login', passport.authenticate('login', {
     successRedirect: '/dashboard',
     failureRedirect: '/login',
     session: true
 }));
 
-//Middleware Managed API
+// Middleware Managed API
 app.post('/api/users/logout', function(request, response) {
     request.session.destroy(function (err) {
         response.status(306).json({'redirect': '/login'});
@@ -188,6 +191,7 @@ app.delete('/api/portfolios/:portfolioId/stocks', function(request,response){
         routes.portfolioStocks.deleteStockFromPortfolio(io, models, request, response);
 });
 
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // Manipulate users associated with a specific portfolio
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -210,6 +214,7 @@ app.delete('/api/portfolios/:portfolioId/users', function(request, response){
         routes.portfolioUsers.deleteUserFromPortfolio(io, models, request, response);
 });
 
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // Stocks
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -217,6 +222,7 @@ app.delete('/api/portfolios/:portfolioId/users', function(request, response){
 app.get('/api/stocks/:symbol', function (request, response) {
     routes.stocks.getStockBySymbol(models, request, response);
 });
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // News
@@ -235,9 +241,11 @@ var authenticate = function(request, response) {
     return true;
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // REAL-TIME
 ////////////////////////////////////////////////////////////////////////////////////////
+
 io.on('connection', function(socket) {
     if (socket.request.user && socket.request.user.logged_in) {
         var userID = socket.request.user.id;
@@ -249,7 +257,6 @@ io.on('connection', function(socket) {
         });
     }
 });
-
 
 var COMPANIES = [];  //This data is retrieved from the DB on app start.
 var listenForStockUpdates = function(url) {
@@ -304,3 +311,4 @@ models.sequelize.sync().then(function() {
         console.log('StockIO server listening on port ' + PORT + '. Open and accepting socket connections.');
     });
 });
+

@@ -40,8 +40,7 @@ module.exports = {
                                             io.to('portfolio' + portfolioID).emit('update' + portfolioID, JSON.stringify(newPortfolio));
                                         }); 
 
-                                    console.log(`Added stock ${company.symbol}`);
-                                    response.status(200).end(`Added stock ${company.symbol}`);
+                                    response.status(200).end(JSON.stringify({'message' : `Added stock: ${company.symbol}`}, null, 4));
                                 });
                             } else {
                                 // TODO: Need to get the stock from Intrinio
@@ -74,7 +73,7 @@ module.exports = {
                                 }).then((portfolioInstance) => {
                                     io.to('portfolio' + portfolioID).emit('update' + portfolioID, JSON.stringify(portfolioInstance));
                                 }); 
-                            response.status(200).end(`Removed stock ${stockID}`);
+                            response.status(200).end(JSON.stringify({'message' : `Removed stock`}, null, 4));
                         });
                     } else {
                         response.status(401).end('User does not have permission to modify portfolio.');

@@ -46,23 +46,18 @@ module.exports = {
                             }]
                         }).then((member) => {                            
                             if (member !== null) {
-                                portfolio.addUser(member, { permission: memberPermission}).then(() => {
-                                    console.log(`Added member ${member.username}`);
-                                    
+                                portfolio.addUser(member, { permission: memberPermission}).then(() => {                                    
                                     var portfolioData = {
                                         id: portfolio.id,
                                         name: portfolio.name,
                                         permission: memberPermission
                                     };
                                     
-                                    var memberID = member.id;
-                                    
-                                    console.log(memberID);
-                                    
+                                    var memberID = member.id;                                    
                                     io.to('user' + memberID).emit('addPortfolio', JSON.stringify(portfolioData))
                                     sockets.newUser(memberID, portfolioID); //Make the new user listen for updates from now on.
 
-                                    response.status(200).end(`Added member ${member.username}`);
+                                    response.status(200).end(JSON.stringify({'message' : `Added memer ${member.username}`}, null, 4));
                                 }).catch((err) => {
                                     console.log(err);
                                     response.status(401).end();
@@ -94,7 +89,7 @@ module.exports = {
                     if (permission === 'admin') {
                         portfolio.removeUser(memberID).then(() => {
                             io.to('user' + memberID).emit('deletePortfolio', JSON.stringify({'portfolioId': portfolioID}));
-                            response.status(200).end(`Removed use ${memberID}`);
+                            response.status(200).end(JSON.stringify({'message' : `Removed memer`}, null, 4));
                         });
                     } else {
                         response.status(401).end('User does not have permission to modify portfolio.');

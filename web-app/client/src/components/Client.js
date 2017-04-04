@@ -13,6 +13,7 @@ function checkStatus(response) {
 }
 
 function parseJSON(response) {
+    console.log(response);
     if (response) { return response.json(); }
 }
 

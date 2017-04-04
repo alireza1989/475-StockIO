@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Client from './Client';
+import PortfolioAdminNotification from './PortfolioAdminNotification';
 import PortfolioAdminStockEntry from './PortfolioAdminStockEntry';
 import PortfolioAdminStock from './PortfolioAdminStock';
 import PortfolioAdminMemberEntry from './PortfolioAdminMemberEntry';
@@ -14,7 +15,8 @@ class PortfolioAdmin extends Component {
             name: this.props.portfolio.name,
             permission: this.props.portfolio.permission,
             stocks: [],
-            members: []
+            members: [],
+            message: ''
 		};
 		
         Client.getStocks(this.props.portfolio.id, (portfolio) => {
@@ -46,8 +48,7 @@ class PortfolioAdmin extends Component {
     
     addStock = (event, symbol) => {
         Client.addStock(this.props.portfolio.id, symbol, (response) => {
-            console.log("Stock added");
-            console.log(response);
+            this.setState({message: 'Stock added'});
         });
 
         event.preventDefault();
@@ -55,15 +56,14 @@ class PortfolioAdmin extends Component {
     
     removeStock = (stockID) => {
         Client.removeStock(this.props.portfolio.id, stockID, (response) => {
-            console.log("Stock removed");
-            console.log(response);
+            console.log("stock removed");
+            this.setState({message: 'Stock removed'});
         });
     }
     
     addMember = (event, body) => {
         Client.addMember(this.props.portfolio.id, body, (response) => {
-            console.log("Member added");
-            console.log(response);
+            this.setState({message: 'Member added'});
         });
 
         event.preventDefault();
@@ -71,8 +71,7 @@ class PortfolioAdmin extends Component {
     
     removeMember = (memberID) => {
         Client.removeMember(this.props.portfolio.id, memberID, (response) => {
-            console.log("Member removed");
-            console.log(response);
+            this.setState({message: 'Member removed'});
         });
     }
 
@@ -110,6 +109,8 @@ class PortfolioAdmin extends Component {
                         <input type="text"  name="portfolio-name" placeholder="Portfolio Name" 
                                             value={this.state.name} onChange={this.updatePortfolioName}
                                             ref={(input) => { this.portfolioNameInput = input; }}/>}
+                    
+                    <PortfolioAdminNotification message={this.state.message}/>
                     
                     <PortfolioAdminStockEntry addStock={this.addStock}/>
                     
