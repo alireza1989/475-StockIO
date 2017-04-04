@@ -51,7 +51,8 @@ module.exports = {
                                     console.log(`Added member ${member.username}`);
                                     var portfolioData = {
                                         id: portfolio.id,
-                                        name: portfolio.name
+                                        name: portfolio.name,
+                                        permission: memberPermission
                                     };
                                     var memberID = member.id;
                                     io.to('user' + memberID).emit('addPortfolio', JSON.stringify(portfolioData))
