@@ -11,10 +11,6 @@ class PortfolioAdminNotification extends Component {
 		};
     }
     
-    componentDidMount() {
-        this.refresh();
-    }
-    
     componentWillReceiveProps() { 
         this.refresh();
     }

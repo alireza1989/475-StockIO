@@ -48,7 +48,7 @@ class PortfolioAdmin extends Component {
     
     addStock = (event, symbol) => {
         Client.addStock(this.props.portfolio.id, symbol, (response) => {
-            this.setState({message: 'Stock added'});
+            this.setState({message: response.message});
         });
 
         event.preventDefault();
@@ -56,14 +56,13 @@ class PortfolioAdmin extends Component {
     
     removeStock = (stockID) => {
         Client.removeStock(this.props.portfolio.id, stockID, (response) => {
-            console.log("stock removed");
-            this.setState({message: 'Stock removed'});
+            this.setState({message: response.message});
         });
     }
     
     addMember = (event, body) => {
         Client.addMember(this.props.portfolio.id, body, (response) => {
-            this.setState({message: 'Member added'});
+            this.setState({message: response.message});
         });
 
         event.preventDefault();
@@ -71,7 +70,7 @@ class PortfolioAdmin extends Component {
     
     removeMember = (memberID) => {
         Client.removeMember(this.props.portfolio.id, memberID, (response) => {
-            this.setState({message: 'Member removed'});
+            this.setState({message: response.message});
         });
     }
 
