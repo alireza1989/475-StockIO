@@ -1,6 +1,6 @@
 module.exports = {
     
-	 getPortfolioUsers: function(models, request, response) {
+     getPortfolioUsers: function(models, request, response) {
         var userID = request.session.passport.user;
         var portfolioID = parseInt(request.params.portfolioId);
 
@@ -53,6 +53,7 @@ module.exports = {
                                     };
                                     var memberID = member.id;
                                     io.to('user' + memberID).emit('addPortfolio', JSON.stringify(portfolioData))
+                                    
                                     response.status(200).end(`Added member ${member.username}`);
                                 }).catch((err) => {
                                     console.log(err);
