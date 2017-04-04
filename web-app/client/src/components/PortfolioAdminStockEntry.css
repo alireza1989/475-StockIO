@@ -34,7 +34,7 @@ form.portfolio-add-stock input[type="submit"] {
     cursor: pointer;
     position: absolute;
     top: 12px;
-    right: 25px;
+    right: 15px;
 }
 
 form.portfolio-add-stock input[type="submit"]:hover {
