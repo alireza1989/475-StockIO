@@ -33,7 +33,7 @@ module.exports = {
         var portfolioID = parseInt(request.params.portfolioId);
         var memberUsername = request.body.username;
         var memberPermission = request.body.permission;
-        console.log(memberPermission);
+        
         models.User.findById(userID).then((user) => {
             user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
                 portfolio = portfolio[0];
@@ -44,17 +44,21 @@ module.exports = {
                             where: [{
                                 username: memberUsername
                             }]
-                        }).then((member) => {
+                        }).then((member) => {                            
                             if (member !== null) {
-                                // TODO: Need to pass the permission type from the frontend
                                 portfolio.addUser(member, { permission: memberPermission}).then(() => {
                                     console.log(`Added member ${member.username}`);
+                                    
                                     var portfolioData = {
                                         id: portfolio.id,
                                         name: portfolio.name,
                                         permission: memberPermission
                                     };
+                                    
                                     var memberID = member.id;
+                                    
+                                    console.log(memberID);
+                                    
                                     io.to('user' + memberID).emit('addPortfolio', JSON.stringify(portfolioData))
                                     sockets.newUser(memberID, portfolioID); //Make the new user listen for updates from now on.
 

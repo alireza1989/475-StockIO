@@ -87,7 +87,7 @@ const Client = module.exports = {
           .then(callback);
     },
 
-    addMember: function(portfolioId, email, callback) {
+    addMember: function(portfolioId, body, callback) {
         return fetch(`/api/portfolios/${portfolioId}/users`, {
             method: 'POST',
             credentials: 'include',
@@ -96,7 +96,8 @@ const Client = module.exports = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                username: email
+                username: body.username,
+                permission: body.permission
             })
         }).then(checkStatus)
           .then(parseJSON)

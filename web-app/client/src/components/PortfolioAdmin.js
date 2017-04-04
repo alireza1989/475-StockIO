@@ -60,8 +60,8 @@ class PortfolioAdmin extends Component {
         });
     }
     
-    addMember = (event, username) => {
-        Client.addMember(this.props.portfolio.id, username, (response) => {
+    addMember = (event, body) => {
+        Client.addMember(this.props.portfolio.id, body, (response) => {
             console.log("Member added");
             console.log(response);
         });
