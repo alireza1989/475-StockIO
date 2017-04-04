@@ -1,3 +1,5 @@
+var sockets = require('./sockets.js');
+
 module.exports = {
     createPortfolio: function(io, models, request, response) {
         var userID = request.session.passport.user;
@@ -13,6 +15,8 @@ module.exports = {
                 name: portfolio.name,
                 permission: 'admin'
             };
+
+            sockets.newPortfolio(userID, portfolio.id);
 
             response.status(200).end(JSON.stringify({
                 message: `Added portfolio ${portfolio.name}`,

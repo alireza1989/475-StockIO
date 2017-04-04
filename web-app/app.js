@@ -85,29 +85,6 @@ passport.deserializeUser(function(userId, done) {
     })
 });
 
-
-////////////////////////////////////////////////////////////////////////////////////////
-// PAGES
-////////////////////////////////////////////////////////////////////////////////////////
-
-//Not used at moment.
-// app.get('/', function(request, response) {
-//     response.redirect(301, 'http://localhost:3000/dashboard');
-// });
-
-// app.get('*', function(request, response) {
-//     loadPage(request, response, 'index.html');
-// });
-
-// var loadPage = function(request, response, page) {
-//         response.status(200);
-//         response.setHeader('Content-Type', 'text/html');
-
-//         var fPath = path.join(__dirname, page);
-//         fs.createReadStream(fPath).pipe(response);
-//        response.redirect(301, 'http://localhost:3000/login');
-// }
-
 ////////////////////////////////////////////////////////////////////////////////////////
 // User account actions
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -182,7 +159,7 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
 // Add a stock to a portfolio (portfolio defined by id, stock defined by symbol)
 app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
     if (authenticate(request, response))
-        routes.portfolioStocks.addStockToPortfolio(io, models, request, response);
+        routes.portfolioStocks.addStockToPortfolio(io, models, requestCall, request, response);
 });
 
 // Remove a stock from a portfolio (portfolio defined by id, stock defined by id)
@@ -241,6 +218,14 @@ var authenticate = function(request, response) {
     return true;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////
+// PAGES
+////////////////////////////////////////////////////////////////////////////////////////
+
+// app.get('*', function(request, response) { 
+//   response.sendFile(path.resolve(__dirname, 'index.html'));
+// });
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // REAL-TIME
@@ -266,35 +251,35 @@ var listenForStockUpdates = function(url) {
 var onStocksUpdate = function(error, response, body) {
     // For google API financial data
     try {
-        data = JSON.parse(body.substring(3));
+        var data = JSON.parse(body.substring(3));
     } catch(e) {
         console.log("Invalid JSON returned from stocks-update query.")
         return false;
     }
 
-    data.forEach(function(stock) {
-        var quote = {};
-        quote.ticker = stock.t;
-        quote.price = stock.l_cur;
-        quote.change_price = stock.c;
-        quote.change_percent = stock.cp;
-        quote.last_trade_time = stock.lt;
-        quote.previous_close_price = stock.pcls_fix;
-        quote.dividend = (stock.div == '' || stock.div == undefined) ? 0 : stock.div;
-        quote.yield = (stock.yld == '' || stock.ylr == undefined) ? 0 : stock.yld;
+    // data.forEach(function(stock) {
+    //     var quote = {};
+    //     quote.ticker = stock.t;
+    //     quote.price = stock.l_cur;
+    //     quote.change_price = stock.c;
+    //     quote.change_percent = stock.cp;
+    //     quote.last_trade_time = stock.lt;
+    //     quote.previous_close_price = stock.pcls_fix;
+    //     quote.dividend = (stock.div == '' || stock.div == undefined) ? 0 : stock.div;
+    //     quote.yield = (stock.yld == '' || stock.yld == undefined) ? 0 : stock.yld;
 
-        models.Company.findOne({where: {symbol: quote.ticker}}).then(function(company) {
+    //     models.Company.findOne({where: {symbol: quote.ticker}}).then(function(company) {
 
-            if (company.last_price != quote.price) {
-                return company.update({last_price: parseFloat(quote.price), change_price: parseFloat(quote.change_price), change_percent: parseFloat(quote.change_percent), previous_close_price: parseFloat(quote.previous_close_price), dividend: parseFloat(quote.dividend), yield: parseFloat(quote.yield)});
-            }
-        }).then(function(updatedCompany) {
-            if (updatedCompany) {
-                io.to(quote.ticker).emit(quote.ticker, JSON.stringify(quote));
-            } else
-                console.log("No changes for " + quote.ticker);
-        });
-    });
+    //         if (company.last_price != quote.price) {
+    //             return company.update({last_price: parseFloat(quote.price), change_price: parseFloat(quote.change_price), change_percent: parseFloat(quote.change_percent), previous_close_price: parseFloat(quote.previous_close_price), dividend: parseFloat(quote.dividend), yield: parseFloat(quote.yield)});
+    //         }
+    //     }).then(function(updatedCompany) {
+    //         if (updatedCompany) {
+    //             io.to(quote.ticker).emit(quote.ticker, JSON.stringify(quote));
+    //         } else
+    //             console.log("No changes for " + quote.ticker);
+    //     });
+    // });
 }
 
 models.sequelize.sync().then(function() {
