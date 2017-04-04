@@ -26,6 +26,11 @@ class PortfolioAdmin extends Component {
             members = members.users.filter(member => !(member.id === this.props.currentUser.id));
             this.setState({members: members});
         });
+
+        this.props.socket.on('update' + this.props.portfolio.id, (data) => {
+            var companyData = JSON.parse(data).Companies;
+            this.setState({stocks: companyData});
+        });
 	}
 	
 	componentDidMount() {
@@ -74,7 +79,7 @@ class PortfolioAdmin extends Component {
     renderStocks = () => {        
         if (this.state.stocks.length > 0) {
             return this.state.stocks.map((stock, i) =>
-                <PortfolioAdminStock key={i} id={stock.id} name={stock.name} symbol={stock.symbol}
+                <PortfolioAdminStock key={stock.id} id={stock.id} name={stock.name} symbol={stock.symbol}
                                      permission={this.state.permission} 
                                      removeStock={this.removeStock}/>
             );
@@ -86,7 +91,7 @@ class PortfolioAdmin extends Component {
     renderMembers = () => {         
         if (this.state.members.length > 0) {
             return this.state.members.map((member, i) =>
-                <PortfolioAdminMember key={i} id={member.id} name={member.username}
+                <PortfolioAdminMember key={member.id} id={member.id} name={member.username}
                                       permission={this.state.permission} 
                                       removeMember={this.removeMember}/>
             );

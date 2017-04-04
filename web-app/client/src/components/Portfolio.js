@@ -14,6 +14,11 @@ class Portfolio extends Component {
         Client.getStocks(this.props.portfolio.id, (portfolio) => {
             this.setState({stocks: portfolio.stocks});
         });
+
+        this.props.socket.on('update' + this.props.portfolio.id, (data) => {
+            var companyData = JSON.parse(data).Companies;
+            this.setState({stocks: companyData});
+        });
     }
     
     renderEditButton = () => {
@@ -42,7 +47,7 @@ class Portfolio extends Component {
                     </div>
                     
                     <div className="stocks">
-                        <ul>{this.state.stocks.map((stock, i) => <PortfolioCell key={i} stock={stock}/>)}</ul>
+                        <ul>{this.state.stocks.map((stock, i) => <PortfolioCell key={stock.id} socket={this.props.socket} stock={stock}/>)}</ul>
                     </div>
                 </div>
             </section>

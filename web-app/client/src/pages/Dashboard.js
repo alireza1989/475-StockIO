@@ -3,8 +3,10 @@ import Portfolio from '../components/Portfolio';
 import PortfolioAdmin from '../components/PortfolioAdmin';
 import logo from "../assets/logo-white.svg";
 import './Dashboard.css';
-
+import io from 'socket.io-client';
 import Client from '../components/Client';
+
+const socket = io('http://localhost:3001');
 
 class Dashboard extends Component {
     constructor() {
@@ -22,6 +24,25 @@ class Dashboard extends Component {
         
         Client.getPortfolios((portfoliosList) => { 
             this.setState({portfolios: portfoliosList.portfolios});
+        });
+
+        socket.on('addPortfolio', (data) => {
+            var newPortfolio = JSON.parse(data);
+            this.setState(state => {
+                this.state.portfolios.push(newPortfolio);
+                return {portfolios: state.portfolios};
+            });
+        });
+
+        socket.on('deletePortfolio', (data) => {
+            var portfolioId = JSON.parse(data).portfolioId;
+            var index = Client.getIndex(portfolioId, this.state.portfolios)
+            if (index !== -1) {
+                this.setState(state => {
+                    this.state.portfolios.splice(index, 1);
+                    return {portfolios: state.portfolios}
+                });
+            }
         });
     }
     
@@ -41,6 +62,7 @@ class Dashboard extends Component {
             return <PortfolioAdmin  portfolio={this.state.selectedPortfolio}
                                     currentUser={this.state.user}
                                     closeForm={this.editPortfolio}
+                                    socket={socket}
                    />
         }
     }
@@ -58,7 +80,8 @@ class Dashboard extends Component {
 
                 <div className="Dashboard">
                     {this.state.portfolios.map((portfolio, i) =>
-                        <Portfolio key={i} portfolio={portfolio}
+                        <Portfolio key={portfolio.id} portfolio={portfolio}
+                                   socket={socket}
                                    editPortfolio={this.editPortfolio}
                         />
                     )}

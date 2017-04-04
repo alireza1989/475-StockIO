@@ -145,6 +145,16 @@ const Client = module.exports = {
         }).then(checkStatus)
           .then(parseJSON)
           .then(callback);
+    },
+
+    //Generic helper function
+    getIndex: function(value, array) {
+        for (var i = 0; i < array.length; i++) {
+            var x = parseInt(value, 10); //This is to avoid annoying ===/== problems
+            if(array[i].id === x)
+                return i;
+        }
+        return -1;
     }
 }
 

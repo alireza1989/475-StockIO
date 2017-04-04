@@ -13,7 +13,6 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.17.1",
-    "cheerio": "latest",
     "concurrently": "^3.4.0",
     "connect-session-sequelize": "^4.1.0",
     "cookie-parser": "~1.4.3",
@@ -22,6 +21,7 @@
     "express-session": "^1.15.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "passport.socketio": "^3.7.0",
     "pg": "^6.1.5",
     "react-intl": "^2.2.3",
     "request": "latest",
