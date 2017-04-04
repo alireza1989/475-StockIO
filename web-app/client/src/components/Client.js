@@ -13,10 +13,10 @@ function checkStatus(response) {
 }
 
 function parseJSON(response) {
-    console.log(response);
-    if (response) { return response.json(); }
+    if (response) {
+        return response.json();
+    }
 }
-
 
 const Client = module.exports = {
 
@@ -33,6 +33,38 @@ const Client = module.exports = {
         return fetch('/api/portfolios', {
             accept: 'application/json',
             credentials: 'include'
+        }).then(checkStatus)
+          .then(parseJSON)
+          .then(callback);
+    },
+    
+    addPortfolio: function(portfolioName, callback) {
+        return fetch(`/api/portfolios`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: portfolioName
+            })
+        }).then(checkStatus)
+          .then(parseJSON)
+          .then(callback);
+    },
+    
+    removePortfolio: function(portfolioId, callback) {
+        return fetch(`/api/portfolios`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                portfolioID: portfolioId
+            })
         }).then(checkStatus)
           .then(parseJSON)
           .then(callback);

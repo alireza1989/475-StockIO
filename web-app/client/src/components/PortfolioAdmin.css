@@ -21,6 +21,11 @@
     border-radius: 10px;
 }
 
+.portfolio-admin-form .dyn-fix  {
+    overflow: auto;
+    line-height: 0;
+    padding-right: 5px;
+}
 
 /* FORM HEADER */
 .portfolio-admin-form a.close-button {
@@ -44,6 +49,32 @@
 }
 
 
+/* FORM FOOTER */
+.portfolio-admin-form .portfolio-admin-footer {
+    background: black;
+    height: auto;
+    width: 100%;
+    overflow: auto;
+    border-radius: 0 0 10px 10px;
+    border-top: 1px solid #333;
+}
+
+.portfolio-admin-form a.portfolio-delete-button {
+    background: #990000;
+    color: white;
+    font: 18px/20px Arial, sans-serif;
+    padding: 5px 15px;
+    margin: 15px;
+    border-radius: 5px;
+    float: right;
+    cursor: pointer;
+}
+
+.portfolio-admin-form a.portfolio-delete-button:hover {
+    background: #cc0000;
+}
+
+
 /* FORM DETAILS */
 .portfolio-admin-form h3 {
 	font-size: 24px;
@@ -51,15 +82,19 @@
 	padding: 15px 0 15px 25px;
 }
 
+.portfolio-admin-form #portfolio-name {
+    padding: 15px;
+}
+
 .portfolio-admin-form input[name="portfolio-name"] {
-    background: black;
+    background: #111;
     color: white;
     font-size: 24px;
-    width: 70%;
-    margin: 15px 0 15px 15px;
-    padding: 5px;
+    width: 100%;
+    margin: 0;
+    padding: 5px 10px;
     box-sizing: border-box;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid #333;
 }
 
@@ -67,11 +102,17 @@
     color: #666;
 }
 
+.portfolio-admin-form .portfolio-add {
+    background: #222;
+    padding: 10px 15px;
+/*     border-top: 1px solid #333; */
+/*     border-bottom: 1px solid #333; */
+}
+
 .portfolio-admin-form ul {
     height: auto;
     padding: 0 0 0 25px;
     box-sizing: border-box;
-    border-top: 1px solid #333;
     overflow-y: scroll;
 }
 
@@ -85,13 +126,17 @@
 
 .portfolio-admin-form ul#portfolio-admin-members {
     max-height: 150px;
-    padding: 15px 25px;
+    padding: 15px 25px 10px;
 }
 
 .portfolio-admin-form li.empty-section-row {
     font: 18px Helvetica;
     padding: 14px;
     cursor: default;
+}
+
+.portfolio-admin-form ul#portfolio-admin-members li.empty-section-row {
+    padding: 6px 14px 11px;
 }
 
 
@@ -110,12 +155,16 @@
         padding: 10px 0 10px 10px;
     }
     
-    .portfolio-admin-form input[name="portfolio-name"] {
-        margin: 10px 0 10px 10px;
+    .portfolio-admin-form #portfolio-name {
+        padding: 10px;
     }
     
     .portfolio-admin-form a.close-button {
         margin: 10px 10px 10px 0;
+    }
+    
+    .portfolio-admin-form .portfolio-add {
+        padding: 10px 10px;
     }
     
     .portfolio-admin-form ul {

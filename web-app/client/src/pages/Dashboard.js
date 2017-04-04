@@ -27,11 +27,8 @@ class Dashboard extends Component {
         });
 
         socket.on('addPortfolio', (data) => {
-            var newPortfolio = JSON.parse(data);
-            this.setState(state => {
-                this.state.portfolios.push(newPortfolio);
-                return {portfolios: state.portfolios};
-            });
+            var portfolio = JSON.parse(data);
+            this.addPortfolioHelper(portfolio);
         });
 
         socket.on('deletePortfolio', (data) => {
@@ -46,14 +43,37 @@ class Dashboard extends Component {
         });
     }
     
-    addPortfolio = () => {
-        console.log('Add new portfolio');
-    }
-    
     editPortfolio = (portfolio) => {
         this.setState({
             overlay: !this.state.overlay,
             selectedPortfolio: this.state.selectedPortfolio ? undefined : portfolio
+        });
+    }
+    
+    addPortfolio = () => {
+        console.log(`Add new portfolio`);
+        
+        Client.addPortfolio('Test', (response) => {
+            this.addPortfolioHelper(response.portfolio);
+        });
+    }
+    
+    addPortfolioHelper = (portfolio) => {
+        this.setState(state => {
+            this.state.portfolios.push(portfolio);
+            return {portfolios: state.portfolios};
+        });
+    }
+    
+    deletePortfolio = () => {
+        var portfolioID = this.state.selectedPortfolio.id;
+        console.log(`Delete portfolio ${portfolioID}`);
+        
+        Client.removePortfolio(this.state.selectedPortfolio.id, (response) => {
+            this.setState({
+                overlay: false,
+                selectedPortfolio: undefined
+            });
         });
     }
     
@@ -62,6 +82,7 @@ class Dashboard extends Component {
             return <PortfolioAdmin  portfolio={this.state.selectedPortfolio}
                                     currentUser={this.state.user}
                                     closeForm={this.editPortfolio}
+                                    deletePortfolio={this.deletePortfolio}
                                     socket={socket}
                    />
         }

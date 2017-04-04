@@ -2,9 +2,19 @@
 
 /* PORTFOLIO-NOTIFIATION */
 p#portfolio-notification {
-    background: #00cc00;
-    font: 18px/40px Helvetica;
-    margin-bottom: 1px;
-    cursor: default;
+    font: 18px/50px Helvetica;
+    width: 100%;
     text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    cursor: default;
+}
+
+p#portfolio-notification.add {
+    background: #339933;   
+}
+
+p#portfolio-notification.delete {
+    background: #cc0000;
 }

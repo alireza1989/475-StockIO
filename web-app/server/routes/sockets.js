@@ -27,6 +27,9 @@ module.exports = {
     },
 
     newUser: function(memberID, portfolioID) {
-        userSocketDictionary[memberID].join('portfolio' + portfolioID);
+        var memberSocket = userSocketDictionary[memberID];
+        if (memberSocket !== undefined) {
+            memberSocket.join('portfolio' + portfolioID);
+        }
     }
 }

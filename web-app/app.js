@@ -159,7 +159,7 @@ app.get('/api/portfolios/:portfolioId', function (request, response) {
 // Create a new portfolio, currrent user has admin privilege
 app.post('/api/portfolios', function (request, response) {
     if (authenticate(request, response))
-        routes.portfolios.createPortfolio(models, request, response);
+        routes.portfolios.createPortfolio(io, models, request, response);
 });
 
 // Delete a specific portfolio (portfolio defined by id)

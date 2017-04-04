@@ -6,35 +6,35 @@ class PortfolioAdminNotification extends Component {
 		super(props);
 		
 		this.state = {
+    		action: '',
             message: '',
             timer: false
 		};
     }
     
     componentWillReceiveProps() { 
-        this.refresh();
+        this.setTimer();
     }
     
-    refresh() {
+    setTimer() {        
         setTimeout(() => {
-            console.log("Timer expired");
             this.setState({
+                action: '',
                 message: '',
                 timer: false
             });
         }, 3000);
         
-        console.log("Timer set");
-        
         this.setState({
-            message: this.props.message,
+            action: this.props.notification.action,
+            message: this.props.notification.message,
             timer: true
         });
     }
     
     render() {        
         return (
-            <p id="portfolio-notification">{this.state.message}</p>
+            <p id="portfolio-notification" className={this.state.action}>{this.state.message}</p>
         );
     }
 }

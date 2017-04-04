@@ -19,19 +19,25 @@ class PortfolioAdminMemberEntry extends Component {
     
     render() {
         return (
-            <form className="portfolio-add-member" onSubmit={(event) => {
-                this.props.addMember(event, this.state)
-                this.setState({symbol: ''});
-            }}>
-                <input type="text"  name="portfolio-member-entry" placeholder="Add new member by email"
-                                    value={this.state.username} onChange={this.getMember}/>
-                <select name="portfolio-member-permission" value={this.state.permission}
-                        onChange={(event) => { this.setState({permission: event.target.value}) }}>
-                    <option value="write">Permission: Write</option>
-                    <option value="read">Permission: Read-only</option>
-                </select>
-                <input type="submit" value="Add"/>
-            </form>
+            <div className="portfolio-add">
+                <form className="portfolio-add-member" onSubmit={(event) => {
+                    this.props.addMember(event, this.state)
+                    this.setState({username: ''});
+                }}>
+                    <input type="submit" value="Add"/>
+                    
+                    <select name="portfolio-member-permission" value={this.state.permission}
+                            onChange={(event) => { this.setState({permission: event.target.value}) }}>
+                        <option value="write">Write</option>
+                        <option value="read">Read</option>
+                    </select>
+                    
+                    <div className="dyn-fix">
+                        <input type="text"  name="portfolio-member-entry" placeholder="Add new member by email"
+                                            value={this.state.username} onChange={this.getMember}/>
+                    </div>
+                </form>
+            </div>
         );
     }
 }

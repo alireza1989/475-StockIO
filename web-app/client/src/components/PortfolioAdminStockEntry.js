@@ -18,14 +18,19 @@ class PortfolioAdminStockEntry extends Component {
     
     render() {
         return (
-            <form className="portfolio-add-stock" onSubmit={(event) => {
-                this.props.addStock(event, this.state.symbol)
-                this.setState({symbol: ''});
-            }}>
-                <input type="text"  name="portfolio-stock-entry" placeholder="Add new stock by symbol or name"
-                                    value={this.state.symbol} onChange={this.getStock}/>
-                <input type="submit" value="Add"/>
-            </form>
+            <div className="portfolio-add">
+                <form className="portfolio-add-stock" onSubmit={(event) => {
+                    this.props.addStock(event, this.state.symbol)
+                    this.setState({symbol: ''});
+                }}>
+                    <input type="submit" value="Add"/>
+                
+                    <div className="dyn-fix">
+                        <input type="text"  name="portfolio-stock-entry" placeholder="Add new stock by symbol or name"
+                                            value={this.state.symbol} onChange={this.getStock}/>
+                    </div>
+                </form>
+            </div>
         );
     }
 }

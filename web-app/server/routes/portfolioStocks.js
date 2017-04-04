@@ -37,10 +37,13 @@ module.exports = {
                                 portfolio.addCompany(company).then(() => {
                                     models.Portfolio.findById(portfolioID, {include: [{ model: models.Company}]
                                         }).then((newPortfolio) => {
-                                            io.to('portfolio' + portfolioID).emit('update' + portfolioID, JSON.stringify(newPortfolio));
+                                            io.to('portfolio' + portfolioID).emit('updateStocks' + portfolioID, JSON.stringify(newPortfolio));
                                         }); 
 
-                                    response.status(200).end(JSON.stringify({'message' : `Added stock: ${company.symbol}`}, null, 4));
+                                    response.status(200).end(JSON.stringify({
+                                        message: `Added stock ${company.symbol}`,
+                                        action: 'add'
+                                    }, null, 4));
                                 });
                             } else {
                                 // TODO: Need to get the stock from Intrinio
@@ -71,9 +74,13 @@ module.exports = {
                         portfolio.removeCompany(stockID).then(() => {
                             models.Portfolio.findById(portfolioID, {include: [{ model: models.Company}]
                                 }).then((portfolioInstance) => {
-                                    io.to('portfolio' + portfolioID).emit('update' + portfolioID, JSON.stringify(portfolioInstance));
+                                    io.to('portfolio' + portfolioID).emit('updateStocks' + portfolioID, JSON.stringify(portfolioInstance));
                                 }); 
-                            response.status(200).end(JSON.stringify({'message' : `Removed stock`}, null, 4));
+                                
+                            response.status(200).end(JSON.stringify({
+                                message: `Removed stock`,
+                                action: 'delete'
+                            }, null, 4));
                         });
                     } else {
                         response.status(401).end('User does not have permission to modify portfolio.');

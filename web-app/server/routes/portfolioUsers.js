@@ -45,7 +45,7 @@ module.exports = {
                                 username: memberUsername
                             }]
                         }).then((member) => {                            
-                            if (member !== null) {
+                            if (member !== null) {                               
                                 portfolio.addUser(member, { permission: memberPermission}).then(() => {                                    
                                     var portfolioData = {
                                         id: portfolio.id,
@@ -53,11 +53,19 @@ module.exports = {
                                         permission: memberPermission
                                     };
                                     
-                                    var memberID = member.id;                                    
-                                    io.to('user' + memberID).emit('addPortfolio', JSON.stringify(portfolioData))
-                                    sockets.newUser(memberID, portfolioID); //Make the new user listen for updates from now on.
+                                    models.Portfolio.findById(portfolioID, {include: [{ model: models.User}]
+                                        }).then((newPortfolio) => {
+                                            var memberID = member.id;
+                                            io.to('user' + memberID).emit('addPortfolio', JSON.stringify(portfolioData))
+                                            sockets.newUser(memberID, portfolioID); // Make the new user listen for updates from now on.
+                                            
+                                            io.to('portfolio' + portfolioID).emit('updateMembers' + portfolioID, JSON.stringify(newPortfolio));
+                                        });
 
-                                    response.status(200).end(JSON.stringify({'message' : `Added memer ${member.username}`}, null, 4));
+                                    response.status(200).end(JSON.stringify({
+                                        message: `Added member ${member.username}`,
+                                        action: 'add'
+                                    }, null, 4));
                                 }).catch((err) => {
                                     console.log(err);
                                     response.status(401).end();
@@ -88,8 +96,16 @@ module.exports = {
                     var permission = portfolio.Users_Portfolios.permission;
                     if (permission === 'admin') {
                         portfolio.removeUser(memberID).then(() => {
-                            io.to('user' + memberID).emit('deletePortfolio', JSON.stringify({'portfolioId': portfolioID}));
-                            response.status(200).end(JSON.stringify({'message' : `Removed memer`}, null, 4));
+                            models.Portfolio.findById(portfolioID, {include: [{ model: models.User}]
+                                }).then((portfolioInstance) => {
+                                    io.to('user' + memberID).emit('deletePortfolio', JSON.stringify({'portfolioId': portfolioID}));
+                                    io.to('portfolio' + portfolioID).emit('updateMembers' + portfolioID, JSON.stringify(portfolioInstance));
+                                }); 
+
+                            response.status(200).end(JSON.stringify({
+                                message: `Removed member`,
+                                action: 'delete'
+                            }, null, 4));
                         });
                     } else {
                         response.status(401).end('User does not have permission to modify portfolio.');

@@ -16,7 +16,7 @@ class PortfolioAdmin extends Component {
             permission: this.props.portfolio.permission,
             stocks: [],
             members: [],
-            message: ''
+            notification: ''
 		};
 		
         Client.getStocks(this.props.portfolio.id, (portfolio) => {
@@ -24,14 +24,17 @@ class PortfolioAdmin extends Component {
         });
         
         Client.getMembers(this.props.portfolio.id, (members) => {
-            // Remove current user from list
-            members = members.users.filter(member => !(member.id === this.props.currentUser.id));
-            this.setState({members: members});
+            this.memberHelper(members.users);
         });
-
-        this.props.socket.on('update' + this.props.portfolio.id, (data) => {
+        
+        this.props.socket.on('updateStocks' + this.props.portfolio.id, (data) => {
             var companyData = JSON.parse(data).Companies;
             this.setState({stocks: companyData});
+        });
+        
+        this.props.socket.on('updateMembers' + this.props.portfolio.id, (data) => {
+            var members = JSON.parse(data).Users;
+            this.memberHelper(members);
         });
 	}
 	
@@ -48,7 +51,7 @@ class PortfolioAdmin extends Component {
     
     addStock = (event, symbol) => {
         Client.addStock(this.props.portfolio.id, symbol, (response) => {
-            this.setState({message: response.message});
+            this.setState({notification: response});
         });
 
         event.preventDefault();
@@ -56,13 +59,13 @@ class PortfolioAdmin extends Component {
     
     removeStock = (stockID) => {
         Client.removeStock(this.props.portfolio.id, stockID, (response) => {
-            this.setState({message: response.message});
+            this.setState({notification: response});
         });
     }
     
     addMember = (event, body) => {
         Client.addMember(this.props.portfolio.id, body, (response) => {
-            this.setState({message: response.message});
+            this.setState({notification: response});
         });
 
         event.preventDefault();
@@ -70,8 +73,14 @@ class PortfolioAdmin extends Component {
     
     removeMember = (memberID) => {
         Client.removeMember(this.props.portfolio.id, memberID, (response) => {
-            this.setState({message: response.message});
+            this.setState({notification: response});
         });
+    }
+    
+    memberHelper = (members) => {
+        // Remove current user from list
+        members = members.filter(member => !(member.id === this.props.currentUser.id));
+        this.setState({members: members});
     }
 
     renderStocks = () => {        
@@ -105,11 +114,14 @@ class PortfolioAdmin extends Component {
                     <a className="close-button" role="button" onClick={this.props.closeForm}></a>
 
                     {(this.state.permission !== 'admin') ? <h3>{this.state.name}</h3> :
-                        <input type="text"  name="portfolio-name" placeholder="Portfolio Name" 
-                                            value={this.state.name} onChange={this.updatePortfolioName}
-                                            ref={(input) => { this.portfolioNameInput = input; }}/>}
+                        <div className="dyn-fix" id="portfolio-name">
+                            <input type="text"  name="portfolio-name" placeholder="Portfolio Name" 
+                                                value={this.state.name} onChange={this.updatePortfolioName}
+                                                ref={(input) => { this.portfolioNameInput = input; }}/>
+                        </div>
+                    }
                     
-                    <PortfolioAdminNotification message={this.state.message}/>
+                    <PortfolioAdminNotification notification={this.state.notification}/>
                     
                     <PortfolioAdminStockEntry addStock={this.addStock}/>
                     
@@ -121,6 +133,10 @@ class PortfolioAdmin extends Component {
                     <ul id="portfolio-admin-members">
                         {this.renderMembers()}
                     </ul>
+                    
+                    <div className="portfolio-admin-footer">
+                        <a className="portfolio-delete-button" role="button" onClick={this.props.deletePortfolio}>Delete Portfolio</a>
+                    </div>
                 </div>
             </div>
 		)

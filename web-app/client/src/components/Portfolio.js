@@ -15,7 +15,7 @@ class Portfolio extends Component {
             this.setState({stocks: portfolio.stocks});
         });
 
-        this.props.socket.on('update' + this.props.portfolio.id, (data) => {
+        this.props.socket.on('updateStocks' + this.props.portfolio.id, (data) => {
             var companyData = JSON.parse(data).Companies;
             this.setState({stocks: companyData});
         });

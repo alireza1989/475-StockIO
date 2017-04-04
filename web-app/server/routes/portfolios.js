@@ -1,14 +1,24 @@
 module.exports = {
-    createPortfolio: function(models, request, response) {
+    createPortfolio: function(io, models, request, response) {
         var userID = request.session.passport.user;
         var portfolioName = request.body.name;
 
         models.Portfolio.create({
             name: portfolioName
-        }).then((portfolioInstance) => {
-            var portfolioID = portfolioInstance.id;
-            portfolioInstance.addUser(userID, {permission: 'admin'});
-            response.status(200).end(JSON.stringify({'portfolioID' : portfolioID}, null, 4));
+        }).then((portfolio) => {
+            portfolio.addUser(userID, {permission: 'admin'});
+
+            var portfolioData = {
+                id: portfolio.id,
+                name: portfolio.name,
+                permission: 'admin'
+            };
+
+            response.status(200).end(JSON.stringify({
+                message: `Added portfolio ${portfolio.name}`,
+                action: 'add',
+                portfolio: portfolioData
+            }, null, 4));
         });
     },
 
@@ -23,14 +33,18 @@ module.exports = {
                     var permission = portfolio.Users_Portfolios.permission;
                     if (permission === 'admin') {
                         user.removePortfolio(portfolio).then(() => {
-                            response.status(200).end(`You have deleted your portfolio ${portfolioID}`);
+                            io.to('portfolio' + portfolioID).emit('deletePortfolio', JSON.stringify({'portfolioId': portfolioID}));
+                            
+                            response.status(200).end(JSON.stringify({
+                                message: `Removed portfolio`,
+                                action: 'delete'
+                            }, null, 4));
                         })
                     } else {
                         response.status(401).end('User does not have permission to modify portfolio.');
                     }
                 } else {
                     response.status(401).end(`Portfolio doesn't exist.`);
-                    io.to('portfolio' + portfolioID).emit('deletePortfolio', JSON.stringify({'portfolioId': portfolioID})); 
                 }
             });
         });
