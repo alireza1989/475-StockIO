@@ -114,6 +114,7 @@
     padding: 0 0 0 25px;
     box-sizing: border-box;
     overflow-y: scroll;
+    border-top: 1px solid #333;
 }
 
 .portfolio-admin-form ul::-webkit-scrollbar { 
