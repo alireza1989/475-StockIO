@@ -159,7 +159,7 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
 // Add a stock to a portfolio (portfolio defined by id, stock defined by symbol)
 app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
     if (authenticate(request, response))
-        routes.portfolioStocks.addStockToPortfolio(io, models, requestCall, request, response);
+        routes.portfolioStocks.addStockToPortfolio(io, models, request, response);
 });
 
 // Remove a stock from a portfolio (portfolio defined by id, stock defined by id)
@@ -257,29 +257,29 @@ var onStocksUpdate = function(error, response, body) {
         return false;
     }
 
-    // data.forEach(function(stock) {
-    //     var quote = {};
-    //     quote.ticker = stock.t;
-    //     quote.price = stock.l_cur;
-    //     quote.change_price = stock.c;
-    //     quote.change_percent = stock.cp;
-    //     quote.last_trade_time = stock.lt;
-    //     quote.previous_close_price = stock.pcls_fix;
-    //     quote.dividend = (stock.div == '' || stock.div == undefined) ? 0 : stock.div;
-    //     quote.yield = (stock.yld == '' || stock.yld == undefined) ? 0 : stock.yld;
+    data.forEach(function(stock) {
+        var quote = {};
+        quote.ticker = stock.t;
+        quote.price = stock.l_cur;
+        quote.change_price = stock.c;
+        quote.change_percent = stock.cp;
+        quote.last_trade_time = stock.lt;
+        quote.previous_close_price = stock.pcls_fix;
+        quote.dividend = (stock.div == '' || stock.div == undefined) ? 0 : stock.div;
+        quote.yield = (stock.yld == '' || stock.yld == undefined) ? 0 : stock.yld;
 
-    //     models.Company.findOne({where: {symbol: quote.ticker}}).then(function(company) {
+        models.Company.findOne({where: {symbol: quote.ticker}}).then(function(company) {
 
-    //         if (company.last_price != quote.price) {
-    //             return company.update({last_price: parseFloat(quote.price), change_price: parseFloat(quote.change_price), change_percent: parseFloat(quote.change_percent), previous_close_price: parseFloat(quote.previous_close_price), dividend: parseFloat(quote.dividend), yield: parseFloat(quote.yield)});
-    //         }
-    //     }).then(function(updatedCompany) {
-    //         if (updatedCompany) {
-    //             io.to(quote.ticker).emit(quote.ticker, JSON.stringify(quote));
-    //         } else
-    //             console.log("No changes for " + quote.ticker);
-    //     });
-    // });
+            if (company.last_price != quote.price) {
+                return company.update({last_price: parseFloat(quote.price), change_price: parseFloat(quote.change_price), change_percent: parseFloat(quote.change_percent), previous_close_price: parseFloat(quote.previous_close_price), dividend: parseFloat(quote.dividend), yield: parseFloat(quote.yield)});
+            }
+        }).then(function(updatedCompany) {
+            if (updatedCompany) {
+                io.to(quote.ticker).emit(quote.ticker, JSON.stringify(quote));
+            } else
+                console.log("No changes for " + quote.ticker);
+        });
+    });
 }
 
 models.sequelize.sync().then(function() {
