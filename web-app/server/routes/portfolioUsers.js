@@ -57,7 +57,7 @@ module.exports = {
                                         }).then((newPortfolio) => {
                                             var memberID = member.id;
                                             io.to('user' + memberID).emit('addPortfolio', JSON.stringify(portfolioData))
-                                            sockets.newUser(memberID, portfolioID); // Make the new user listen for updates from now on.
+                                            sockets.newPortfolio(memberID, portfolioID); // Make the new user listen for updates from now on.
                                             
                                             io.to('portfolio' + portfolioID).emit('updateMembers' + portfolioID, JSON.stringify(newPortfolio));
                                         });
