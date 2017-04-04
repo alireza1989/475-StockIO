@@ -1,6 +1,9 @@
+userSocketDictionary = {};
+
 module.exports = {
 	userConnected: function(userID, models, socket) {
         socket.join('user' + userID); //Join to hear changes specific to user
+        userSocketDictionary[userID] = socket;
 
         models.User.findById(userID).then((user) => {
             return user.getPortfolios();
@@ -21,5 +24,9 @@ module.exports = {
                 socket.leave('portfolio' + portfolio.id); 
             });
         });	
+    },
+
+    newUser: function(memberID, portfolioID) {
+        userSocketDictionary[memberID].join('portfolio' + portfolioID);
     }
 }

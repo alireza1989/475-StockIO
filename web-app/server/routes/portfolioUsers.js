@@ -1,3 +1,5 @@
+var sockets = require('./sockets.js');
+
 module.exports = {
     
      getPortfolioUsers: function(models, request, response) {
@@ -53,7 +55,8 @@ module.exports = {
                                     };
                                     var memberID = member.id;
                                     io.to('user' + memberID).emit('addPortfolio', JSON.stringify(portfolioData))
-                                    
+                                    sockets.newUser(memberID, portfolioID); //Make the new user listen for updates from now on.
+
                                     response.status(200).end(`Added member ${member.username}`);
                                 }).catch((err) => {
                                     console.log(err);
