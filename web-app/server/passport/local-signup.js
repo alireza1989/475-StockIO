@@ -4,9 +4,8 @@ var models = require('../../db/models');
 module.exports = new LocalStrategy ({
 	passReqToCallback : true
 }, function (request, username, password, done) {
-	var firstname = request.body['firstname'];
-	var lastname = request.body['lastname'];
-	var companies = request.body['companies']; // Array of id's. Password and username already in arguments.
+	var firstname = request.body.firstname;
+	var lastname = request.body.lastname;
 
 	//Check if password is long enough; otherwise send error.
 	if (password.length < 8)
@@ -21,10 +20,6 @@ module.exports = new LocalStrategy ({
     	//Create the user's first portfolio
     	models.Portfolio.create({ name: 'My First Portfolio'}).then(function (portfolio) {
     		user.addPortfolio(portfolio, { permission: 'admin' });
-
-    		if (companies != '' && companies != null)
-    			portfolio.setCompanies(companies);  //Add companies to it if the user has specified any.
-
     		done(null, user);
     	});
     }).catch(function(error) {
