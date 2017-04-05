@@ -26,6 +26,41 @@ module.exports = {
         });
     },
 
+    editPortfolioName: function(io, models, request, response){
+        var userID = request.session.passport.user;
+        var portfolioID = request.params['portfolioId'];
+        var portfolioName = request.body.name;
+
+        models.User.findById(userID).then((user) => {
+            user.getPortfolios({where: {id: portfolioID}}).then((portfolio) => {
+                portfolio = portfolio[0];
+                if (portfolio !== undefined) {
+                    var permission = portfolio.Users_Portfolios.permission;
+                    if (permission === 'admin') {
+                        portfolio.update({name: portfolioName}).then(() => {
+                            var portfolioData = {
+                                id: portfolioID,
+                                name: portfolioName,
+                                permission: 'admin'
+                            };
+                            io.to('portfolio' + portfolioID).emit('editPortfolioName', JSON.stringify(portfolioData));
+
+                            response.status(200).end(JSON.stringify({
+                                message: `Portfolio name modified`,
+                                action: 'edit',
+                                portfolio: portfolioData
+                            }, null, 4));
+                        })
+                    } else {
+                        response.status(401).end('User does not have permission to modify portfolio.');
+                    }
+                } else {
+                    response.status(401).end(`Portfolio doesn't exist.`);
+                }
+            });
+        });
+    },
+
     deletePortfolio: function(io, models, request, response) {
         var userID = request.session.passport.user;
         var portfolioID = request.body.portfolioID;
@@ -38,7 +73,7 @@ module.exports = {
                     if (permission === 'admin') {
                         user.removePortfolio(portfolio).then(() => {
                             io.to('portfolio' + portfolioID).emit('deletePortfolio', JSON.stringify({'portfolioId': portfolioID}));
-                            
+
                             response.status(200).end(JSON.stringify({
                                 message: `Removed portfolio`,
                                 action: 'delete'
@@ -75,7 +110,7 @@ module.exports = {
             });
         });
     },
-    
+
     getPortfolioById: function(models, request, response) {
         var userID = request.session.passport.user;
         var portfolioID = request.params['portfolioId'];
@@ -98,5 +133,5 @@ module.exports = {
         });
     },
 
-   
+
 }

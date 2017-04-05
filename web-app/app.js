@@ -47,10 +47,10 @@ var server = require('http').Server(app);
 
 var io = require('socket.io')(server);
 io.use(passportSocketIo.authorize({
-    cookieParser: cookieParser, 
-    key: 'connect.sid',      
-    secret: 'keyboard kitty', 
-    store: sessionStore       
+    cookieParser: cookieParser,
+    key: 'connect.sid',
+    secret: 'keyboard kitty',
+    store: sessionStore
 }));
 
 app.use('/static', express.static(__dirname + '/static'));
@@ -133,6 +133,12 @@ app.get('/api/portfolios/:portfolioId', function (request, response) {
         routes.portfolios.getPortfolioById(models, request, response);
 });
 
+// Modify a specific portfolio's name (portfolio defined by id)
+app.post('/api/portfolios/:portfolioId', function (request, response) {
+    if (authenticate(request, response))
+        routes.portfolios.editPortfolioName(io, models, request, response);
+});
+
 // Create a new portfolio, currrent user has admin privilege
 app.post('/api/portfolios', function (request, response) {
     if (authenticate(request, response))
@@ -183,7 +189,7 @@ app.get('/api/portfolios/:portfolioId/users', function (request, response) {
 app.post('/api/portfolios/:portfolioId/users', function(request, response){
     if (authenticate(request, response))
         routes.portfolioUsers.addUserToPortfolio(io, models, request, response);
-});  
+});
 
 // Remove a user from a portfolio (portfolio defined by id, user defined by id)
 app.delete('/api/portfolios/:portfolioId/users', function(request, response){
@@ -222,7 +228,7 @@ var authenticate = function(request, response) {
 // PAGES
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// app.get('*', function(request, response) { 
+// app.get('*', function(request, response) {
 //   response.sendFile(path.resolve(__dirname, 'index.html'));
 // });
 
@@ -296,4 +302,3 @@ models.sequelize.sync().then(function() {
         console.log('StockIO server listening on port ' + PORT + '. Open and accepting socket connections.');
     });
 });
-

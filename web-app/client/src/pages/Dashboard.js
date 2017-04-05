@@ -23,8 +23,8 @@ class Dashboard extends Component {
         Client.getUser((currentUser) => {
             this.setState({user: currentUser});
         });
-        
-        Client.getPortfolios((portfoliosList) => { 
+
+        Client.getPortfolios((portfoliosList) => {
             this.setState({portfolios: portfoliosList.portfolios});
         });
 
@@ -33,19 +33,31 @@ class Dashboard extends Component {
             this.addPortfolioHelper(portfolio);
         });
 
+        socket.on('editPortfolioName', (data) => {
+            var portfolioData = JSON.parse(data);
+            var portfolioId = portfolioData.id;
+            var index = Client.getIndex(portfolioId, this.state.portfolios);
+            if (index !== -1) {
+                this.setState(state => {
+                    var portfolio = this.state.portfolios[index];
+                    portfolio.name = portfolioData.name;
+                })
+            }
+        });
+
         socket.on('deletePortfolio', (data) => {
             var portfolioId = JSON.parse(data).portfolioId;
-            var index = Client.getIndex(portfolioId, this.state.portfolios)
+            var index = Client.getIndex(portfolioId, this.state.portfolios);
             if (index !== -1) {
                 this.setState(state => {
                     // If user is currently editing portfolio being removed, must dismiss admin panel
                     var portfolio = this.state.portfolios[index];
                     var selected = (this.state.selectedPortfolio === portfolio) ?
                                         undefined : this.state.selectedPortfolio
-                    
+
                     // Remove portfolio
                     this.state.portfolios.splice(index, 1);
-                    
+
                     // Update state
                     return {
                         selectedPortfolio: selected,
@@ -55,14 +67,14 @@ class Dashboard extends Component {
             }
         });
     }
-    
+
     editPortfolio = (portfolio) => {
         this.setState({
             overlay: !this.state.overlay,
             selectedPortfolio: this.state.selectedPortfolio ? undefined : portfolio
         });
     }
-    
+
     addPortfolio = (portfolioName) => {
         console.log(`Add portfolio ${portfolioName}`);
 
@@ -70,7 +82,7 @@ class Dashboard extends Component {
             this.addPortfolioHelper(response.portfolio);
         });
     }
-    
+
     addPortfolioHelper = (portfolio) => {
         this.setState(state => {
             this.state.portfolios.push(portfolio);
@@ -80,11 +92,11 @@ class Dashboard extends Component {
             };
         });
     }
-    
+
     deletePortfolio = () => {
         var portfolioID = this.state.selectedPortfolio.id;
         console.log(`Delete portfolio ${portfolioID}`);
-        
+
         Client.removePortfolio(this.state.selectedPortfolio.id, (response) => {
             this.setState({
                 overlay: false,
@@ -92,7 +104,7 @@ class Dashboard extends Component {
             });
         });
     }
-    
+
     renderAdminPanel() {
         if (this.state.selectedPortfolio) {
             return <PortfolioAdmin  portfolio={this.state.selectedPortfolio}
@@ -102,7 +114,7 @@ class Dashboard extends Component {
                                     socket={socket}/>
         }
     }
-    
+
     renderCreatePanel() {
         if (this.state.newPortfolio === true) {
             return <PortfolioCreate closeForm={() => {this.setState({newPortfolio: false})}}
@@ -131,10 +143,10 @@ class Dashboard extends Component {
                                    editPortfolio={this.editPortfolio}
                         />
                     )}
-                    
+
                     <button id="new-portfolio-button" onClick={() => { this.setState({newPortfolio: true}) }}></button>
                 </div>
-                
+
                 {this.renderCreatePanel()}
                 {this.renderAdminPanel()}
             </div>
