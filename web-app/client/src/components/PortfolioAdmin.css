@@ -63,12 +63,16 @@
 .portfolio-admin-form a.portfolio-delete-button {
     background: #990000;
     color: white;
-    font: 18px/20px Arial, sans-serif;
-    padding: 5px 15px;
+    font: bold 16px/27px Arial;
+    display: block;
     margin: 15px;
-    border-radius: 5px;
+    padding: 0 10px;
     float: right;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: 450ms all;
+    transform-origin: center;
 }
 
 .portfolio-admin-form a.portfolio-delete-button:hover {
@@ -105,9 +109,7 @@
 
 .portfolio-admin-form .portfolio-add {
     background: #222;
-    padding: 10px 15px;
-/*     border-top: 1px solid #333; */
-/*     border-bottom: 1px solid #333; */
+    padding: 10px 15px 9px;
 }
 
 .portfolio-admin-form ul {
@@ -115,7 +117,7 @@
     padding: 0 0 0 25px;
     box-sizing: border-box;
     overflow-y: scroll;
-    border-top: 1px solid #333;
+    border-top: 1px solid #222;
 }
 
 .portfolio-admin-form ul::-webkit-scrollbar { 

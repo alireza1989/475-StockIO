@@ -68,7 +68,7 @@
 }
 
 .portfolio .nav-button {
-    background: rgba(30, 30, 30, 0.8);
+    background: rgba(30, 30, 30, 0.9);
 /*     -webkit-backdrop-filter: saturate(50%) blur(25px); */
     font: 64px Arial;
     text-align: center;
@@ -79,6 +79,7 @@
     position: relative;
     z-index: 100;
     cursor: pointer;
+    transition: 450ms all;
 }
 
 .portfolio .nav-button:before {
@@ -89,6 +90,7 @@
 
 .portfolio .nav-button.prev {
     border-radius: 0 8px 8px 0;
+    transform-origin: left;
 }
 
 .portfolio .nav-button.prev:before {
@@ -98,10 +100,18 @@
 .portfolio .nav-button.next {
     float: right;
     border-radius: 8px 0 0 8px;
+    transform-origin: right;
 }
 
 .portfolio .nav-button.next:before {
     content: '\203A';
+}
+
+.portfolio .nav-button:hover {
+    background: #222;
+    transform: scale(1.2);
+    z-index: 1500;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
 }
 
 

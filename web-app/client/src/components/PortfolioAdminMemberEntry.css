@@ -43,10 +43,10 @@ form.portfolio-add-member select[name="portfolio-member-permission"] {
 }
 
 form.portfolio-add-member input[type="submit"] {
+    background: #00cc00;
+    color: #111;
     font: bold 16px/27px Arial;
     text-indent: 0;
-    color: #111;
-    background: #00cc00;
     display: block;
     margin: 1px 0;
     padding: 0 10px;

@@ -82,24 +82,17 @@
 
 .portfolio-cell-content .price-currency {
     font: 12px/24px Helvetica;
-    color: rgba(255, 255, 255, 0.5);
+    color: white;
 }
 
-.arrow-up {
-    width: 0; 
-    height: 0; 
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #0f0;
+.portfolio-cell-content.up .price-currency {
+    color: rgba(0, 255, 0, 0.7);
 }
 
-.arrow-down {
-    width: 0; 
-    height: 0; 
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #f00;
+.portfolio-cell-content.down .price-currency {
+    color: rgba(255, 150, 150, 0.7);
 }
+
 
 @media screen and (max-width:449px) {
     .portfolio-cell {

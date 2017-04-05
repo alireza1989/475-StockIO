@@ -75,7 +75,8 @@ nav ul li.right {
 }
 
 #new-portfolio-button {
-    background: #333;
+    background: #222;
+    color: white;
     height: 65px;
     width: 65px;
     border: none;
@@ -84,19 +85,22 @@ nav ul li.right {
     position: fixed;
     bottom: 35px;
     right: 35px;
-    z-index: 1200;
+    z-index: 50;
     cursor: pointer;
+    transition: 450ms all;
+    transform-origin: center;
 }
 
 #new-portfolio-button:after {
     content: '+';
-    color: white;
     font-size: 34px;
     line-height: 20px;
 }
 
 #new-portfolio-button:hover {
-    background: #00cc00;
+    background: #00CC00;
+    color: #111;
+    transform: scale(1.2);
 }
 
 #new-portfolio-button:active {

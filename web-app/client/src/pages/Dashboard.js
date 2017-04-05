@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Portfolio from '../components/Portfolio';
+import PortfolioCreate from '../components/PortfolioCreate';
 import PortfolioAdmin from '../components/PortfolioAdmin';
 import logo from "../assets/logo-white.svg";
 import './Dashboard.css';
@@ -14,6 +15,7 @@ class Dashboard extends Component {
         this.state = {
             user: {},
             overlay: false,
+            newPortfolio: false,
             selectedPortfolio: undefined,
             portfolios: []
         };
@@ -50,10 +52,10 @@ class Dashboard extends Component {
         });
     }
     
-    addPortfolio = () => {
-        console.log(`Add new portfolio`);
-        
-        Client.addPortfolio('Test', (response) => {
+    addPortfolio = (portfolioName) => {
+        console.log(`Add portfolio ${portfolioName}`);
+
+        Client.addPortfolio(portfolioName, (response) => {
             this.addPortfolioHelper(response.portfolio);
         });
     }
@@ -61,7 +63,10 @@ class Dashboard extends Component {
     addPortfolioHelper = (portfolio) => {
         this.setState(state => {
             this.state.portfolios.push(portfolio);
-            return {portfolios: state.portfolios};
+            return {
+                newPortfolio: false,
+                portfolios: state.portfolios
+            };
         });
     }
     
@@ -83,8 +88,14 @@ class Dashboard extends Component {
                                     currentUser={this.state.user}
                                     closeForm={this.editPortfolio}
                                     deletePortfolio={this.deletePortfolio}
-                                    socket={socket}
-                   />
+                                    socket={socket}/>
+        }
+    }
+    
+    renderCreatePanel() {
+        if (this.state.newPortfolio === true) {
+            return <PortfolioCreate closeForm={() => {this.setState({newPortfolio: false})}}
+                                    savePortfolio={this.addPortfolio}/>
         }
     }
 
@@ -107,9 +118,10 @@ class Dashboard extends Component {
                         />
                     )}
                     
-                    <button id="new-portfolio-button" onClick={this.addPortfolio}></button>
+                    <button id="new-portfolio-button" onClick={() => { this.setState({newPortfolio: true}) }}></button>
                 </div>
                 
+                {this.renderCreatePanel()}
                 {this.renderAdminPanel()}
             </div>
         );

@@ -16,7 +16,8 @@ class PortfolioAdmin extends Component {
             permission: this.props.portfolio.permission,
             stocks: [],
             members: [],
-            notification: ''
+            notification: '',
+            delConfirm: false
 		};
 		
         Client.getStocks(this.props.portfolio.id, (portfolio) => {
@@ -106,6 +107,26 @@ class PortfolioAdmin extends Component {
             return <li className="empty-section-row">No other members</li>
         }
     }
+    
+    renderDeleteButton = () => {
+        if (this.state.permission === 'admin') {
+            if (this.state.delConfirm === false) {
+                return (
+                    <div className="portfolio-admin-footer">
+                        <a className="portfolio-delete-button" role="button"
+                           onClick={() => { this.setState({delConfirm: true}) }}>Delete Portfolio</a>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="portfolio-admin-footer">
+                        <a className="portfolio-delete-button" role="button"
+                           onClick={this.props.deletePortfolio}>Confirm Delete</a>
+                    </div>
+                )    
+            }
+        }
+    }
 
 	render() {
 		return (
@@ -116,8 +137,8 @@ class PortfolioAdmin extends Component {
                     {(this.state.permission !== 'admin') ? <h3>{this.state.name}</h3> :
                         <div className="dyn-fix" id="portfolio-name">
                             <input type="text"  name="portfolio-name" placeholder="Portfolio Name" 
-                                                value={this.state.name} onChange={this.updatePortfolioName}
-                                                ref={(input) => { this.portfolioNameInput = input; }}/>
+                                                ref={(input) => { this.portfolioNameInput = input; }}
+                                                value={this.state.name} onChange={this.updatePortfolioName}/>
                         </div>
                     }
                     
@@ -133,12 +154,8 @@ class PortfolioAdmin extends Component {
                     <ul id="portfolio-admin-members">
                         {this.renderMembers()}
                     </ul>
-                    
-                    {(this.state.permission !== 'admin') ? '' :
-                        <div className="portfolio-admin-footer">
-                            <a className="portfolio-delete-button" role="button" onClick={this.props.deletePortfolio}>Delete Portfolio</a>
-                        </div>
-                    }
+
+                    {this.renderDeleteButton()}
                 </div>
             </div>
 		)

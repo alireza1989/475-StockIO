@@ -33,6 +33,7 @@
     height: auto;
     padding: 15px;
     border-bottom: 1px solid #333;
+    overflow: auto;
 }
 
 .stock-header h3 {
