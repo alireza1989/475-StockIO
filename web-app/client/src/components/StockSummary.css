@@ -2,7 +2,7 @@
 
 /* PORTFOLIO-ADMIN */
 .stock-summary {
-    background: rgba(50, 50, 50, 0.7);
+    background: rgba(90, 90, 90, 0.8);
     -webkit-backdrop-filter: saturate(100%) blur(5px);
     height: 100%;
     width: 100%;
@@ -12,6 +12,7 @@
     left: 0;
     overflow: scroll;
 }
+
 .stock-summary::-webkit-scrollbar {
 	display: none;
 }
@@ -25,6 +26,7 @@
 	border-radius: 10px;
     position: relative;
     overflow: auto;
+    box-shadow: 0 0 50px rgba(90, 90, 90, 0.8);
 }
 
 

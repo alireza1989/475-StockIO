@@ -2,7 +2,7 @@
 
 /* PORTFOLIO-ADMIN */
 .portfolio-admin {
-    background: rgba(50, 50, 50, 0.7);
+    background: rgba(90, 90, 90, 0.8);
     -webkit-backdrop-filter: saturate(100%) blur(5px);
     height: 100%;
     width: 100%;
@@ -16,10 +16,11 @@
     background: black;
     height: auto;
     width: 700px;
-    padding: 1px;
+    padding: 0;
     margin: 100px auto;
     box-sizing: border-box ;
     border-radius: 10px;
+    box-shadow: 0 0 50px rgba(90, 90, 90, 0.8);
 }
 
 .portfolio-admin-form .dyn-fix  {
