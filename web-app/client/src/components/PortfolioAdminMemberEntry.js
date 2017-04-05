@@ -22,7 +22,7 @@ class PortfolioAdminMemberEntry extends Component {
             <div className="portfolio-add">
                 <form className="portfolio-add-member" onSubmit={(e) => {
                     e.preventDefault();
-                    this.props.addMember(event, this.state)
+                    this.props.addMember(this.state)
                     this.setState({username: ''});
                 }}>
                     <input type="submit" value="Add"/>
