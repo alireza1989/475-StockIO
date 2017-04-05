@@ -12,13 +12,21 @@ class StockNewsArticle extends Component {
             url: props.news.url
         };
     }
+    
+    formatDate() {
+        var dateString = this.state.date;
+        var regExp = /([0-9]{4}-[0-9]{2}-[0-9]{2}) ([0-9]{1,2}:[0-9]{2})/g;
+        var match = regExp.exec(dateString);
+        dateString = `${match[1]} at ${match[2]}`;
+        return dateString;
+    }
 
-    render() {
+    render() {            
         return (
             <li className="stock-news-article">
                 <a onClick={() => {window.open(this.state.url, '_blank')}}>
                     <span className="article-title">{this.state.title}</span>
-                    <span className="article-date">{new Date(this.state.date).toDateString()}</span>
+                    <span className="article-date">{this.formatDate()}</span>
                     <span className="article-summary">{this.state.summary}</span>
                 </a>
             </li>

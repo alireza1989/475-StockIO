@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Client from './Client';
 import StockNewsArticle from './StockNewsArticle';
+// import loader from "../assets/loader.svg";
 import './StockNews.css';
 
 class StockNews extends Component {

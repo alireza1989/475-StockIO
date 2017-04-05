@@ -2,7 +2,10 @@
 
 /* STOCK-NEWS */
 .stock-news {
+    background: url(../assets/loader.svg) no-repeat;
+    background-position: center center;
     height: 100%;
+    min-height: 300px;
     max-height: 600px;
     width: 50%;
     padding: 10px 0 10px 25px;
@@ -16,6 +19,11 @@
 	font-size: 16pt;
 	line-height: 18pt;
 	margin-bottom: 10px;
+}
+
+.stock-news .stock-news-items {
+    display: none;
+    background: #151515;
 }
 
 .stock-news::-webkit-scrollbar { 
