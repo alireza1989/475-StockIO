@@ -25,20 +25,19 @@ form.portfolio-add-stock input[name="portfolio-stock-entry"] {
 
 form.portfolio-add-stock input[type="submit"] {
     font: bold 16px/27px Arial;
-    text-indent: 0;
-    color: #111;
-    background: #00cc00;
+    color: #00cc00;
+    background: #111;
     display: block;
-    margin: 1px 0;
+    margin: 0;
     padding: 0 10px;
-    border: none;
+    border: 1px solid #00cc00;
     border-radius: 5px;
     cursor: pointer;
     float: right;
 }
 
 form.portfolio-add-stock input[type="submit"]:hover {
-    background: #009900;
+    background: #00cc00;
     color: #111;
 }
 

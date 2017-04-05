@@ -58,7 +58,7 @@
 }
 
 .portfolio-create-footer a.button {
-    background: rgba(255, 255, 255, 0.1);
+    background: #222;
     color: #999;
     font: 18px/27px Arial, sans-serif;
     padding: 2px 8px;
@@ -67,23 +67,25 @@
 }
 
 .portfolio-create-footer a.button:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #333;
     color: #ddd;
 }
 
 .portfolio-create-footer a.button.cancel {
     float: left;
+    transition: 450ms all;
 }
 
 .portfolio-create-footer a.button.save {
-    background: #00cc00;
-    color: #111;
+    background: #111;
+    color: #00cc00;
     float: right;
     font-weight: bold;
+    border: 1px solid #00cc00;
 }
 
 .portfolio-create-footer a.button.save:hover {
-    background: #009900;
+    background: #00cc00;
     color: #111;
 }
 

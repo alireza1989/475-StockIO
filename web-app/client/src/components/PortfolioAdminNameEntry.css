@@ -2,7 +2,7 @@
 
 /* PORTFOLIO-MEMBER-ENTRY */
 #portfolio-admin-name {
-    padding: 15px;
+    padding: 14px;
 }
 
 #portfolio-admin-name form {
@@ -13,7 +13,7 @@
     background: #111;
     color: white;
     font-size: 24px;
-
+    line-height: 30px;
     width: 100%;
     margin: 0;
     padding: 5px 10px;
@@ -27,23 +27,22 @@
 }
 
 #portfolio-admin-name input[type="submit"] {
-    background: #00cc00;
-    color: #111;
-    font: bold 16px/27px Arial;
-    text-indent: 0;
+    font: bold 16px/26px Arial;
+    color: #00cc00;
+    background: #111;
     display: block;
-    margin: 1px 0;
+    margin: 0;
     padding: 0 10px;
-    border: none;
+    border: 1px solid #00cc00;
     border-radius: 5px;
     cursor: pointer;
     position: absolute;
-    top: 5px;
+    top: 6px;
     right: 7px;
 }
 
 #portfolio-admin-name input[type="submit"]:hover {
-    background: #009900;
+    background: #00cc00;
     color: #111;
 }
 

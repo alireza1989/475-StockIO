@@ -38,8 +38,19 @@ class Dashboard extends Component {
             var index = Client.getIndex(portfolioId, this.state.portfolios)
             if (index !== -1) {
                 this.setState(state => {
+                    // If user is currently editing portfolio being removed, must dismiss admin panel
+                    var portfolio = this.state.portfolios[index];
+                    var selected = (this.state.selectedPortfolio === portfolio) ?
+                                        undefined : this.state.selectedPortfolio
+                    
+                    // Remove portfolio
                     this.state.portfolios.splice(index, 1);
-                    return {portfolios: state.portfolios}
+                    
+                    // Update state
+                    return {
+                        selectedPortfolio: selected,
+                        portfolios: state.portfolios
+                    }
                 });
             }
         });
@@ -106,7 +117,10 @@ class Dashboard extends Component {
                     <ul>
                         <li className="nav-title">Stock.I<img src={logo} alt="O"/></li>
                         <li onClick={() => {Client.logout()}} className="right nav-button">Logout</li>
-                        <li className="right">{this.state.user.username}</li>
+                        <li className="right" id="account-info">
+                            {`${this.state.user.firstname} ${this.state.user.lastname}`}
+                            <span>{this.state.user.username}</span>
+                        </li>
                     </ul>
                 </nav>
 

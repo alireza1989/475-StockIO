@@ -8,6 +8,11 @@
     cursor: default;
 }
 
+.portfolio-stock .portfolio-stock-name {
+    margin-left: 15px;
+    color: #666;
+}
+
 .portfolio-stock .delete-button {
     font: 21px/21px Arial;
     text-indent: 0;

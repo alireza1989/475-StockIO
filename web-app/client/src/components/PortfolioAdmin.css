@@ -31,7 +31,7 @@
 
 /* FORM HEADER */
 .portfolio-admin-form a.close-button {
-    background: rgba(255, 255, 255, 0.1);
+    background: #222;
     color: #999;
     font: 18px/30px Arial, sans-serif;
     padding: 5px 15px;
@@ -39,10 +39,11 @@
     border-radius: 5px;
     float: right;
     cursor: pointer;
+    transition: 450ms all;
 }
 
 .portfolio-admin-form a.close-button:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #333;
     color: #ddd;
 }
 
@@ -61,22 +62,21 @@
 }
 
 .portfolio-admin-form a.portfolio-delete-button {
-    background: #990000;
-    color: white;
     font: bold 16px/27px Arial;
+    color: #cc0000;
+    background: #111;
     display: block;
     margin: 15px;
     padding: 0 10px;
-    float: right;
-    border: none;
+    border: 1px solid #cc0000;
     border-radius: 5px;
     cursor: pointer;
-    transition: 450ms all;
-    transform-origin: center;
+    float: right;
 }
 
 .portfolio-admin-form a.portfolio-delete-button:hover {
     background: #cc0000;
+    color: #111;
 }
 
 

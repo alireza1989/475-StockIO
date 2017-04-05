@@ -52,8 +52,10 @@ class PortfolioAdmin extends Component {
         });
     }
     
-    removeStock = (stockID) => {
-        Client.removeStock(this.props.portfolio.id, stockID, (response) => {
+    removeStock = (stock) => {
+        console.log(stock);
+        Client.removeStock(this.props.portfolio.id, stock.id, (response) => {
+            response.message += ` ${stock.symbol}`;
             this.setState({notification: response});
         });
     }
@@ -64,8 +66,9 @@ class PortfolioAdmin extends Component {
         });
     }
     
-    removeMember = (memberID) => {
-        Client.removeMember(this.props.portfolio.id, memberID, (response) => {
+    removeMember = (member) => {
+        Client.removeMember(this.props.portfolio.id, member.id, (response) => {
+            response.message += ` ${member.firstname} ${member.lastname}`;
             this.setState({notification: response});
         });
     }
@@ -79,7 +82,7 @@ class PortfolioAdmin extends Component {
     renderStocks = () => {        
         if (this.state.stocks.length > 0) {
             return this.state.stocks.map((stock, i) =>
-                <PortfolioAdminStock key={stock.id} id={stock.id} name={stock.name} symbol={stock.symbol}
+                <PortfolioAdminStock key={stock.id} stock={stock}
                                      permission={this.state.permission} 
                                      removeStock={this.removeStock}/>
             );
@@ -91,7 +94,7 @@ class PortfolioAdmin extends Component {
     renderMembers = () => {         
         if (this.state.members.length > 0) {
             return this.state.members.map((member, i) =>
-                <PortfolioAdminMember key={member.id} id={member.id} name={member.username}
+                <PortfolioAdminMember key={member.id} member={member}
                                       permission={this.state.permission} 
                                       removeMember={this.removeMember}/>
             );

@@ -8,7 +8,8 @@ class PortfolioAdminNotification extends Component {
 		this.state = {
     		action: '',
             message: '',
-            timer: false
+            timer: false,
+            timerHandle: undefined
 		};
     }
     
@@ -17,18 +18,25 @@ class PortfolioAdminNotification extends Component {
     }
     
     setTimer() {        
-        setTimeout(() => {
-            this.setState({
-                action: '',
-                message: '',
-                timer: false
-            });
-        }, 3000);
-        
-        this.setState({
-            action: this.props.notification.action,
-            message: this.props.notification.message,
-            timer: true
+        this.setState(state => {
+            if (this.state.timerHandle !== undefined) {
+                clearTimeout(this.state.timerHandle);
+            }
+            
+            var handle = setTimeout(() => {
+                this.setState({
+                    action: '',
+                    message: '',
+                    timer: false
+                });
+            }, 3000);
+
+            return {
+                action: this.props.notification.action,
+                message: this.props.notification.message,
+                timer: true,
+                timerHandle: handle
+            }
         });
     }
     

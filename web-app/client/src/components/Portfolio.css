@@ -30,6 +30,7 @@
     font: 14px/18px Helvetica;
     color: black;
     cursor: pointer;
+    transition: 450ms all;
 }
 
 .portfolio h2 span:hover {
