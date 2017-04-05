@@ -20,7 +20,8 @@ class PortfolioAdminMemberEntry extends Component {
     render() {
         return (
             <div className="portfolio-add">
-                <form className="portfolio-add-member" onSubmit={(event) => {
+                <form className="portfolio-add-member" onSubmit={(e) => {
+                    e.preventDefault();
                     this.props.addMember(event, this.state)
                     this.setState({username: ''});
                 }}>

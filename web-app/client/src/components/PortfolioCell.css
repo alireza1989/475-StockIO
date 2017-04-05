@@ -111,7 +111,8 @@
     }
     
     .portfolio-cell-content:hover {
-        transform: scale(1);
+        transform: scale(1.03);
+        box-shadow: none;
     }
 
     .portfolio-cell-content .info {

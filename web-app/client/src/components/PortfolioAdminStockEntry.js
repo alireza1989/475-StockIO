@@ -19,8 +19,9 @@ class PortfolioAdminStockEntry extends Component {
     render() {
         return (
             <div className="portfolio-add">
-                <form className="portfolio-add-stock" onSubmit={(event) => {
-                    this.props.addStock(event, this.state.symbol)
+                <form className="portfolio-add-stock" onSubmit={(e) => {
+                    e.preventDefault();
+                    this.props.addStock(this.state.symbol)
                     this.setState({symbol: ''});
                 }}>
                     <input type="submit" value="Add"/>

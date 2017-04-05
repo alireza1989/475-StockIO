@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Client from './Client';
 import PortfolioAdminNotification from './PortfolioAdminNotification';
+import PortfolioAdminNameEntry from './PortfolioAdminNameEntry';
 import PortfolioAdminStockEntry from './PortfolioAdminStockEntry';
 import PortfolioAdminStock from './PortfolioAdminStock';
 import PortfolioAdminMemberEntry from './PortfolioAdminMemberEntry';
@@ -38,24 +39,17 @@ class PortfolioAdmin extends Component {
             this.memberHelper(members);
         });
 	}
-	
-	componentDidMount() {
-        if (this.portfolioNameInput !== undefined) {
-            this.portfolioNameInput.focus();
-        }
-	}
     
-    updatePortfolioName = (e) => {
-        console.log(`Update portfolio name to "${e.target.value}"`);
-        this.setState({name: event.target.value});
+    updateName = (portfolioName) => {
+        Client.updatePortfolioName(this.props.portfolio.id, portfolioName, (response) => {
+            this.setState({name: portfolioName});
+        });
     }
     
-    addStock = (event, symbol) => {
+    addStock = (symbol) => {
         Client.addStock(this.props.portfolio.id, symbol, (response) => {
             this.setState({notification: response});
         });
-
-        event.preventDefault();
     }
     
     removeStock = (stockID) => {
@@ -64,12 +58,10 @@ class PortfolioAdmin extends Component {
         });
     }
     
-    addMember = (event, body) => {
+    addMember = (body) => {
         Client.addMember(this.props.portfolio.id, body, (response) => {
             this.setState({notification: response});
         });
-
-        event.preventDefault();
     }
     
     removeMember = (memberID) => {
@@ -134,12 +126,9 @@ class PortfolioAdmin extends Component {
                 <div className="portfolio-admin-form">
                     <a className="close-button" role="button" onClick={this.props.closeForm}></a>
 
-                    {(this.state.permission !== 'admin') ? <h3>{this.state.name}</h3> :
-                        <div className="dyn-fix" id="portfolio-name">
-                            <input type="text"  name="portfolio-name" placeholder="Portfolio Name" 
-                                                ref={(input) => { this.portfolioNameInput = input; }}
-                                                value={this.state.name} onChange={this.updatePortfolioName}/>
-                        </div>
+                    {(this.state.permission === 'admin') ?
+                        <PortfolioAdminNameEntry name={this.state.name} updateName={this.updateName}/> :
+                        <h3>{this.state.name}</h3>
                     }
                     
                     <PortfolioAdminNotification notification={this.state.notification}/>

@@ -85,7 +85,7 @@ nav ul li.right {
     position: fixed;
     bottom: 35px;
     right: 35px;
-    z-index: 50;
+    z-index: 150;
     cursor: pointer;
     transition: 450ms all;
     transform-origin: center;
