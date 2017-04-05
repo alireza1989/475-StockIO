@@ -54,6 +54,22 @@ const Client = module.exports = {
           .then(callback);
     },
     
+    updatePortfolioName: function(portfolioID, portfolioName, callback) {        
+        return fetch(`/api/portfolios/${portfolioID}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: portfolioName
+            })
+        }).then(checkStatus)
+          .then(parseJSON)
+          .then(callback); 
+    },
+    
     removePortfolio: function(portfolioId, callback) {
         return fetch(`/api/portfolios`, {
             method: 'DELETE',
