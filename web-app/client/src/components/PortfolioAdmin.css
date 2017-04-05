@@ -7,13 +7,13 @@
     height: 100%;
     width: 100%;
     position: absolute;
-    z-index: 1500;
+    z-index: 1000;
     top: 0;
     left: 0;
 }
 
 .portfolio-admin-form {
-    background: black;
+    background: #151515;
     height: auto;
     width: 700px;
     padding: 0;
@@ -53,7 +53,6 @@
 
 /* FORM FOOTER */
 .portfolio-admin-form .portfolio-admin-footer {
-    background: black;
     height: auto;
     width: 100%;
     overflow: auto;

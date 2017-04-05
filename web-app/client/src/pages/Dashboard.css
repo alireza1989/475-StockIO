@@ -9,7 +9,7 @@ nav {
     height: 70px;
     position: -webkit-sticky;
     position: fixed;
-    z-index: 1000;
+    z-index: 100;
 }
 
 nav ul {
@@ -75,17 +75,17 @@ nav ul li.right {
 }
 
 #new-portfolio-button {
-    background: #222;
+    background: #333;
     color: white;
     height: 65px;
     width: 65px;
     border: none;
     border-radius: 50px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 0 3px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8), 0 0 3px rgba(0, 0, 0, 0.5);
     position: fixed;
     bottom: 35px;
     right: 35px;
-    z-index: 150;
+    z-index: 100;
     cursor: pointer;
     transition: 450ms all;
     transform-origin: center;
@@ -100,7 +100,7 @@ nav ul li.right {
 #new-portfolio-button:hover {
     background: #00CC00;
     color: #111;
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 #new-portfolio-button:active {

@@ -29,14 +29,14 @@
     overflow: hidden;
     box-sizing: border-box;
     position: relative;
-    z-index: 40;
+    z-index: 0;
     transition: 450ms all;
     transform-origin: center;
 }
 
 .portfolio-cell-content:hover {
     transform: scale(1.2);
-    z-index: 150;
+    z-index: 10;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
 }
 

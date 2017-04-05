@@ -34,7 +34,7 @@ a:hover     { color: #00aeff; }
 
 /* APP */
 html, body, #app {
-    background: black;
+    background: #151515;
     color: white;
     height: 100%;
     width: 100%;

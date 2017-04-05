@@ -7,16 +7,17 @@
     height: 100%;
     width: 100%;
     position: absolute;
-    z-index: 1500;
+    z-index: 1000;
     top: 0;
     left: 0;
 }
 
 .portfolio-create-form {
-    background: black;
+    background: #151515;
     height: auto;
     width: 400px;
-    margin: 125px auto;
+    padding: 10px;
+    margin: 135px auto;
     box-sizing: border-box ;
     border-radius: 10px;
     overflow: auto;
@@ -26,7 +27,7 @@
 .portfolio-create-form h3 {
     font-size: 24px;
     text-align: center;
-    margin: 25px 0 8px;
+    margin: 15px 0 15px;
 }
 
 .portfolio-create-form p {
@@ -39,8 +40,8 @@
     background: #111;
     color: white;
     font-size: 24px;
-    width: 90%;
-    margin: 15px 5%;
+    width: 100%;
+    margin: 15px 0;
     padding: 5px 10px;
     box-sizing: border-box;
     border-radius: 5px;
@@ -50,7 +51,8 @@
 /* FOOTER */
 .portfolio-create-footer {
     height: auto;
-    padding: 10px;
+    padding: 10px 10px 0;
+    margin: 0 -10px;
     border-top: 1px solid #333;
     overflow: auto;
 }

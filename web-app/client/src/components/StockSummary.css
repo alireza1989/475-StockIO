@@ -7,7 +7,7 @@
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: 1500;
+    z-index: 1000;
     top: 0;
     left: 0;
     overflow: scroll;
@@ -18,7 +18,7 @@
 }
 
 .stock-summary-form {
-	background: black;
+	background: #151515;
 	height: auto;
 	width: 900px;
 	margin: 100px auto 25px;
