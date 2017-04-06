@@ -16,11 +16,6 @@ module.exports = {
 		var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
 		var url = "https://api.intrinio.com/news?identifier=";
 
-		if (!request.user) {
-	        response.status(306).json({'redirect': '/login'});
-			return;
-		}
-
 		var stocksymbol = request.params['symbol'];
 
 		const options = {

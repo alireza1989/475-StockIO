@@ -17,7 +17,7 @@ module.exports = {
         });
     },
 
-    addStockToPortfolio: function(io, models, request, response) {
+    addStockToPortfolio: function(io, requestCall, models, request, response) {
         var userID = request.session.passport.user;
         var portfolioID = parseInt(request.params.portfolioId, 10);
         var stockSymbol = request.body.symbol;
@@ -46,15 +46,75 @@ module.exports = {
                                     }, null, 4));
                                 });
                             } else {
-                                // TODO: Need to get the stock from Intrinio
-                                response.status(200).end('Could not add stock -- need to lookup Intrinio');
+                        // Intrinio constants for News
+                                const username = "17440ee7fe0d7aeb1962fb3a18df9607";
+                                const password = "bd8d650b82b0f07cf98d893a9fde0bb7";
+                                var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
+                                var url = "https://api.intrinio.com/companies?identifier=" + stockSymbol;
+
+                                const options = {
+                                    method: 'GET',
+                                    uri: url,
+                                    headers: {
+                                        "Authorization": auth
+                                    }
+                                }
+
+                                requestCall(options, function(err, res, companyData) {
+                                    if(err) {
+                                        console.log("Error making request for stock symbol");
+                                        return;
+                                    }
+
+                                    if (companyData == "") {
+                                        response.status(400).end('Stock Symbol doesnt exist');
+                                        return;
+                                    }
+                                    else {
+                                        var companyData = JSON.parse(companyData);
+                                        var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + stockSymbol;
+                                        requestCall(url, (err, res, stockData) => {
+                                            if (err) {
+                                                console.log('error getting stock data');
+                                                return;
+                                            }
+
+                                            if (res.statusCode >= 400) {
+                                                response.status(500).end('Error getting pricing info for this stock');
+                                                return;
+                                            }
+                                            var stock = JSON.parse(stockData.substring(3));
+                                            models.Company.create({
+                                                'name': companyData.name, 
+                                                'symbol': companyData.ticker,
+                                                'stock_exchange': companyData.stock_exchange,
+                                                'url': companyData.company_url,
+                                                'ceo': companyData.ceo,
+                                                'sector': companyData.sector,
+                                                'last_price': stock[0].l_cur,
+                                                'change_price': stock[0].c,
+                                                'change_percent': stock[0].cp,
+                                                'previous_close_price': stock[0].pcls_fix,
+                                                'dividend': stock[0].div,
+                                                'yield': stock[0].yld
+                                            }).then(function (newCompany) {
+                                                portfolio.addCompany(newCompany).then(function(updatedInfo) {
+                                                    models.Portfolio.findById(portfolioID, {include: [{ model: models.Company}]}).then(function(newPortfolio){
+                                                        io.to('portfolio' + portfolioID).emit('updateStocks' + portfolioID, JSON.stringify(newPortfolio));
+                                                        response.status(200).end('Successfully added stock from elsewhere');
+                                                    })
+                                                })
+                                            });
+                                        });
+                                    }
+                                });
                             }
                         });
                     } else {
                         response.status(401).end('User does not have permission to modify portfolio.');
                     }
                 } else {
-                    response.status(401).end(`Portfolio doesn't exist.`);
+                    response.status(400).end(`Portfolio doesn't exist.`);
                 }
             });
         });

@@ -165,7 +165,7 @@ app.get('/api/portfolios/:portfolioId/stocks', function (request, response) {
 // Add a stock to a portfolio (portfolio defined by id, stock defined by symbol)
 app.post('/api/portfolios/:portfolioId/stocks', function(request,response){
     if (authenticate(request, response))
-        routes.portfolioStocks.addStockToPortfolio(io, models, request, response);
+        routes.portfolioStocks.addStockToPortfolio(io, requestCall, models, request, response);
 });
 
 // Remove a stock from a portfolio (portfolio defined by id, stock defined by id)
@@ -277,7 +277,14 @@ var onStocksUpdate = function(error, response, body) {
         models.Company.findOne({where: {symbol: quote.ticker}}).then(function(company) {
 
             if (company.last_price != quote.price) {
-                return company.update({last_price: parseFloat(quote.price), change_price: parseFloat(quote.change_price), change_percent: parseFloat(quote.change_percent), previous_close_price: parseFloat(quote.previous_close_price), dividend: parseFloat(quote.dividend), yield: parseFloat(quote.yield)});
+                return company.update({
+                    last_price: quote.price,
+                    change_price: quote.change_price, 
+                    change_percent: quote.change_percent, 
+                    previous_close_price: quote.previous_close_price, 
+                    dividend: quote.dividend, 
+                    yield: quote.yield
+                });
             }
         }).then(function(updatedCompany) {
             if (updatedCompany) {

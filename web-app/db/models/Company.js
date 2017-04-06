@@ -26,34 +26,28 @@ module.exports = function(sequelize, DataType) {
             field: 'sector'
         },
         last_price: {
-            type: DataType.DECIMAL,
+            type: DataType.STRING,
             field: 'last_price',
-            allowNull: false
         },
         change_price: {
-            type: DataType.DECIMAL,
+            type: DataType.STRING,
             field: 'change_price',
-            allowNull: false
         },
         change_percent: {
-            type: DataType.DECIMAL,
+            type: DataType.STRING,
             field: 'change_percent',
-            allowNull: false
         },
         previous_close_price: {
-            type: DataType.DECIMAL,
+            type: DataType.STRING,
             field: 'previous_close_price',
-            allowNull: false
         },
         dividend: {
-            type: DataType.DECIMAL,
+            type: DataType.STRING,
             field: 'dividend',
-            allowNull: false
         },
         yield: {
-            type: DataType.DECIMAL,
+            type: DataType.STRING,
             field: 'yield',
-            allowNull: false
         }
 
     }, {
