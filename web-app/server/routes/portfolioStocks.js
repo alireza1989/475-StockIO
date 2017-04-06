@@ -72,7 +72,8 @@ module.exports = {
                                     }
                                     else {
                                         var companyData = JSON.parse(companyData);
-                                        var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + stockSymbol;
+                                        var url = `http://finance.google.com/finance/info?client=ig&q=${stockSymbol}`;
+                                        
                                         requestCall(url, (err, res, stockData) => {
                                             if (err) {
                                                 console.log('error getting stock data');
@@ -83,6 +84,7 @@ module.exports = {
                                                 response.status(500).end('Error getting pricing info for this stock');
                                                 return;
                                             }
+                                            
                                             var stock = JSON.parse(stockData.substring(3));
                                             models.Company.create({
                                                 'name': companyData.name, 
