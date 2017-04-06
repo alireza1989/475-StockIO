@@ -14,7 +14,9 @@ function checkStatus(response) {
 }
 
 function parseJSON(response) {
-    return response.json();
+    if (response) {
+        return response.json();
+    }
 }
 
 const Client = module.exports = {
