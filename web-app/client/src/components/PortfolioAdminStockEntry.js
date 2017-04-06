@@ -10,6 +10,12 @@ class PortfolioAdminStockEntry extends Component {
             symbol: ''
 		};
 	}
+	
+	componentDidMount() {
+        if (this.stockInput !== undefined) {
+            this.stockInput.focus();
+        }
+	}
 
     getStock = (event) => {
         this.setState({
@@ -34,7 +40,8 @@ class PortfolioAdminStockEntry extends Component {
                 
                     <div className="dyn-fix">
                         <input type="text"  name="portfolio-stock-entry" placeholder="Add new stock by symbol"
-                                            value={this.state.symbol} onChange={this.getStock}/>
+                                            value={this.state.symbol} onChange={this.getStock}
+                                            ref={(input) => { this.stockInput = input; }}/>
                     </div>
                 </form>
             </div>

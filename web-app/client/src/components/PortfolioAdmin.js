@@ -40,12 +40,6 @@ class PortfolioAdmin extends Component {
         });
 	}
 	
-	componentDidMount() {
-        if (this.adminForm !== undefined) {
-            this.adminForm.focus();
-        }
-	}
-	
     handleKeyDown = (event) => {        
         // Permit closing dialog with escape key
         if (event.keyCode === 27) {
@@ -139,8 +133,7 @@ class PortfolioAdmin extends Component {
 	render() {
 		return (
             <div className="portfolio-admin">
-                <div className="portfolio-admin-form" tabIndex="0" onKeyDown={this.handleKeyDown}
-                    ref={(form) => { this.adminForm = form; }}>
+                <div className="portfolio-admin-form" onKeyDown={this.handleKeyDown}>
                     <a className="close-button" role="button" onClick={this.props.closeForm}></a>
 
                     {(this.state.permission === 'admin') ?
