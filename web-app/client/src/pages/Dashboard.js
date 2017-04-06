@@ -30,7 +30,14 @@ class Dashboard extends Component {
 
         socket.on('addPortfolio', (data) => {
             var portfolio = JSON.parse(data);
-            this.addPortfolioHelper(portfolio);
+            
+            this.setState(state => {
+                this.state.portfolios.push(portfolio);
+                return {
+                    newPortfolio: false,
+                    portfolios: state.portfolios
+                };
+            });
         });
 
         socket.on('editPortfolioName', (data) => {
@@ -79,17 +86,15 @@ class Dashboard extends Component {
         console.log(`Add portfolio ${portfolioName}`);
 
         Client.addPortfolio(portfolioName, (response) => {
-            this.addPortfolioHelper(response.portfolio);
-        });
-    }
-
-    addPortfolioHelper = (portfolio) => {
-        this.setState(state => {
-            this.state.portfolios.push(portfolio);
-            return {
-                newPortfolio: false,
-                portfolios: state.portfolios
-            };
+            var portfolio = response.portfolio;
+            this.setState(state => {
+                this.state.portfolios.push(portfolio);
+                return {
+                    newPortfolio: false,
+                    portfolios: state.portfolios,
+                    selectedPortfolio: portfolio
+                };
+            });
         });
     }
 
