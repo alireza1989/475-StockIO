@@ -67,7 +67,7 @@ module.exports = {
                                     }
 
                                     if (companyData == "") {
-                                        response.status(400).end('Stock Symbol doesnt exist');
+                                        response.status(400).end(JSON.stringify({'message' : 'Stock Symbol doesnt exist'}));
                                         return;
                                     }
                                     else {
@@ -81,7 +81,7 @@ module.exports = {
                                             }
 
                                             if (res.statusCode >= 400) {
-                                                response.status(500).end('Error getting pricing info for this stock');
+                                                response.status(500).end(JSON.stringify({'message' : 'Error getting pricing data'}));
                                                 return;
                                             }
                                             
@@ -103,7 +103,7 @@ module.exports = {
                                                 portfolio.addCompany(newCompany).then(function(updatedInfo) {
                                                     models.Portfolio.findById(portfolioID, {include: [{ model: models.Company}]}).then(function(newPortfolio){
                                                         io.to('portfolio' + portfolioID).emit('updateStocks' + portfolioID, JSON.stringify(newPortfolio));
-                                                        response.status(200).end('Successfully added stock from elsewhere');
+                                                        response.status(200).end(JSON.stringify({'message' : 'Successfully added stock from elsewhere'}));
                                                     })
                                                 })
                                             });
@@ -113,10 +113,10 @@ module.exports = {
                             }
                         });
                     } else {
-                        response.status(401).end('User does not have permission to modify portfolio.');
+                        response.status(401).end(JSON.stringify({'message' : 'Not authorized to change portfolio'}));
                     }
                 } else {
-                    response.status(400).end(`Portfolio doesn't exist.`);
+                    response.status(400).end(JSON.stringify({'message' : 'Portfolio doesnt exist'}));
                 }
             });
         });

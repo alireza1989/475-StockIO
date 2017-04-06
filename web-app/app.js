@@ -300,7 +300,7 @@ models.sequelize.sync().then(function() {
 }).then(function (companies) {
     COMPANIES = Object.keys(companies).map(function (key) { return companies[key].symbol; }); //Stores stock symbols in array
 
-    var url = 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:' + COMPANIES;
+    var url = 'http://finance.google.com/finance/info?client=ig&q=' + COMPANIES;
     requestCall(url, onStocksUpdate);
 
     //listenForStockUpdates(url);

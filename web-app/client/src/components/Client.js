@@ -4,18 +4,17 @@ function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-
-    response.json().then((body) => {
-        if (body.redirect) {
-            browserHistory.push(body.redirect);
-        }
-    });
+    else if (response.body) {
+        response.json().then((body) => {
+            if (body.redirect) {
+                browserHistory.push(body.redirect);
+            }
+        }); 
+    }
 }
 
 function parseJSON(response) {
-    if (response) {
-        return response.json();
-    }
+    return response.json();
 }
 
 const Client = module.exports = {
