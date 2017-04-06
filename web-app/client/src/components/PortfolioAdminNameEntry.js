@@ -6,7 +6,9 @@ class PortfolioAdminNameEntry extends Component {
 		super(props);
 		
 		this.state = {
-            name: this.props.name
+    		active: false,
+            name: this.props.name,
+    		name_current: this.props.name
 		};
 	}
 	
@@ -15,21 +17,31 @@ class PortfolioAdminNameEntry extends Component {
             this.portfolioNameInput.focus();
         }
 	}
+	
+    changeName = (event) => {        
+        this.setState({
+            active: event.target.value !== this.state.name ? true : false,
+            name_current: event.target.value
+        });
+    }
     
     render() {
         return (
             <div className="dyn-fix" id="portfolio-admin-name">
                 <form className="portfolio-name-entry" onSubmit={(event) => {
                     event.preventDefault();
-                    this.props.updateName(this.state.name)
+                    this.props.updateName(this.state.name_current);
+                    
+                    this.setState({
+                        active: false,
+                        name: this.state.name_current
+                    });
                 }}>
                 
-                    <input type="submit" value="Update"/>
+                    <input className={this.state.active ? `active` : `disabled`} type="submit" value="Update"/>
                 
                     <input type="text"  name="portfolio-name" placeholder="Portfolio Name" 
-                                        value={this.state.name} onChange={(e) => {
-                                            this.setState({name: e.target.value})
-                                        }}/>
+                                        value={this.state.name_current} onChange={this.changeName}/>
                 </form>
             </div>
         );

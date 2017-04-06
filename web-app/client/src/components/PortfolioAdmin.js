@@ -39,6 +39,19 @@ class PortfolioAdmin extends Component {
             this.memberHelper(members);
         });
 	}
+	
+	componentDidMount() {
+        if (this.adminForm !== undefined) {
+            this.adminForm.focus();
+        }
+	}
+	
+    handleKeyDown = (event) => {        
+        // Permit closing dialog with escape key
+        if (event.keyCode === 27) {
+            this.props.closeForm();
+        }
+    }
     
     updateName = (portfolioName) => {
         Client.updatePortfolioName(this.props.portfolio.id, portfolioName, (response) => {
@@ -47,13 +60,13 @@ class PortfolioAdmin extends Component {
     }
     
     addStock = (symbol) => {
+        symbol = symbol.toUpperCase()
         Client.addStock(this.props.portfolio.id, symbol, (response) => {
             this.setState({notification: response});
         });
     }
     
     removeStock = (stock) => {
-        console.log(stock);
         Client.removeStock(this.props.portfolio.id, stock.id, (response) => {
             response.message += ` ${stock.symbol}`;
             this.setState({notification: response});
@@ -126,7 +139,8 @@ class PortfolioAdmin extends Component {
 	render() {
 		return (
             <div className="portfolio-admin">
-                <div className="portfolio-admin-form">
+                <div className="portfolio-admin-form" tabIndex="0" onKeyDown={this.handleKeyDown}
+                    ref={(form) => { this.adminForm = form; }}>
                     <a className="close-button" role="button" onClick={this.props.closeForm}></a>
 
                     {(this.state.permission === 'admin') ?

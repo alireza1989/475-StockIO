@@ -6,15 +6,17 @@ class PortfolioAdminMemberEntry extends Component {
 		super(props);
 		
 		this.state = {
+    		active: false,
             username: '',
             permission: 'write'
 		};
-
-        this.getMember = this.getMember.bind(this);
 	}
 
-    getMember(event) {
-        this.setState({username: event.target.value});
+    getMember = (event) => {
+        this.setState({
+            active: event.target.value ? true : false,
+            username: event.target.value
+        });
     }
     
     render() {
@@ -23,9 +25,13 @@ class PortfolioAdminMemberEntry extends Component {
                 <form className="portfolio-add-member" onSubmit={(e) => {
                     e.preventDefault();
                     this.props.addMember(this.state)
-                    this.setState({username: ''});
+                    
+                    this.setState({
+                        active: false,
+                        username: ''
+                    });
                 }}>
-                    <input type="submit" value="Add"/>
+                    <input className={this.state.active ? `active` : `disabled`} type="submit" value="Add"/>
                     
                     <select name="portfolio-member-permission" value={this.state.permission}
                             onChange={(event) => { this.setState({permission: event.target.value}) }}>

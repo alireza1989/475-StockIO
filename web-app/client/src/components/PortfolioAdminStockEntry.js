@@ -6,14 +6,16 @@ class PortfolioAdminStockEntry extends Component {
 		super(props);
 		
 		this.state = {
+    		active: false,
             symbol: ''
 		};
-
-        this.getStock = this.getStock.bind(this);
 	}
 
-    getStock(event) {
-        this.setState({symbol: event.target.value});        
+    getStock = (event) => {
+        this.setState({
+            active: event.target.value ? true : false,
+            symbol: event.target.value
+        });
     }
     
     render() {
@@ -22,12 +24,16 @@ class PortfolioAdminStockEntry extends Component {
                 <form className="portfolio-add-stock" onSubmit={(e) => {
                     e.preventDefault();
                     this.props.addStock(this.state.symbol)
-                    this.setState({symbol: ''});
+                    
+                    this.setState({
+                        active: false,
+                        symbol: ''
+                    });
                 }}>
-                    <input type="submit" value="Add"/>
+                    <input className={this.state.active ? `active` : `disabled`} type="submit" value="Add"/>
                 
                     <div className="dyn-fix">
-                        <input type="text"  name="portfolio-stock-entry" placeholder="Add new stock by symbol or name"
+                        <input type="text"  name="portfolio-stock-entry" placeholder="Add new stock by symbol"
                                             value={this.state.symbol} onChange={this.getStock}/>
                     </div>
                 </form>

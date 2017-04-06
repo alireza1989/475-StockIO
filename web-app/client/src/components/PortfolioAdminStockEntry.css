@@ -8,7 +8,6 @@ form.portfolio-add-stock {
     padding: 8px 10px;
     box-sizing: border-box;
     border-radius: 10px;
-/*     border: 1px solid #333; */
     position: relative;
 }
 
@@ -39,6 +38,14 @@ form.portfolio-add-stock input[type="submit"] {
 form.portfolio-add-stock input[type="submit"]:hover {
     background: #00cc00;
     color: #111;
+}
+
+form.portfolio-add-stock input[type="submit"].disabled,
+form.portfolio-add-stock input[type="submit"].disabled:hover {
+    background: #111;
+    color: #333;
+    border-color: #333;
+    cursor: default;
 }
 
 

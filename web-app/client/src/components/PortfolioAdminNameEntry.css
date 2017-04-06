@@ -46,6 +46,10 @@
     color: #111;
 }
 
+#portfolio-admin-name input[type="submit"].disabled {
+    display: none;
+}
+
 
 @media screen and (max-width:500px) {
     #portfolio-admin-name {

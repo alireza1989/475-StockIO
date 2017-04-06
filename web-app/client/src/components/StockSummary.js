@@ -23,13 +23,25 @@ class StockPopup extends Component {
             ceo: props.stock.ceo,            
         };
     }
+    
+	componentDidMount() {
+        if (this.summaryForm !== undefined) {
+            this.summaryForm.focus();
+        }
+	}
 
-    render() {
-        console.log(this.state);
-        
+    handleKeyDown = (event) => {        
+        // Permit closing dialog with escape key
+        if (event.keyCode === 27) {
+            this.props.closeForm();
+        }
+    }
+
+    render() {        
         return (
             <div className="stock-summary">
-                <div className="stock-summary-form">
+                <div className="stock-summary-form" tabIndex="0" onKeyDown={this.handleKeyDown}
+                     ref={(form) => { this.summaryForm = form; }}>
                     <div className="stock-header">
                         <a className="close-button" role="button" onClick={() => {this.props.closeForm();}}></a>
                         <h3>

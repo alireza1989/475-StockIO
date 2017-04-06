@@ -10,17 +10,18 @@ class StockNews extends Component {
 
         this.state = {
             ticker: props.symbol,
-            news: []
+            news: [],
+            mounted: true
         };
 
         var symbol = this.state.ticker;
 
         Client.getNews(symbol, (newsList) => {
-            const news = newsList.data.map(obj => obj);
-            this.setState({news});
-        }).catch(function() {
-            const news = StockNews.news;
-            this.setState({news});
+            // This will throw an error if the parent is closed before it loads
+            if (this.state.mounted) {
+                const news = newsList.data.map(obj => obj);
+                this.setState({news});
+            }
         });
     }
 

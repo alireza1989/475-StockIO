@@ -13,11 +13,17 @@ class PortfolioAdminNotification extends Component {
 		};
     }
     
-    componentWillReceiveProps() { 
-        this.setTimer();
+    componentWillReceiveProps() {
+        if (this.props.notification !== '') {
+            this.setTimer();
+        }
     }
     
-    setTimer() {        
+    componentWillUnmount() {
+        clearTimeout(this.state.timerHandle);
+    }
+    
+    setTimer() {
         this.setState(state => {
             if (this.state.timerHandle !== undefined) {
                 clearTimeout(this.state.timerHandle);

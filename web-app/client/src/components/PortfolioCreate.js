@@ -15,14 +15,23 @@ class PortfolioAdmin extends Component {
             this.portfolioNameInput.focus();
         }
 	}
+	
+    handleKeyDown = (event) => {
+        // Permit closing dialog with escape key
+        if (event.keyCode === 27) {
+            this.props.closeForm();
+        }
+    }
 
 	render() {
 		return (
             <div className="portfolio-create">
-                <form className="portfolio-create-form" onSubmit={(e) => {
+                <form className="portfolio-create-form" onKeyDown={this.handleKeyDown}
+                      onSubmit={(e) => {
                         e.preventDefault();
                         this.props.savePortfolio(this.state.name);
                 }}>
+                
                     <h3>New Portfolio</h3>
                     <p>Enter a name for this portfolio</p>
 
