@@ -38,32 +38,38 @@ module.exports = {
 		});
     },
 
-    getStockHistory: function(models, request, response){
+    getStockHistory: function(models, requestCall, request, response){
+		console.log('stock history function is called');
 		// alphavantage API key
-		const key = 0776;
+		const key = '0776';
+		console.log('key is:',key);
 		const URI = request.url;
 		var stocksymbol = request.params['symbol'];
+		console.log('stock symbol is: ',stocksymbol);
+		console.log('local request is:',URI);
 
 		// Check what request for history is made
-		if(URI === '/api/stocks/:symbol/todayhistory'){
+		if(URI === `/api/stocks/${stocksymbol}/todayhistory`){
 
 			var url = "http://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" +
 					  stocksymbol + "&interval=15min&outputsize=full&apikey=" + key;
-
+			console.log('api url is:', url);
 			const options = {
 		  		method: 'GET',
 		  		uri: url,
 		  		}
 
+			console.log('options is:', options);
 			requestCall(options, function(err, res, body) {
 		    	if (err) {
 					console.log(err);
 				}
-
+				// console.log('Response is: ', res);
+				console.log('body is: ',body);
 				response.status(200).end(JSON.stringify(body));
 		  	});
 
-		}else if(URI === '/api/stocks/:symbol/history'){
+		}else if(URI === `/api/stocks/${stocksymbol}/history`){
 
 			var url = "http://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" +
 					  stocksymbol + "&outputsize=full&apikey=" + key;

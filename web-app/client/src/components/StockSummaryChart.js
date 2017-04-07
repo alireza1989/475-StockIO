@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 //import D3 from 'd3';
 import C3 from 'c3';
 import './StockSummaryChart.css';
+import Client from './Client';
 
 
 class StockSummaryChart extends Component {
@@ -9,10 +10,24 @@ class StockSummaryChart extends Component {
 		super(props);
 
 		this.state = {
-
-		}
+            ticker: props.symbol,
+            intraDayHiatory: [],
+			dailyHistory: [],
+            mounted: true
+        };
 	}
 	componentDidMount() {
+
+		var symbol = this.state.ticker;
+
+		Client.getIntraDayHistory(symbol, (history) => {
+            // This will throw an error if the parent is closed before it loads
+            if (this.state.mounted) {
+                const intraDayHiatory = history.map(obj => obj);
+                this.setState({intraDayHiatory});
+            }
+        });
+		console.log(this.state.intraDayHiatory);
 		/*var chart =*/ C3.generate({
 		bindto: '#chart',
 		data: {

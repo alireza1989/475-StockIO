@@ -231,6 +231,7 @@ var authenticate = function(request, response) {
 // Get the today's history from Alphavantage
 app.get('/api/stocks/:symbol/todayhistory', function(request, response){
     routes.stocks.getStockHistory(models, requestCall, request, response);
+    console.log('todayhistory is called');
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////
