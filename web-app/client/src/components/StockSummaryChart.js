@@ -23,11 +23,12 @@ class StockSummaryChart extends Component {
 		Client.getIntraDayHistory(symbol, (history) => {
             // This will throw an error if the parent is closed before it loads
             if (this.state.mounted) {
+				console.log('history is: ',history);
                 const intraDayHiatory = history.map(obj => obj);
                 this.setState({intraDayHiatory});
             }
         });
-		console.log(this.state.intraDayHiatory);
+
 		/*var chart =*/ C3.generate({
 		bindto: '#chart',
 		data: {

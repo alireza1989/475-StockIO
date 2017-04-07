@@ -64,7 +64,7 @@ class StockPopup extends Component {
                         </ul>
                     </div>
                     <div className="stock-summary-chart">
-                        <StockSummaryChart />
+                        <StockSummaryChart symbol={this.state.ticker}/>
                     </div>
                     <div>
                     <StockNews symbol={this.state.ticker}/>
