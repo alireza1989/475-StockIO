@@ -33,8 +33,53 @@ module.exports = {
 
 			var news = JSON.parse(body);
 			news.data = news.data.slice(0,20);
-			
+
 			response.status(200).end(JSON.stringify(news));
 		});
+    }
+
+    getStockHistory: function(models, request, response){
+		// alphavantage API key
+		const key = 0776;
+		const URI = request.url;
+		var stocksymbol = request.params['symbol'];
+
+		// Check what request for history is made
+		if(URI === '/api/stocks/:symbol/todayhistory'){
+
+			var url = "http://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" +
+					  stocksymbol + "&interval=15min&outputsize=full&apikey=" + key;
+
+			const options = {
+		  		method: 'GET',
+		  		uri: url,
+		  		}
+
+			requestCall(options, function(err, res, body) {
+		    	if (err) {
+					console.log(err);
+				}
+
+				response.status(200).end(JSON.stringify(body));
+		  	});
+
+		}else if(URI === '/api/stocks/:symbol/history'){
+
+			var url = "http://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" +
+					  stocksymbol + "&outputsize=full&apikey=" + key;
+
+			const options = {
+				method: 'GET',
+				uri: url,
+			}
+
+			requestCall(options, function(err, res, body) {
+				if (err) {
+					console.log(err);
+				}
+
+				response.status(200).end(JSON.stringify(body));
+			});
+		}
     }
 }

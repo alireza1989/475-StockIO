@@ -225,6 +225,24 @@ var authenticate = function(request, response) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
+// Get stock Itra-day history from alphavantage
+////////////////////////////////////////////////////////////////////////////////////////
+
+// Get the today's history from Alphavantage
+app.get('/api/stocks/:symbol/todayhistory', function(request, response){
+    routes.stocks.getStockHistory(models, requestCall, request, response);
+});
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Get stock daily history from alphavantage
+////////////////////////////////////////////////////////////////////////////////////////
+
+// Get the latest the 20 years history from Alphavantage
+app.get('/api/stocks/:symbol/history', function(request, response){
+    routes.stocks.getStockHistory(models, requestCall, request, response);
+});
+
+////////////////////////////////////////////////////////////////////////////////////////
 // PAGES
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -279,10 +297,10 @@ var onStocksUpdate = function(error, response, body) {
             if (company.last_price != quote.price) {
                 return company.update({
                     last_price: quote.price,
-                    change_price: quote.change_price, 
-                    change_percent: quote.change_percent, 
-                    previous_close_price: quote.previous_close_price, 
-                    dividend: quote.dividend, 
+                    change_price: quote.change_price,
+                    change_percent: quote.change_percent,
+                    previous_close_price: quote.previous_close_price,
+                    dividend: quote.dividend,
                     yield: quote.yield
                 });
             }
