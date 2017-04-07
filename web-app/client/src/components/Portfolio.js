@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PortfolioCell from './PortfolioCell';
 import Client from './Client';
+import PortfolioAddStock from './PortfolioAddStock.js'
 import './Portfolio.css';
 
 class Portfolio extends Component {
@@ -47,7 +48,10 @@ class Portfolio extends Component {
                     </div>
                     
                     <div className="stocks">
-                        <ul>{this.state.stocks.map((stock, i) => <PortfolioCell key={stock.id} socket={this.props.socket} stock={stock}/>)}</ul>
+                        <ul>
+                            <PortfolioAddStock addStock={() => {this.props.editPortfolio(this.props.portfolio)}} />
+                            {this.state.stocks.map((stock, i) => <PortfolioCell key={stock.id} socket={this.props.socket} stock={stock}/>)}
+                        </ul>
                     </div>
                 </div>
             </section>

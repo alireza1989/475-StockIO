@@ -9,6 +9,7 @@
     padding: 0 5px 0 0;
     position: relative;
     display: inline-block;
+    vertical-align: top;
     box-sizing: border-box;
     cursor: pointer;
 }
@@ -94,7 +95,26 @@
 }
 
 
-@media screen and (max-width:449px) {
+/* ADD-STOCK-BUTTON */
+.portfolio-cell.add-stock-button {
+    width: 5%;
+}
+
+.add-stock-button .portfolio-cell-content {
+    background: #333;
+    font-size: 36px;
+    line-height: 90px;
+    text-align: center;
+    padding: 0;
+}
+
+.add-stock-button .portfolio-cell-content:hover {
+    background: #666;
+    transform: scale(1);
+}
+
+
+@media screen and (max-width:469px) {
     .portfolio-cell {
         width: 100%;
         margin: 5px 0;
@@ -139,27 +159,42 @@
         float: none;
         display: block;
     }
+    
+    /* ADD-STOCK-BUTTON */
+    .portfolio-cell.add-stock-button {
+        width: 100%;
+    }
+    
+    .add-stock-button .portfolio-cell-content {
+        line-height: 40px;
+    }
 }
 
-@media screen and (min-width:450px) and (max-width:649px) {
-    .portfolio-cell { width: 50% }
+
+@media screen and (min-width:470px) and (max-width:679px) {
+    .portfolio-cell { width: 45% }
     .portfolio-cell:last-of-type { margin-right: 8%; }
+    .portfolio-cell.add-stock-button { width: 10%; }
 }
 
-@media screen and (min-width:650px) and (max-width:949px) {
-    .portfolio-cell { width: 33.333333% }
+@media screen and (min-width:680px) and (max-width:949px) {
+    .portfolio-cell { width: 31% }
     .portfolio-cell:last-of-type { margin-right: 8%; }
+    .portfolio-cell.add-stock-button { width: 8%; }
 }
 
 @media screen and (min-width:950px) and (max-width:1129px) {
-    .portfolio-cell { width: 25% }
+    .portfolio-cell { width: 24% }
     .portfolio-cell:last-of-type { margin-right: 6%; }
+    .portfolio-cell.add-stock-button { width: 5%; }
 }
 
 @media screen and (min-width:1130px) and (max-width:1399px) {
-    .portfolio-cell { width: 20% }
+    .portfolio-cell { width: 19% }
+    .portfolio-cell.add-stock-button { width: 5%; }
 }
 
 @media screen and (min-width:1400px) {
-    .portfolio-cell { width: 16.66666667% }
+    .portfolio-cell { width: 15.5% }
+    .portfolio-cell.add-stock-button { width: 6%; }
 }

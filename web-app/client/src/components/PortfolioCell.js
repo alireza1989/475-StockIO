@@ -21,7 +21,6 @@ class PortfolioCell extends Component {
             ceo: props.stock.ceo,
             summary_visible: false
         };
-        
     }
     
     componentWillMount() {
