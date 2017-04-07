@@ -3,8 +3,7 @@ import {browserHistory} from 'react-router';
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
-    }
-    else if (response.body) {
+    } else if (response.body) {
         response.json().then((body) => {
             if (body.redirect) {
                 browserHistory.push(body.redirect);
