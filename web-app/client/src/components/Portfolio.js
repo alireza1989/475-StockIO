@@ -49,7 +49,9 @@ class Portfolio extends Component {
                     
                     <div className="stocks">
                         <ul>
-                            <PortfolioAddStock addStock={() => {this.props.editPortfolio(this.props.portfolio)}} />
+                            {(this.props.portfolio.permission === 'read') ? '' :
+                                <PortfolioAddStock addStock={() => {this.props.editPortfolio(this.props.portfolio)}} />
+                            }
                             {this.state.stocks.map((stock, i) => <PortfolioCell key={stock.id} socket={this.props.socket} stock={stock}/>)}
                         </ul>
                     </div>
