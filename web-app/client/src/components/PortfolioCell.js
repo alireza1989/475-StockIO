@@ -10,6 +10,7 @@ class PortfolioCell extends Component {
             name: props.stock.name,
             ticker: props.stock.symbol,
             price: props.stock.last_price,
+            currency: 'USD',
             last_price: props.stock.last_price,
             prev_close: props.stock.previous_close_price,
             change_price: props.stock.change_price,
@@ -20,13 +21,33 @@ class PortfolioCell extends Component {
             ceo: props.stock.ceo,
             summary_visible: false
         };
-        
+    }
+    
+    componentWillMount() {
+        this.formatPrice();
+    }
+    
+    componentWillReceiveProps() {
+        this.formatPrice();
     }
 
     toggleSummary = () => {
         this.setState({
             summary_visible: !this.state.summary_visible
         });
+    }
+    
+    formatPrice = () => {
+        var priceString = this.state.price;
+        var regExp = /(CA\$)([0-9]+.[0-9]+)/g;
+        var match = regExp.exec(priceString);
+
+        if (match) {            
+            this.setState({
+                price: match[2],
+                currency: 'CAD'
+            });
+        }
     }
 
     render() {
@@ -38,8 +59,8 @@ class PortfolioCell extends Component {
                         <h1>{this.state.ticker}</h1>
                     </div>
 
-                    <div className="details">
-                        <p className="price">{this.state.price} <span className="price-currency">USD</span></p>
+                    <div className="details">                        
+                        <p className="price">{this.state.price} <span className="price-currency">{this.state.currency}</span></p>
 
                         <p className='price-change'>
                             {this.state.change_percent}%
