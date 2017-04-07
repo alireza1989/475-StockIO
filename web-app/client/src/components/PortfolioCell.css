@@ -122,12 +122,8 @@
     }
     
     .portfolio-cell:first-of-type {
-        margin: 0;
+        margin-top: 0;
         padding: 0;
-    }
-    
-    .portfolio-cell:last-of-type {
-        margin: 0;
     }
     
     .portfolio-cell-content:hover {

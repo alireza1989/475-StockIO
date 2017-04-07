@@ -36,10 +36,12 @@ class PortfolioAdminNotification extends Component {
                     timer: false
                 });
             }, 3000);
+            
+            console.log(this.props);
 
             return {
-                action: this.props.notification.action,
-                message: this.props.notification.message,
+                action: (this.props.notification !== undefined) ? this.props.notification.action : '',
+                message: (this.props.notification !== undefined) ? this.props.notification.message : '',
                 timer: true,
                 timerHandle: handle
             }
