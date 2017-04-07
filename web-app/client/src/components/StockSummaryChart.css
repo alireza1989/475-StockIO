@@ -1,0 +1,21 @@
+/*.stock-summary-chart{
+  background-color: white;
+}*/
+
+/*.stock-summary-chart{
+  color: white;
+}*/
+.c3 path, .c3 line {
+    fill: none;
+    stroke: white;
+}
+
+.c3 text {
+  /*-webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none; */
+
+  stroke: white;
+  font-size: 12px;
+
+}

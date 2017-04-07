@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './StockSummary.css';
 import StockProperty from './StockProperty';
 import StockNews from './StockNews';
+import StockSummaryChart from './StockSummaryChart';
 // const io = require('socket.io-client');
 // const socket = io();
 
@@ -20,24 +21,24 @@ class StockPopup extends Component {
             dividend: props.stock.dividend,
             yield: props.stock.yield,
             sector: props.stock.sector,
-            ceo: props.stock.ceo,            
+            ceo: props.stock.ceo,
         };
     }
-    
+
 	componentDidMount() {
         if (this.summaryForm !== undefined) {
             this.summaryForm.focus();
         }
 	}
 
-    handleKeyDown = (event) => {        
+    handleKeyDown = (event) => {
         // Permit closing dialog with escape key
         if (event.keyCode === 27) {
             this.props.closeForm();
         }
     }
 
-    render() {        
+    render() {
         return (
             <div className="stock-summary">
                 <div className="stock-summary-form" tabIndex="0" onKeyDown={this.handleKeyDown}
@@ -61,12 +62,15 @@ class StockPopup extends Component {
                             <StockProperty name="Sector" value={this.state.sector}/>
                             <StockProperty name="CEO" value={this.state.ceo}/>
                         </ul>
-
-                        <div className="stock-summary-chart"></div>
                     </div>
-
+                    <div className="stock-summary-chart">
+                        <StockSummaryChart />
+                    </div>
+                    <div>
                     <StockNews symbol={this.state.ticker}/>
+                    </div>
                 </div>
+
             </div>
         )
     }

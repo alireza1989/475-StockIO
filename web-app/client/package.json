@@ -7,6 +7,8 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "dependencies": {
+    "c3": "^0.4.11",
+    "d3": "^4.7.4",
     "jquery": "^3.2.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
