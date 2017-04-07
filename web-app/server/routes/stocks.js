@@ -36,7 +36,7 @@ module.exports = {
 
 			response.status(200).end(JSON.stringify(news));
 		});
-    }
+    },
 
     getStockHistory: function(models, request, response){
 		// alphavantage API key

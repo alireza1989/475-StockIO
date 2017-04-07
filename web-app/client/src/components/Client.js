@@ -8,7 +8,7 @@ function checkStatus(response) {
             if (body.redirect) {
                 browserHistory.push(body.redirect);
             }
-        }); 
+        });
     }
 }
 
@@ -37,7 +37,7 @@ const Client = module.exports = {
           .then(parseJSON)
           .then(callback);
     },
-    
+
     addPortfolio: function(portfolioName, callback) {
         return fetch(`/api/portfolios`, {
             method: 'POST',
@@ -53,8 +53,8 @@ const Client = module.exports = {
           .then(parseJSON)
           .then(callback);
     },
-    
-    updatePortfolioName: function(portfolioID, portfolioName, callback) {        
+
+    updatePortfolioName: function(portfolioID, portfolioName, callback) {
         return fetch(`/api/portfolios/${portfolioID}`, {
             method: 'POST',
             credentials: 'include',
@@ -67,9 +67,9 @@ const Client = module.exports = {
             })
         }).then(checkStatus)
           .then(parseJSON)
-          .then(callback); 
+          .then(callback);
     },
-    
+
     removePortfolio: function(portfolioId, callback) {
         return fetch(`/api/portfolios`, {
             method: 'DELETE',
@@ -205,7 +205,29 @@ const Client = module.exports = {
                 return i;
         }
         return -1;
-    }
+    },
+
+    //// Get Histroy
+
+    // ItraDay History
+    getIntraDayHistory: function(symbol, callback) {
+        return fetch(`/api/stocks/${symbol}/todayhistory`, {
+            accept: 'application/json',
+            credentials: 'include'
+        }).then(checkStatus)
+          .then(parseJSON)
+          .then(callback);
+    },
+
+    // 20 years Daily History
+    getDailyHistory: function(symbol, callback) {
+        return fetch(`/api/stocks/${symbol}/history`, {
+            accept: 'application/json',
+            credentials: 'include'
+        }).then(checkStatus)
+          .then(parseJSON)
+          .then(callback);
+    },
 }
 
 export default Client;
