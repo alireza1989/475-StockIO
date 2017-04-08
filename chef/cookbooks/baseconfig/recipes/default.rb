@@ -17,12 +17,16 @@ execute 'ntp_restart' do
 end
 
 # Install nginx via apt-get
-package "nginx"
+package "nginx" do
+  action :install
+end
+
 # Override the default nginx config with the one in our cookbook.
 cookbook_file "nginx-default" do
   path "/etc/nginx/sites-available/default"
 end
 # Reload nginx to pick up new nginx config
+
 service "nginx" do
   action :reload
 end
@@ -35,35 +39,16 @@ end
 # Install node.js
 package "nodejs"
  
-execute 'npm_install_client' do
-  cwd "/home/ubuntu/project/web-app/client"
-  command "npm install"
-end
-
-execute "react-scripts" do
-  cwd "/home/ubuntu/project/web-app/client"
-  command "npm install react-scripts"
-end
-
-# Add a service file for running the client on startup
-cookbook_file "stockio-client.service" do
-  path "/etc/systemd/system/stockio-client.service"
-end
- 
-# Start the client 
-execute "start_stockio-client" do
-  command "sudo systemctl start stockio-client"
-end
- 
-# # Start react client  on VM startup
-execute "startup_stockio-client" do
-  command "sudo systemctl enable stockio-client"
-end
-
 # NPM install for client and server
 execute "npm_install_server" do
   cwd "/home/ubuntu/project/web-app"
   command "npm install"
+end
+
+# NPM install for client and server
+execute "sqlite" do
+  cwd "/home/ubuntu/project/web-app"
+  command "npm install sqlite3"
 end
 
 # Install postgres

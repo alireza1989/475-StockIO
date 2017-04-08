@@ -92,7 +92,7 @@ passport.deserializeUser(function(userId, done) {
 // Middleware Managed API
 app.post('/api/users/signup', passport.authenticate('signup', {
     successRedirect: '/dashboard',
-    failureRedirect: '/login',
+    failureRedirect: '/signup',
     session: true
 }));
 
@@ -228,9 +228,9 @@ var authenticate = function(request, response) {
 // PAGES
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// app.get('*', function(request, response) {
-//   response.sendFile(path.resolve(__dirname, 'index.html'));
-// });
+app.get('*', function(request, response) {
+  response.sendFile(path.resolve(__dirname, 'index.html'));
+});
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
