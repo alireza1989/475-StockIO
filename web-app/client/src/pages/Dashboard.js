@@ -7,7 +7,7 @@ import './Dashboard.css';
 import io from 'socket.io-client';
 import Client from '../components/Client';
 
-const socket = io('http://localhost:3001');
+const socket = io();
 
 class Dashboard extends Component {
     constructor() {
