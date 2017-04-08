@@ -83,7 +83,7 @@
 
 /* SUMMARY LEFT (DETAILS) */
 .stock-information {
-    height: auto;
+    height: 600px;
     width: 50%;
     float: left;
     box-sizing: border-box;
@@ -96,12 +96,6 @@
     overflow: auto;
     clear: both;
     border-bottom: 1px solid #333;
-}
-
-.stock-summary-chart {
-    height: 412px;
-    width: 100%;
-    overflow: hidden;
 }
 
 

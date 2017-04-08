@@ -62,13 +62,11 @@ class StockPopup extends Component {
                             <StockProperty name="Sector" value={this.state.sector}/>
                             <StockProperty name="CEO" value={this.state.ceo}/>
                         </ul>
-                    </div>
-                    <div className="stock-summary-chart">
+                        
                         <StockSummaryChart symbol={this.state.ticker}/>
                     </div>
-                    <div>
+
                     <StockNews symbol={this.state.ticker}/>
-                    </div>
                 </div>
 
             </div>

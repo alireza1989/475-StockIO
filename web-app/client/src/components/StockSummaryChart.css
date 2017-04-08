@@ -1,21 +1,55 @@
-/*.stock-summary-chart{
-  background-color: white;
-}*/
+/* Elliot Barer, ebarer [at] mac [dot] com, 2017-03-25 */
 
-/*.stock-summary-chart{
-  color: white;
-}*/
+/* STOCK-SUMMARY-CHART */
+.stock-summary-chart {
+    height: auto;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.stock-summary-chart-options {
+    padding: 5px 0;
+    text-align: center;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.stock-summary-chart-options li {
+    background: black;
+    font: 14px Helvetica;
+    color: #666;
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 30px;
+    border: 1px solid black;
+}
+
+.stock-summary-chart-options li:hover {
+    background: #666;
+    color: black;
+    border-color: #666;
+}
+
+.stock-summary-chart-options li.active {
+    background: #333;
+    color: white;
+    border-color: #333;
+    cursor: default;
+}
+
+.stock-summary-chart #chart {
+    margin: 10px 0;
+    overflow: hidden;
+    font: 10px Helvetica;
+}
+
 .c3 path, .c3 line {
     fill: none;
-    stroke: white;
+    stroke: #333;
 }
 
 .c3 text {
-  /*-webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none; */
-
-  stroke: white;
-  font-size: 12px;
-
+    stroke: #999;
 }

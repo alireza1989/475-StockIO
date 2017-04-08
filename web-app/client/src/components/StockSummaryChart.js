@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 //import D3 from 'd3';
-import C3 from 'c3';
+import c3 from 'c3';
 import './StockSummaryChart.css';
 import Client from './Client';
-
 
 class StockSummaryChart extends Component {
 	constructor(props) {
@@ -11,106 +10,50 @@ class StockSummaryChart extends Component {
 
 		this.state = {
             ticker: props.symbol,
-            fiveDayHistory: ['x'],
-			oneYearHistory: ['5 Day-Stock Price'],
-			fiveDayDates: ['x'],
-			fiveDayPrice: ['1 Year-Stock Price'],
-			oneYearDates: ['x'],
-			oneYearPrice: ['Stock Price'],
-            mounted: true
+            data: [
+                ['x', '2017-04-03', '2017-04-04', '2017-04-05', '2017-04-06', '2017-04-07'],
+                ['data', 146.92, 145.5, 143.62, 143.74, 143.11]
+            ]
         };
 	}
-
-
-
+	
 	componentDidMount() {
-
-		var chart =  C3.generate({
-		    data: {
-		        x: 'x',
-		        columns: [
-		            window.fiveDayDates,
-		            window.fiveDayPrice,
-		        ]
-		    },
-		    axis: {
+        var chart = c3.generate({
+            bindto: '#chart',
+            legend: { show: false },
+            size: { width: 430 },
+            data: {
+                x: 'x',
+                columns: [
+                    ['x', '2017-04-03', '2017-04-04', '2017-04-05', '2017-04-06', '2017-04-07'],
+                    ['data', 146.92, 145.5, 143.62, 143.74, 143.11]
+                ]
+            },
+            axis: {
 		        x: {
 		            type: 'timeseries',
-		            tick: {
-		                format: '%Y-%m-%d'
-		            }
+		            tick: { format: '%m/%d' }
 		        }
 		    }
-		});
-
-		setTimeout(function () { chart.load({columns: [window.fiveDayDates, window.fiveDayPrice,]}); }, 500);
-
-		setTimeout(function () {
-		    chart.unload({
-		        ids: '5 Day-Stock Price'
-		    });
-		}, 3000);
-
-		setTimeout(function () {
-		    chart.load({
-		        columns: [
-		            window.oneYearDates,
-					window.oneYearPrice,
-		        ]
-		    });
-		}, 4000);
-
-	}
-
-	componentWillMount(){
-
-		var symbol = this.state.ticker;
-		window.fiveDayDates = ['x'];
-		window.fiveDayPrice = ['5 Day-Stock Price'];
-		window.oneYearDates = ['x'];
-		window.oneYearPrice = ['1 Year-Stock Price'];
-
-		Client.getFiveDay(symbol, (history) => {
-            // This will throw an error if the parent is closed before it loads
-            if (this.state.mounted) {
-				var historyObj = JSON.parse(history);
-                const fiveDayHistory = historyObj.data.map(obj => obj);
-                this.setState({fiveDayHistory});
-
-				historyObj.data.forEach(function(data){
-					window.fiveDayDates.push(data.date);
-					window.fiveDayPrice.push(data.value);
-				});
-
-            }
         });
-
-		Client.getOneYear(symbol, (history) => {
-            // This will throw an error if the parent is closed before it loads
-            if (this.state.mounted) {
-				var historyObj = JSON.parse(history);
-                const oneYearHistory = historyObj.data.map(obj => obj);
-                this.setState({oneYearHistory});
-
-				oneYearHistory.forEach(function(data){
-					window.oneYearDates.push(data.date);
-					window.oneYearPrice.push(data.value);
-				});
-
-            }
+	}
+	
+	updateChart = () => {
+        Client.getFiveDay(this.state.ticker, (history) => {
+			history = JSON.parse(history);
+			console.log(history.data);
         });
 	}
 
-	render() {
+	render() {    	
 		return (
-			<div className="stock-property">
-				<select>
-				    <option value="five-day">5 Day</option>
-				    <option value="one-month">1 Month</option>
-				    <option value="three-month">3 Month</option>
-				    <option value="one-year">1 Year</option>
-				</select>
+			<div className="stock-summary-chart">			    
                 <div id="chart"></div>
+
+			    <ul className="stock-summary-chart-options">
+			        <li className='active'>5 Days</li>
+			        <li>1 Year</li>
+			    </ul>
 			</div>
 		);
 	}

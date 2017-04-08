@@ -27,13 +27,15 @@ module.exports = {
 		}
 
 		requestCall(options, function(err, res, body){
-			if(err){
+			if (err) {
 				console.log(err);
 			}
 
 			var news = JSON.parse(body);
-			news.data = news.data.slice(0,20);
-
+            if (news.data !== undefined) {
+    			news.data = news.data.slice(0,20);
+            }
+            
 			response.status(200).end(JSON.stringify(news));
 		});
     },

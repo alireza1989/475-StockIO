@@ -2,8 +2,7 @@
 
 /* STOCK-NEWS */
 .stock-news {
-    background: url(../assets/loader.svg) no-repeat;
-    background-position: center center;
+    background: none;
     height: 100%;
     min-height: 300px;
     max-height: 600px;
@@ -13,6 +12,11 @@
     position: relative;
     float: right;
     overflow-y: scroll;
+}
+
+.stock-news.loading {
+    background: url(../assets/loader.svg) no-repeat;
+    background-position: center center;
 }
 
 .stock-news h4 {

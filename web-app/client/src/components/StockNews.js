@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Client from './Client';
 import StockNewsArticle from './StockNewsArticle';
-// import loader from "../assets/loader.svg";
 import './StockNews.css';
 
 class StockNews extends Component {
@@ -10,27 +9,42 @@ class StockNews extends Component {
 
         this.state = {
             ticker: props.symbol,
-            news: [],
-            mounted: true
+            loaded: false,
+            news: []
         };
 
         var symbol = this.state.ticker;
 
-        Client.getNews(symbol, (newsList) => {
-            // This will throw an error if the parent is closed before it loads
-            if (this.state.mounted) {
-                const news = newsList.data.map(obj => obj);
-                this.setState({news});
+        Client.getNews(symbol, (news) => {
+            if (news.data !== undefined) {
+                news = news.data.map(obj => obj);
+            } else {
+                news = [];
             }
+            
+            this.setState({
+                loaded: true,
+                news: news
+            });
         });
+    }
+    
+    loadNews = () => {
+        if (this.state.loaded) {
+            return (
+                this.state.news.length === 0 ?
+                    <li><p>Cannot load news</p></li> :
+                    this.state.news.map((news, i) => <StockNewsArticle key={i} news={news}/>)
+            )
+        }
     }
 
     render() {
         return(
-            <div className="stock-news">
+            <div className={`stock-news ${this.state.loaded ? '' : 'loading'}`}>
                 <h4>Related News</h4>
                 <ul className="stock-news-items">
-                    {this.state.news.map((news, i) => <StockNewsArticle key={i} news={news}/>)}
+                    {this.loadNews()}
                 </ul>
             </div>
         );
