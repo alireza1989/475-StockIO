@@ -23,8 +23,9 @@ class StockSummaryChart extends Component {
 		Client.getFiveDay(symbol, (history) => {
             // This will throw an error if the parent is closed before it loads
             if (this.state.mounted) {
-				//console.log('history is: ',history);
-                const fiveDayHistory = history.map(obj => obj);
+				var historyObj = JSON.parse(history);
+				console.log(historyObj);
+                const fiveDayHistory = historyObj.data.map(obj => obj);
                 this.setState({fiveDayHistory});
             }
         });
@@ -32,8 +33,9 @@ class StockSummaryChart extends Component {
 		Client.getOneYear(symbol, (history) => {
             // This will throw an error if the parent is closed before it loads
             if (this.state.mounted) {
-				//console.log('history is: ',history);
-                const oneYearHistory = history.map(obj => obj);
+				var historyObj = JSON.parse(history);
+				console.log(historyObj);
+                const oneYearHistory = historyObj.data.map(obj => obj);
                 this.setState({oneYearHistory});
             }
         });

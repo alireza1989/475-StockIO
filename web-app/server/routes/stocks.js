@@ -48,13 +48,13 @@ module.exports = {
 		const username = "17440ee7fe0d7aeb1962fb3a18df9607";
 		const password = "bd8d650b82b0f07cf98d893a9fde0bb7";
 		var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
-		var url = "https://api.intrinio.com/news?identifier=";
+		var url = "https://api.intrinio.com/historical_data?identifier=";
 
 
 		// Check what request for history is made
 		if(URI === `/api/stocks/${stocksymbol}/history/daily`){
 
-			var currentDate = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
+			var currentDate = now.getFullYear() + '-' + now.getMonth() + '-' + (now.getDate() -5);
 			url = url + `${stocksymbol}&item=adj_close_price&start_date=${currentDate}&frequency=daily`
 
 			const options = {
