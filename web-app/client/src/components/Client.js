@@ -209,9 +209,9 @@ const Client = module.exports = {
 
     //// Get Histroy
 
-    // ItraDay History
-    getIntraDayHistory: function(symbol, callback) {
-        return fetch(`/api/stocks/${symbol}/todayhistory`, {
+    // 5 days history
+    getFiveDay: function(symbol, callback) {
+        return fetch(`/api/stocks/${symbol}/history/daily`, {
             accept: 'application/json',
             credentials: 'include'
         }).then(checkStatus)
@@ -220,8 +220,8 @@ const Client = module.exports = {
     },
 
     // 20 years Daily History
-    getDailyHistory: function(symbol, callback) {
-        return fetch(`/api/stocks/${symbol}/history`, {
+    getOneYear: function(symbol, callback) {
+        return fetch(`/api/stocks/${symbol}/history/weekly`, {
             accept: 'application/json',
             credentials: 'include'
         }).then(checkStatus)

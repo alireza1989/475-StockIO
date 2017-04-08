@@ -39,20 +39,31 @@ module.exports = {
     },
 
     getStockHistory: function(models, requestCall, request, response){
-		// alphavantage API key
-		const key = '0776';
+
+		// Create a Date OBJ
+		var now = new Date();
 		const URI = request.url;
 		var stocksymbol = request.params['symbol'];
+		// Intrinio constants for News
+		const username = "17440ee7fe0d7aeb1962fb3a18df9607";
+		const password = "bd8d650b82b0f07cf98d893a9fde0bb7";
+		var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
+		var url = "https://api.intrinio.com/news?identifier=";
+
 
 		// Check what request for history is made
-		if(URI === `/api/stocks/${stocksymbol}/todayhistory`){
+		if(URI === `/api/stocks/${stocksymbol}/history/daily`){
 
-			var url = "http://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" +
-					  stocksymbol + "&interval=15min&outputsize=full&apikey=" + key;
+			var currentDate = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
+			url = url + `${stocksymbol}&item=adj_close_price&start_date=${currentDate}&frequency=daily`
+
 			const options = {
-		  		method: 'GET',
-		  		uri: url,
-		  		}
+				method: 'GET',
+				uri: url,
+				headers: {
+					"Authorization": auth
+				}
+			}
 
 			requestCall(options, function(err, res, body) {
 		    	if (err) {
@@ -61,14 +72,17 @@ module.exports = {
 				response.status(200).end(JSON.stringify(body));
 		  	});
 
-		}else if(URI === `/api/stocks/${stocksymbol}/history`){
+		}else if(URI === `/api/stocks/${stocksymbol}/history/weekly`){
 
-			var url = "http://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" +
-					  stocksymbol + "&outputsize=full&apikey=" + key;
+			var currentDate = (now.getFullYear() -1) + '-' + now.getMonth() + '-' + now.getDate();
+			url = url + `${stocksymbol}&item=adj_close_price&start_date=${currentDate}&frequency=weekly`
 
 			const options = {
 				method: 'GET',
 				uri: url,
+				headers: {
+					"Authorization": auth
+				}
 			}
 
 			requestCall(options, function(err, res, body) {

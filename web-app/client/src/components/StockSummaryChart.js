@@ -11,8 +11,8 @@ class StockSummaryChart extends Component {
 
 		this.state = {
             ticker: props.symbol,
-            intraDayHiatory: [],
-			dailyHistory: [],
+            fiveDayHistory: [],
+			oneYearHistory: [],
             mounted: true
         };
 	}
@@ -20,12 +20,21 @@ class StockSummaryChart extends Component {
 
 		var symbol = this.state.ticker;
 
-		Client.getIntraDayHistory(symbol, (history) => {
+		Client.getFiveDay(symbol, (history) => {
             // This will throw an error if the parent is closed before it loads
             if (this.state.mounted) {
-				console.log('history is: ',history);
-                const intraDayHiatory = history.map(obj => obj);
-                this.setState({intraDayHiatory});
+				//console.log('history is: ',history);
+                const fiveDayHistory = history.map(obj => obj);
+                this.setState({fiveDayHistory});
+            }
+        });
+
+		Client.getOneYear(symbol, (history) => {
+            // This will throw an error if the parent is closed before it loads
+            if (this.state.mounted) {
+				//console.log('history is: ',history);
+                const oneYearHistory = history.map(obj => obj);
+                this.setState({oneYearHistory});
             }
         });
 

@@ -225,20 +225,20 @@ var authenticate = function(request, response) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// Get stock Itra-day history from alphavantage
+// Get stock Itra-day history from Intrinio
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// Get the today's history from Alphavantage
-app.get('/api/stocks/:symbol/todayhistory', function(request, response){
+// Get the today's history from Intrinio
+app.get('/api/stocks/:symbol/history/daily', function(request, response){
     routes.stocks.getStockHistory(models, requestCall, request, response);
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// Get stock daily history from alphavantage
+// Get stock daily history from Intrinio
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// Get the latest the 20 years history from Alphavantage
-app.get('/api/stocks/:symbol/history', function(request, response){
+// Get the latest the 20 years history from Intrinio
+app.get('/api/stocks/:symbol/history/weekly', function(request, response){
     routes.stocks.getStockHistory(models, requestCall, request, response);
 });
 
