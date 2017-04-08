@@ -11,44 +11,26 @@ class StockSummaryChart extends Component {
 
 		this.state = {
             ticker: props.symbol,
-            fiveDayHistory: [],
-			oneYearHistory: [],
+            fiveDayHistory: ['x'],
+			oneYearHistory: ['Stock Price'],
+			fiveDayDates: ['x'],
+			fiveDayPrice: ['Stock Price'],
+			oneYearDates: ['x'],
+			oneYearPrice: ['Stock Price'],
             mounted: true
         };
 	}
+
+
+
 	componentDidMount() {
 
-		var symbol = this.state.ticker;
-
-		Client.getFiveDay(symbol, (history) => {
-            // This will throw an error if the parent is closed before it loads
-            if (this.state.mounted) {
-				var historyObj = JSON.parse(history);
-                const fiveDayHistory = historyObj.data.map(obj => obj);
-                this.setState({fiveDayHistory});
-				console.log(fiveDayHistory);
-            }
-        });
-
-		Client.getOneYear(symbol, (history) => {
-            // This will throw an error if the parent is closed before it loads
-            if (this.state.mounted) {
-				var historyObj = JSON.parse(history);
-                const oneYearHistory = historyObj.data.map(obj => obj);
-                this.setState({oneYearHistory});
-				console.log(oneYearHistory);
-            }
-        });
-
-		/*var chart =*/ C3.generate({
+		var chart =  C3.generate({
 		    data: {
 		        x: 'x',
-		//        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
 		        columns: [
-		            ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
-		//            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
-		            ['Stock Price', 30, 200, 100, 400, 150, 250],
-		            //['data2', 130, 340, 200, 500, 250, 350]
+		            window.fiveDayDates,
+		            window.fiveDayPrice,
 		        ]
 		    },
 		    axis: {
@@ -60,6 +42,47 @@ class StockSummaryChart extends Component {
 		        }
 		    }
 		});
+
+		setTimeout(function () { chart.load({columns: [window.fiveDayDates, window.fiveDayPrice,]}); }, 500);
+	}
+
+	componentWillMount(){
+
+		var symbol = this.state.ticker;
+		window.fiveDayDates = ['x'];
+		window.fiveDayPrice = ['Stock Price'];
+		window.oneYearDates = ['x'];
+		window.oneYearPrice = ['Stock Price'];
+
+		Client.getFiveDay(symbol, (history) => {
+            // This will throw an error if the parent is closed before it loads
+            if (this.state.mounted) {
+				var historyObj = JSON.parse(history);
+                const fiveDayHistory = historyObj.data.map(obj => obj);
+                this.setState({fiveDayHistory});
+
+				historyObj.data.forEach(function(data){
+					window.fiveDayDates.push(data.date);
+					window.fiveDayPrice.push(data.value);
+				});
+
+            }
+        });
+
+		Client.getOneYear(symbol, (history) => {
+            // This will throw an error if the parent is closed before it loads
+            if (this.state.mounted) {
+				var historyObj = JSON.parse(history);
+                const oneYearHistory = historyObj.data.map(obj => obj);
+                this.setState({oneYearHistory});
+
+				oneYearHistory.forEach(function(data){
+					window.oneYearDates.push(data.date);
+					window.oneYearPrice.push(data.value);
+				});
+
+            }
+        });
 	}
 
 	render() {
