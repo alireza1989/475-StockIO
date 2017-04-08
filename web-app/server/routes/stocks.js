@@ -54,8 +54,8 @@ module.exports = {
 		// Check what request for history is made
 		if(URI === `/api/stocks/${stocksymbol}/history/daily`){
 
-			var currentDate = now.getFullYear() + '-' + now.getMonth() + '-' + (now.getDate() -5);
-			url = url + `${stocksymbol}&item=adj_close_price&start_date=${currentDate}&frequency=daily`
+			var fiveDay = now.getFullYear() + '-' + (now.getMonth()+1) + '-' + (now.getDate()-5);
+			url = url + `${stocksymbol}&item=adj_close_price&start_date=${fiveDay}&frequency=daily`
 
 			const options = {
 				method: 'GET',
@@ -74,7 +74,7 @@ module.exports = {
 
 		}else if(URI === `/api/stocks/${stocksymbol}/history/weekly`){
 
-			var currentDate = (now.getFullYear() -1) + '-' + now.getMonth() + '-' + now.getDate();
+			var currentDate = (now.getFullYear()-1) + '-' + (now.getMonth()+1) + '-' + now.getDate();
 			url = url + `${stocksymbol}&item=adj_close_price&start_date=${currentDate}&frequency=weekly`
 
 			const options = {
