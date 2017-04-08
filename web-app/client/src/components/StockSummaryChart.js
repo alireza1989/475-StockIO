@@ -12,9 +12,9 @@ class StockSummaryChart extends Component {
 		this.state = {
             ticker: props.symbol,
             fiveDayHistory: ['x'],
-			oneYearHistory: ['Stock Price'],
+			oneYearHistory: ['5 Day-Stock Price'],
 			fiveDayDates: ['x'],
-			fiveDayPrice: ['Stock Price'],
+			fiveDayPrice: ['1 Year-Stock Price'],
 			oneYearDates: ['x'],
 			oneYearPrice: ['Stock Price'],
             mounted: true
@@ -44,15 +44,31 @@ class StockSummaryChart extends Component {
 		});
 
 		setTimeout(function () { chart.load({columns: [window.fiveDayDates, window.fiveDayPrice,]}); }, 500);
+
+		setTimeout(function () {
+		    chart.unload({
+		        ids: '5 Day-Stock Price'
+		    });
+		}, 3000);
+
+		setTimeout(function () {
+		    chart.load({
+		        columns: [
+		            window.oneYearDates,
+					window.oneYearPrice,
+		        ]
+		    });
+		}, 4000);
+
 	}
 
 	componentWillMount(){
 
 		var symbol = this.state.ticker;
 		window.fiveDayDates = ['x'];
-		window.fiveDayPrice = ['Stock Price'];
+		window.fiveDayPrice = ['5 Day-Stock Price'];
 		window.oneYearDates = ['x'];
-		window.oneYearPrice = ['Stock Price'];
+		window.oneYearPrice = ['1 Year-Stock Price'];
 
 		Client.getFiveDay(symbol, (history) => {
             // This will throw an error if the parent is closed before it loads
