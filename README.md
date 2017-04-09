@@ -28,6 +28,10 @@
 4.5. Note the portfolio appearing on their dashboard
 4.6. Repeat with a different level of access permission, note the differences
 
+### Important Implementation Details
+
+1. Stock prices are updated when the app is first launched, unable to update in real-time as it was prohibitively expensive for a school projet
+2. Stock graph is purely for aesthetics, the data is not dynamic
 
 ### Technologies Used
 
