@@ -24,6 +24,7 @@
     margin: 5px;
     border-radius: 30px;
     border: 1px solid black;
+    cursor: default;
 }
 
 .stock-summary-chart-options li:hover {
