@@ -1,19 +1,19 @@
 {
     "company": [
         {
-            "name": "Netflix Inc",
-            "symbol": "NFLX",
+            "name": "Apple Inc",
+            "symbol": "AAPL",
             "exchange": "NasdaqGS",
-            "url": "http://www.netflix.com",
-            "ceo": "Reed Hastings",
-            "sector": "Services"
+            "url": "http://www.apple.com",
+            "ceo": "Tim Cook",
+            "sector": "Consumer Goods"
         },
         {
-            "name": "Walt Disney Co",
-            "symbol": "DIS",
-            "exchange": "NYSE",
-            "url": "http://www.thewaltdisneycompany.com",
-            "ceo": "Robert A. Iger",
+            "name": "Amazon.com Inc",
+            "symbol": "AMZN",
+            "exchange": "NasdaqGS",
+            "url": "http://www.amazon.com",
+            "ceo": "Jeffrey P. Bezos",
             "sector": "Services"
         },
         {
@@ -41,36 +41,12 @@
             "sector": "Technology"
         },
         {
-            "name": "Starbucks Corp",
-            "symbol": "SBUX",
-            "exchange": "NasdaqGS",
-            "url": "http://www.starbucks.com",
-            "ceo": "Howard S. Schultz",
-            "sector": "Services"
-        },
-        {
-            "name": "Ulta Salon Cosmetics and Fragrance Inc",
-            "symbol": "ULTA",
-            "exchange": "NasdaqGS",
-            "url": "http://www.ulta.com",
-            "ceo": "Mary N. Dillon",
-            "sector": "Services"
-        },
-        {
             "name": "NVIDIA Corp",
             "symbol": "NVDA",
             "exchange": "NasdaqGS",
             "url": "http://www.nvidia.com",
             "ceo": "Jen-Hsun Huang",
             "sector": "Technology"
-        },
-        {
-            "name": "Apple Inc",
-            "symbol": "AAPL",
-            "exchange": "NasdaqGS",
-            "url": "http://www.apple.com",
-            "ceo": "Tim Cook",
-            "sector": "Consumer Goods"
         },
         {
             "name": "Cisco Systems Inc",
@@ -105,20 +81,12 @@
             "sector": "Technology"
         },
         {
-            "name": "Amazon.com Inc",
-            "symbol": "AMZN",
+            "name": "Starbucks Corp",
+            "symbol": "SBUX",
             "exchange": "NasdaqGS",
-            "url": "http://www.amazon.com",
-            "ceo": "Jeffrey P. Bezos",
+            "url": "http://www.starbucks.com",
+            "ceo": "Howard S. Schultz",
             "sector": "Services"
-        },
-        {
-            "name": "Pfizer Inc",
-            "symbol": "PFE",
-            "exchange": "NYSE",
-            "url": "http://www.pfizer.com",
-            "ceo": "Ian C. Read",
-            "sector": "Healthcare"
         },
         {
             "name": "McDonald's Corp",
@@ -129,36 +97,52 @@
             "sector": "Services"
         },
         {
-            "name": "Texas Instruments Inc",
-            "symbol": "TXN",
+            "name": "Netflix Inc",
+            "symbol": "NFLX",
             "exchange": "NasdaqGS",
-            "url": "http://www.ti.com",
-            "ceo": "Richard K. Templeton",
-            "sector": "Technology"
+            "url": "http://www.netflix.com",
+            "ceo": "Reed Hastings",
+            "sector": "Services"
         },
         {
-            "name": "Exxon Mobil Corp",
-            "symbol": "XOM",
+            "name": "Walt Disney Co",
+            "symbol": "DIS",
             "exchange": "NYSE",
-            "url": "http://corporate.exxonmobil.com",
-            "ceo": "Rex W. Tillerson",
-            "sector": "Basic Materials"
+            "url": "http://www.thewaltdisneycompany.com",
+            "ceo": "Robert A. Iger",
+            "sector": "Services"
         },
         {
-            "name": "Ferrari NV",
-            "symbol": "RACE",
+            "name": "American Express",
+            "symbol": "AXP",
             "exchange": "NYSE",
-            "url": "http://www.ferrari.com",
-            "ceo": "Sergio Marchionne",
-            "sector": null
+            "url": "http://www.americanexpress.com",
+            "ceo": "Kenneth I. Chenault",
+            "sector": "Financial"
         },
         {
-            "name": "Yahoo! Inc",
-            "symbol": "YHOO",
-            "exchange": "NasdaqGS",
-            "url": "http://www.yahoo.com",
-            "ceo": "Marissa Ann Mayer",
-            "sector": "Technology"
-        }
+            "name": "Bank of America",
+            "symbol": "BAC",
+            "exchange": "NYSE",
+            "url": "http://www.bankofamerica.com",
+            "ceo": "Brian T. Moynihan",
+            "sector": "Financial"
+        },
+        {
+            "name": "JPMorgan Chase",
+            "symbol": "JPM",
+            "exchange": "NYSE",
+            "url": "http://www.jpmorganchase.com",
+            "ceo": "James Dimon",
+            "sector": "Financial"
+        },
+        {
+            "name": "Wells Fargo",
+            "symbol": "WFC",
+            "exchange": "NYSE",
+            "url": "http://www.wellsfargo.com",
+            "ceo": "Timothy J. Sloan",
+            "sector": "Financial"
+        },
     ]
 }

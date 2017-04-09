@@ -2,20 +2,26 @@
    "users":[
 	{
 		 "firstname": "Elliot",
-		 "lastname": "Snow",
+		 "lastname": "Barer",
 		 "username": "elliot@elliot.com",
 		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e"
 	},
 	{
 		 "firstname": "Bonnie",
-		 "lastname": "Snow",
+		 "lastname": "Ng",
 		 "username": "bonnie@bonnie.com",
 		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e"
 	},
 	{
-		 "firstname": "Sherlock",
-		 "lastname": "Snow",
-		 "username": "sherlock@sherlock.com",
+		 "firstname": "Shawn",
+		 "lastname": "Jansepar",
+		 "username": "jansepar@sfu.ca",
+		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e"
+	},
+	{
+		 "firstname": "Abhinav",
+		 "lastname": "Sood",
+		 "username": "sood@sfu.ca",
 		 "password": "$2a$10$5i/slrZ2oGCtPjSGdyugK.GpbH.hcTESFWcibjKPvh37edceFS6/e"
 	}]
 }
