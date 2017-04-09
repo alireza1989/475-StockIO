@@ -36,7 +36,7 @@
 
 ### Important Implementation Details
 
-1. Stock prices are updated when the app is first launched, unable to update in real-time as it was prohibitively expensive for a school projet
+1. Stock prices are updated when the app is first launched, unable to update in real-time as it was prohibitively expensive for a school project
 2. Stock graph is purely for aesthetics, the data is not dynamic
 
 ### Technologies Used
