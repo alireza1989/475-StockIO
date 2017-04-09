@@ -11,7 +11,7 @@ module.exports = {
                         response.status(200).end(JSON.stringify({'stocks' : stocks}, null, 4));
                     });
                 } else {
-                    response.status(401).end(`Portfolio doesn't exist.`);
+                    response.status(401).end(JSON.stringify({'message' : 'Portfolio does not exist.'}));
                 }
             });
         });
@@ -46,10 +46,10 @@ module.exports = {
                                     }, null, 4));
                                 });
                             } else {
-                        // Intrinio constants for News
-                                const username = "17440ee7fe0d7aeb1962fb3a18df9607";
-                                const password = "bd8d650b82b0f07cf98d893a9fde0bb7";
-                                var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
+                                // Intrinio constants for News
+                                USERNAME = "4a44bb3be24d961e9679366fd23b753b"
+                                PASSWORD = "40bb5f3b10038b557291badf18a2cd5a"
+                                var auth = "Basic " + new Buffer(USERNAME + ':' + PASSWORD).toString('base64');
                                 var url = "https://api.intrinio.com/companies?identifier=" + stockSymbol;
 
                                 const options = {
@@ -65,7 +65,7 @@ module.exports = {
                                         console.log("Error making request for stock symbol");
                                         return;
                                     }
-
+                                    
                                     if (companyData == "") {
                                         response.status(400).end(JSON.stringify({'message' : 'Stock Symbol doesnt exist'}));
                                         return;
@@ -145,10 +145,10 @@ module.exports = {
                             }, null, 4));
                         });
                     } else {
-                        response.status(401).end('User does not have permission to modify portfolio.');
+                        response.status(401).end(JSON.stringify({'message': 'User does not have permission to modify portfolio.'}));
                     }
                 } else {
-                    response.status(401).end(`Portfolio doesn't exist.`);
+                    response.status(401).end(JSON.stringify({'message': `Portfolio doesn't exist.`}));
                 }
             });
         });

@@ -112,8 +112,7 @@ app.post('/api/users/logout', function(request, response) {
 
 // Return information for current user
 app.get('/api/users/current', function(request, response) {
-    if (authenticate(request, response))
-        routes.users.currentUserSession(models, request, response);
+    routes.users.currentUserSession(models, request, response);
 })
 
 
@@ -243,14 +242,6 @@ app.get('/api/stocks/:symbol/history/weekly', function(request, response){
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// PAGES
-////////////////////////////////////////////////////////////////////////////////////////
-
-app.get('*', function(request, response) {
-  response.sendFile(path.resolve(__dirname, 'index.html'));
-});
-
-////////////////////////////////////////////////////////////////////////////////////////
 // Get stock 5Day history from Intrinio
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -266,6 +257,14 @@ app.get('/api/stocks/:symbol/history/daily', function(request, response){
 // Get the latest the 20 years history from Intrinio
 app.get('/api/stocks/:symbol/history/weekly', function(request, response){
     routes.stocks.getStockHistory(models, requestCall, request, response);
+});
+
+////////////////////////////////////////////////////////////////////////////////////////
+// REACT ROUTE (Keep at end after all defined routes)
+////////////////////////////////////////////////////////////////////////////////////////
+
+app.get('*', function(request, response) {
+  response.sendFile(path.resolve(__dirname, 'index.html'));
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////

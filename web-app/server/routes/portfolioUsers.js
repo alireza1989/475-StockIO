@@ -22,7 +22,7 @@ module.exports = {
 
                     response.status(200).end(JSON.stringify({'users' : users}, null, 4));
                 } else {
-                    response.status(401).end('Unauthorized access to portfolio');
+                    response.status(401).end(JSON.stringify({message: 'Unauthorized access to portfolio'}));
                 }
             });
         });
@@ -71,14 +71,14 @@ module.exports = {
                                     response.status(401).end();
                                 });
                             } else {
-                                response.status(200).end(`Member doesn't exist`);
+                                response.status(400).end(JSON.stringify({'message': `Member doesn't exist`}));
                             }
                         });
                     } else {
-                        response.status(401).end('User does not have permission to modify portfolio.');
+                        response.status(401).end(JSON.stringify({'message': 'User does not have permission to modify portfolio.'}));
                     }
                 } else {
-                    response.status(401).end('Unauthorized access to portfolio.');
+                    response.status(401).end(JSON.stringify({'message': 'Unauthorized access to portfolio.'}));
                 }
             });
         });
@@ -108,10 +108,10 @@ module.exports = {
                             }, null, 4));
                         });
                     } else {
-                        response.status(401).end('User does not have permission to modify portfolio.');
+                        response.status(401).end(JSON.stringify({'message': 'User does not have permission to modify portfolio.'}));
                     }
                 } else {
-                    response.status(401).end('Unauthorized access to portfolio.');
+                    response.status(401).end(JSON.stringify({'message': 'Unauthorized access to portfolio.'}));
                 }
             });
         });

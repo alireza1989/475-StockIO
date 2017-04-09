@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataType) {
             field: 'url'
         },
         summary: {
-            type: DataType.STRING,
+            type: DataType.STRING(1024),
             field: 'summary'
         }
     },{

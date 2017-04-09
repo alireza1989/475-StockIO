@@ -45,12 +45,6 @@ execute "npm_install_server" do
   command "npm install"
 end
 
-# NPM install for client and server
-execute "sqlite" do
-  cwd "/home/ubuntu/project/web-app"
-  command "npm install sqlite3"
-end
-
 # Install postgres
 package "postgresql"
 
