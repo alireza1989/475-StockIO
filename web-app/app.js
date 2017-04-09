@@ -92,7 +92,7 @@ passport.deserializeUser(function(userId, done) {
 // Middleware Managed API
 app.post('/api/users/signup', passport.authenticate('signup', {
     successRedirect: '/dashboard',
-    failureRedirect: '/signup',
+    failureRedirect: '/login',
     session: true
 }));
 
