@@ -4,22 +4,20 @@
 
 TO RUN PRODUCTION:
 
-1. Make sure 'npm install' has been run for both 'package.json' files (One under the 'web-app' folder, one under the 'client' folder)
-2. Populate the database with the initial data. Run 'node populateDb.js' under the 'db' folder.
-3. Run 'npm start' from the top directory ('web-app').
-4. Both the client and server will start concurrently in your console.
+Run  'Vagrant up' and navigate to http://localhost:8080
 
-Note: Need to run 'Vagrant up' to set up the database for development. Navigate to http://localhost:8080
+User Test accounts:
+     usernames: "elliot@elliot.com",  "bonnie@bonnie.com", "jansepar@sfu.ca", "sood@sfu.ca"
+     all have password 'password'
 
 ### **_Technologies used in the project:_**
 
 - UI: React + webpack + hot modules + D3 for Data Visualization
-- Backend: Express + NodeJS + Passport
+- Backend: Express + NodeJS + Passport + Socket.io
 - ORM: Sequelize
 - Database: PostgreSQL
 - HTTP server: NGINX
 - Deploy: Vagrant
-- Web Scraper: NodeJS + Request + Cheerio
 
 ## **File Structure**
 
@@ -47,7 +45,7 @@ Note: Need to run 'Vagrant up' to set up the database for development. Navigate 
            -
 
          - server
-           - api
-           -
+           - passport
+           - routes
 
  
