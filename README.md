@@ -21,18 +21,21 @@
 4. View stock information
     1. Click on the first tile, for "AAPL" to view details for Apple Inc.
     2. Hit the "Done" button or esc key to close the modal
-4. Edit a portfolio
-    2. With a window open for each user, click the "edit" button beside the Technology header
-    3. Change the name from "Technology" to "Technologies", and then hit update
-    4. Use the 'x' button beside "AAPL" to remove it from the list
+5. Open a window for each user above (use private browsing for one of them) and display them side-by-side
+6. Edit a portfolio (perform actions for 1 user)
+    2. Click the "edit" button beside the Technology header
+    3. Change the name from "Technology" to "Technologies", and press "Update", note the update on both screens
+    4. Use the "x" button beside "AAPL" to remove it from the list, note the removal on both screen
     4. Try re-adding "AAPL", note it appearing at the end of the list on both screens (you may need to scroll)
-5. Add a new portfolio
-    1. Click the '+' button in the bottom-right of the dashboard
+7. Add a new portfolio
+    1. Click the "+" button in the bottom-right of the dashboard
     2. Give the portfolio a name
     3. Add a stock, for example, "CSCO"
     4. Add the other account listed above using their username/email
     5. Note the portfolio appearing on their dashboard
-    6. Repeat with a different level of access permission, note the differences
+    6. Add a stock and note it appearing on both screens
+    7. Remove the user, note the portfolio disappearing from their dashboard (even if they're currently editing the portfolio)
+    8. Re-add the user with different permissions (write vs. read), note the differences
 
 ### Important Implementation Details
 
