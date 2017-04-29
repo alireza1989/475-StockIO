@@ -3,13 +3,6 @@
 
 ### Demo Accounts
 
-    1. Shawn
-        username | jansepar@sfu.ca
-        password | password
-                
-    2. Abhinav 
-        username | sood@sfu.ca
-        password | password
 
 ### Demo Steps
 
